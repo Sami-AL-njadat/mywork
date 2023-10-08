@@ -63,6 +63,8 @@ Route::get('/myacc', function () {
 
 
 
+Route::get('/shop/filterByPrice', [CategoriesController::class, 'filterByPrice'])->name('shop.filterByPrice');
+// Route::get('/shop/showProduct/{id?}', [CategoriesController::class, 'showProduct'])->name('shop.showProduct');
 
 Route::get('/shop/{id?}', [CategoriesController::class, 'showProduct'])->name('shop');
 Route::get('/products', [CategoriesController::class, 'showProduct'])->name('products.index');
@@ -70,12 +72,13 @@ Route::get('/shopdetai/{id?}', [CategoriesController::class, 'shopdetai'])->name
 
 
 
-Route::get('/cart', [CartsController::class, 'show'])->name('cart');
+Route::get('/cart', [CartsController::class, 'show'])->name('cart.index');
 Route::get('cart/{id?}', [CartsController::class, 'store'])->name('cartstor');
-// Route::get('cart', [CartsController::class, 'index'])->name('cart.index');
+Route::get('carttt/{id?}', [CartsController::class, 'storee'])->name('cartstoree');
+// Route::get('/cart', [CartsController::class, 'index'])->name('cart.index');
 Route::get('delete/{id?}', [CartsController::class, 'destroy'])->name('cart.destroy');
 Route::get('add/{id?}', [CartsController::class, 'add'])->name('cart.add');
 Route::get('remove/{id?}', [CartsController::class, 'remove'])->name('cart.remove');
 
-Route::get('/checkout1', [CategoriesController::class, 'checkout'])->middleware(['auth', 'verified'])->name('checkout');
+Route::get('/checkout', [CategoriesController::class, 'checkout'])->middleware(['auth', 'verified'])->name('checkout');
 Route::post('/coupon', [CartsController::class, 'coupon'])->name('coupon');

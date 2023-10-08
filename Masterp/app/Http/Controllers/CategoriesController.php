@@ -11,28 +11,82 @@ use function Pest\Laravel\get;
 class CategoriesController extends Controller
 {
 
-   public  function showProduct(Request $request,$id=null)
-{
-    $perPage = $request->input('per_page', 6);
+    public function showProduct(Request $request, $id = null)
+    {
+        $perPage = $request->input('per_page', 6);
 
-    // Get the count of all products
-    $counts = Products::count();
+        // Get the count of all products
+        $counts = Products::count();
 
         // Get all categories
         $category = categories::all();
 
-    // Check if $id is not null
-    if ($id !== null) {
-            // Find a specific product by $id
-            $product = Products::where('categoryId', $id)->paginate($perPage);
+        // Check if the request has filter parameters
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
 
-    } else {
-        // Paginate all products
-        $product = Products::paginate($perPage);
+        // Apply price filter if values are provided
+        if ($minPrice !== null && $maxPrice !== null) {
+            $product = Products::whereBetween('price', [$minPrice, $maxPrice])
+                ->when($id !== null, function ($query) use ($id) {
+
+                    return $query->where('categoryId', $id);
+                })
+                ->paginate($perPage);
+        } else {
+            // Pagination without price filter
+            $query = Products::query();
+            if ($id !== null) {
+                $query->where('categoryId', $id);
+            }
+            $product = $query->paginate($perPage);
+
+        }
+
+
+        return view('pagess.shop.shop', compact('product', 'counts', 'category'));
+
     }
 
-    return view('pagess.shop.shop', compact('product', 'counts', 'category'));
-}
+    public function filterByPrice(Request $request)
+    {
+        // Redirect back to the product list page with price filter parameters
+        session()->flash('info', 'price change');
+
+        return redirect()->route('shop', [
+            'min_price' => $request->input('min_price'),
+            'max_price' => $request->input('max_price'),
+            'per_page' => $request->input('per_page', 6),
+            
+        ]);
+
+    }
+
+    // function shopdetai(Request $request, $id = null)
+    // {
+    //     if ($id !== null) {
+    //         // Find a single product by its ID
+    //         $product = Products::find($id);
+
+    //         // Check if the product exists
+    //         if (!$product) {
+    //             // Handle the case where the product with the given ID was not found
+    //             abort(404);
+    //         }
+
+    //         // Retrieve related products based on the category of the main product
+    //         $reproduct = Products::where('categoryId', $product->categoryId)
+    //             ->inRandomOrder()
+    //             ->limit(4)
+    //             ->get();
+    //     } else {
+    //         // Fetch all products when $id is null
+    //         $product = null; // No specific product selected
+    //         $reproduct = Products::inRandomOrder()->limit(4)->get();
+    //     }
+
+    //     return view('pagess.shop.shopDetailes', compact('product', 'reproduct'));
+    // }
 
 
     function shopdetai(Request $request, $id=null)

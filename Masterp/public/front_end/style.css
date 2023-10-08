@@ -409,7 +409,8 @@ img {
         .header-area .alazea-main-menu .classy-navbar {
           height: 98px; } }
     .header-area .alazea-main-menu .classynav ul li a {
-      padding: 0 30px;
+      /* padding: 0 30px ;  edit by  sam  */ 
+      margin-left: 5px;
       font-weight: 500;
       text-transform: capitalize;
       font-size: 20px;

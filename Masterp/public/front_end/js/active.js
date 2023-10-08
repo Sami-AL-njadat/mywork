@@ -159,26 +159,38 @@
     }
 
     // :: 12.0 Price Range Active Code
-    $('.slider-range-price').each(function () {
-        var min = jQuery(this).data('min');
-        var max = jQuery(this).data('max');
-        var unit = jQuery(this).data('unit');
-        var value_min = jQuery(this).data('value-min');
-        var value_max = jQuery(this).data('value-max');
-        var label_result = jQuery(this).data('label-result');
-        var t = $(this);
-        $(this).slider({
-            range: true,
-            min: min,
-            max: max,
-            values: [value_min, value_max],
-            slide: function (event, ui) {
-                var result = label_result + " " + unit + ui.values[0] + ' - ' + unit + ui.values[1];
-                console.log(t);
-                t.closest('.slider-range').find('.range-price').html(result);
-            }
-        });
-    })
+$(".slider-range-price").each(function () {
+    var min = 0; // Set the minimum value to $0
+    var max = jQuery(this).data("max");
+    var unit = jQuery(this).data("unit");
+    var value_min = jQuery(this).data("value-min");
+    var value_max = jQuery(this).data("value-max");
+    var label_result = jQuery(this).data("label-result");
+    var t = $(this);
+
+    $(this).slider({
+        range: true,
+        min: min,
+        max: max,
+        values: [value_min, value_max],
+        slide: function (event, ui) {
+            var result =
+                label_result +
+                " " +
+                unit +
+                ui.values[0] +
+                " - " +
+                unit +
+                ui.values[1];
+            t.closest(".slider-range").find(".range-price").html(result);
+
+            // Update hidden input fields with selected values
+            $("#min_price").val(ui.values[0]);
+            $("#max_price").val(ui.values[1]);
+        },
+    });
+});
+
 
     // :: 13.0 prevent default a click
     $('a[href="#"]').on('click', function ($) {

@@ -175,8 +175,8 @@
 
                                 <div class="cart--area d-flex flex-wrap align-items-center">
                                     <!-- Add to Cart Form -->
-                                    <form class="cart clearfix d-flex align-items-center" action="{{  route('cartstor') }}/{{ $product->id }}" method="get">
-                                       {{-- @csrf --}}
+                                    <form class="cart clearfix d-flex align-items-center" action="{{  route('cartstoree') }}/{{ $product->id }}" method="get">
+                                       @csrf
                                         <div class="quantity">
                                             <span class="qty-minus"
                                                 onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i
@@ -188,7 +188,7 @@
                                                     class="fa fa-plus" aria-hidden="true"></i></span>
                                         </div>
                                         <button type="submit" name="addtocart" value="5"
-                                            class="btn alazea-btn ml-15">
+                                            class="btn alazea-btn ml-15" href="{{ route('cartstoree')}}/{{ $product->id }} }}" >
                                             Add to cart
                                         </button>
                                     </form>
@@ -445,7 +445,7 @@
                             <div class="product-meta d-flex">
 
                                 <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                <a href="{{ route('cartstor',$reproducts->id ) }}}}" class="add-to-cart-btn">Add to cart</a>
+                                <a href="{{ route('cartstor',$reproducts->id ) }}" class="add-to-cart-btn">Add to cart</a>
                                 <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
                             </div>
                         </div>

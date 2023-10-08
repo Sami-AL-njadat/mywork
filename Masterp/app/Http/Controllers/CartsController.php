@@ -18,9 +18,18 @@ class CartsController extends Controller
      */
     public function index()
     {
-    
 
-        // return view('pagess.shop.cart');
+
+        if (auth()->user()) {
+            $iduser = auth()->user()->id;
+            $cart = carts::where('customerId', $iduser)->with('product')->get();
+            return view('pagess.shop.cart', compact('cart'));
+        } elseif ((session('cart')) != null) {
+            $products = session('cart');
+        } else {
+            $products = [];
+        }
+        return view('pagess.shop.cart', compact('products'));
     
 
     }
@@ -90,12 +99,74 @@ class CartsController extends Controller
                     'price' => $product->price,
 
                 ];
+                
             }
             session()->put('cart', $sessioncart);
         }
         // dd( session('cart'));
 
         return redirect()->back();
+
+
+
+
+    }
+    public function storee(Request $request, $id)
+    {
+        
+
+
+        $product = Products::where('id', $id)->first();
+        if (auth()->user()) {
+            $iduser = auth()->user()->id;
+            $productId = $product->id;
+            $quantity = $request->quantity;
+
+            // Check if the product already exists in the cart
+            $existingCart = carts::where('customerId', $iduser)
+                ->where('productId', $productId)
+                ->first();
+
+           
+            if ($existingCart) {
+                // Product already exists in the cart, so increment the quantity
+                $existingCart->update([
+                    'quantity' => $existingCart->quantity + $quantity
+                ]);
+            } else {
+                // Product does not exist in the cart, so create a new record
+                carts::create([
+                    'customerId' => $iduser,
+                    'productId' => $productId,
+                    'quantity' => 1,
+                   
+                ]);
+            }
+            
+        } else {
+            $sessioncart = session()->get('cart', []);
+            if (isset($sessioncart[$id])) {
+
+                $sessioncart[$id]['quantity'] += $request->quantity;
+
+                session()->put('cart', $sessioncart);
+            } else {
+                $sessioncart[$id] = [
+                    'id' => $id,
+                    'productname' => $product->productName,
+                    'shortdes' => $product->Sdescription,
+                    'quantity' => 1,
+                    'image' => $product->image1,
+                    'price' => $product->price,
+
+                ];
+                
+            }
+            session()->put('cart', $sessioncart);
+        }
+        // dd( session('cart'));
+
+        return redirect()->route("cart.index");
 
 
 

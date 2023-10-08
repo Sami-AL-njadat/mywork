@@ -69,29 +69,43 @@
                 <div class="col-12 col-md-4 col-lg-3">
                     <div class="shop-sidebar-area">
                         <!-- Shop Widget -->
-                        <div class="shop-widget price mb-50">
-                            <h4 class="widget-title">Prices</h4>
-                            <div class="widget-desc">
-                                <div class="slider-range">
-                                    <div data-min="8" data-max="30" data-unit="$"
-                                        class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
-                                        data-value-min="8" data-value-max="30" data-label-result="Price:">
-                                        <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                        <span class="ui-slider-handle ui-state-default ui-corner-all first-handle"
-                                            tabindex="0"></span>
-                                        <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+
+                        <form method="GET" action="{{ route('shop.filterByPrice') }}">
+                            <!-- Your other form elements (if any) here -->
+
+                            <div class="shop-widget price mb-50">
+                                <h4 class="widget-title">Prices</h4>
+                                <div class="widget-desc">
+                                    <div class="slider-range">
+                                        <div data-min="0" data-max="100" data-unit="$"
+                                            class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
+                                            data-value-min="0" data-value-max="100" data-label-result="Price:">
+
+                                            <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
+                                            <span class="ui-slider-handle ui-state-default ui-corner-all first-handle"
+                                                tabindex="0"></span>
+                                            <span class="ui-slider-handle ui-state-default ui-corner-all"
+                                                tabindex="0"></span>
+                                        </div>
+                                        <div class="range-price">Price: $0 - $100</div>
                                     </div>
-                                    <div class="range-price">Price: $8 - $30</div>
                                 </div>
                             </div>
-                        </div>
+
+                            <!-- Add hidden input fields to capture price range -->
+
+                            <input type="hidden" name="min_price" id="min_price" value="0">
+                            <input type="hidden" name="max_price" id="max_price" value="30">
+
+                            <button type="submit" class="btn alazea-btn active">Filter</button>
+                        </form>
 
                         <!-- Shop Widget -->
                         <div class="shop-widget catagory mb-50">
                             <h4 class="widget-title">Categories</h4>
                             <div class="widget-desc">
                                 <!-- Single Checkbox -->
-                                
+
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                     <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                     <label class="custom-control-label" for="customCheck1">All plants <span
@@ -131,7 +145,7 @@
                                     <input type="checkbox" class="custom-control-input" id="customCheck6" />
                                     <label class="custom-control-label" for="customCheck6">Others <span
                                             class="text-muted">(2)</span></label>
-                                </div> 
+                                </div>
                             </div>
                         </div>
 
@@ -245,14 +259,17 @@
                                     <div class="single-product-area mb-50">
                                         <!-- Product Image -->
                                         <div class="product-img">
-                                            <a href="{{ route('shopdetai') }}/{{ $allproduct->id }}"><img src="{{ $allproduct->image1 }}"
-                                                    alt="" /></a>
+                                            <a href="{{ route('shopdetai') }}/{{ $allproduct->id }}"><img
+                                                    src="{{ $allproduct->image1 }}" alt="" /></a>
                                             <div class="product-tag">
-                                                <a href="#">{{ $allproduct->status }}</a>
+                                                @if ($allproduct->status > 0)
+                                                    <a href="#">{{ $allproduct->status }}</a>
+                                                @endif
                                             </div>
                                             <div class="product-meta d-flex">
                                                 <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                                <a href="{{ route('cartstor') }}/{{ $allproduct->id }}" class="add-to-cart-btn">Add to cart</a>
+                                                <a href="{{ route('cartstor') }}/{{ $allproduct->id }}"
+                                                    class="add-to-cart-btn">Add to cart</a>
                                                 <a href="#" class="compare-btn"><i
                                                         class="arrow_left-right_alt"></i></a>
                                             </div>
