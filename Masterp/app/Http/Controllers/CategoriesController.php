@@ -5,104 +5,89 @@ namespace App\Http\Controllers;
 use App\Models\categories;
 use Illuminate\Http\Request;
 use App\Models\Products;
+use App\DataTables\CategoryDataTable;
 
 use function Pest\Laravel\get;
 
 class CategoriesController extends Controller
 {
 
-    public function showProduct(Request $request, $id = null)
+    public function showProducts(Request $request, $id = null)
     {
         $perPage = $request->input('per_page', 6);
-
-        // Get the count of all products
+        $allcategory = categories::orderBy('categoryName', 'ASC')->get();
         $counts = Products::count();
+        // $categoryes = Products::where('categoryName')->count();
 
-        // Get all categories
         $category = categories::all();
 
         // Check if the request has filter parameters
         $minPrice = $request->input('min_price');
         $maxPrice = $request->input('max_price');
 
+        $query = Products::query();
+
         // Apply price filter if values are provided
         if ($minPrice !== null && $maxPrice !== null) {
-            $product = Products::whereBetween('price', [$minPrice, $maxPrice])
-                ->when($id !== null, function ($query) use ($id) {
-
-                    return $query->where('categoryId', $id);
-                })
-                ->paginate($perPage);
-        } else {
-            // Pagination without price filter
-            $query = Products::query();
-            if ($id !== null) {
-                $query->where('categoryId', $id);
-            }
-            $product = $query->paginate($perPage);
+            $query->whereBetween('price', [$minPrice, $maxPrice]);
+            session()->flash('success', 'parice change ');
 
         }
 
+        // Apply category filter if $id is provided
+        if ($id !== null) {
+            $query->where('categoryId', $id);
+        }
 
-        return view('pagess.shop.shop', compact('product', 'counts', 'category'));
+        $product = $query->paginate($perPage);
 
+        return view('pagess.shop.shop', compact('product', 'counts', 'category', 'allcategory'));
     }
 
-    public function filterByPrice(Request $request)
-    {
-        // Redirect back to the product list page with price filter parameters
-        session()->flash('info', 'price change');
 
-        return redirect()->route('shop', [
-            'min_price' => $request->input('min_price'),
-            'max_price' => $request->input('max_price'),
-            'per_page' => $request->input('per_page', 6),
-            
-        ]);
 
-    }
+    // function shopdetai(Request $request, $id=null)
+    // {    $allcategory = categories::orderBy('categoryName', 'ASC')->get();
 
-    // function shopdetai(Request $request, $id = null)
-    // {
-    //     if ($id !== null) {
-    //         // Find a single product by its ID
+
+
+    //     if ($id!==null) {
     //         $product = Products::find($id);
+    //     }else{
+    //         $product = Products::all();
 
-    //         // Check if the product exists
-    //         if (!$product) {
-    //             // Handle the case where the product with the given ID was not found
-    //             abort(404);
-    //         }
-
-    //         // Retrieve related products based on the category of the main product
-    //         $reproduct = Products::where('categoryId', $product->categoryId)
-    //             ->inRandomOrder()
-    //             ->limit(4)
-    //             ->get();
-    //     } else {
-    //         // Fetch all products when $id is null
-    //         $product = null; // No specific product selected
-    //         $reproduct = Products::inRandomOrder()->limit(4)->get();
     //     }
+    //     $reproduct = Products::where('categoryId', $product->categoryId)->inRandomOrder()->limit(4)->get();
 
-    //     return view('pagess.shop.shopDetailes', compact('product', 'reproduct'));
-    // }
+    //     return view('pagess.shop.shopDetailes',compact('product' , 'allcategory' , 'reproduct'));
+    //   }
 
 
-    function shopdetai(Request $request, $id=null)
-    {            
-       
+ 
 
-        if ($id!==null) {
+    function shopdetai(Request $request, $id = null)
+    {
+        $allcategory = Categories::orderBy('categoryName', 'ASC')->get();
+
+        if ($id !== null) {
             $product = Products::find($id);
-        }else{
+
+            // Retrieve the category name of the selected product
+            $selectedCategory = Categories::find($product->categoryId);
+
+            $reproduct = Products::where('categoryId', $product->categoryId)
+                ->inRandomOrder()
+                ->limit(4)
+                ->get();
+
+            return view('pagess.shop.shopDetailes', compact('product', 'allcategory', 'reproduct', 'selectedCategory'));
+        } else {
             $product = Products::all();
-
+            $reproduct = Products::inRandomOrder()->limit(4)->get();
+            return view('pagess.shop.shopDetailes', compact('product', 'allcategory', 'reproduct'));
         }
-        $reproduct = Products::where('categoryId', $product->categoryId)->inRandomOrder()->limit(4)->get();
+    }
 
-        return view('pagess.shop.shopDetailes',compact('product' , 'reproduct'));
-      }
 
     public function checkout()
     {
@@ -111,6 +96,11 @@ class CategoriesController extends Controller
 
         return view('pagess.shop.checkOut');
     }
+
+    function indexCategory(CategoryDataTable $dataTable)
+    {
+        return $dataTable->render('Admin.pages.category.index');
+    }
   
 
 
@@ -118,11 +108,13 @@ class CategoriesController extends Controller
     {
      $categories = categories::all();
 
-     $product = Products::orderBy('created_at', 'desc')->take(4)->get();
+        $product = Products::orderBy('created_at', 'desc')->take(4)->get();
      return view ('pagess.home.home' ,compact('categories', 'product'));
 
 
     }
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -162,10 +154,13 @@ class CategoriesController extends Controller
      * @param  \App\Models\categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function edit(categories $categories)
+    public function edit(  $id )
     {
-        //
-    }
+        $category = categories::findOrFail($id);
+
+return view('Admin.pages.category.edit' ,compact('category'));
+
+}
 
     /**
      * Update the specified resource in storage.
@@ -176,7 +171,9 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, categories $categories)
     {
-        //
+ 
+ 
+ 
     }
 
     /**
@@ -185,8 +182,28 @@ class CategoriesController extends Controller
      * @param  \App\Models\categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function destroy(categories $categories)
-    {
-        //
-    }
-}
+    public function destroy( $id )
+    { 
+        $category = categories::findOrFail($id);
+        $category->delete();
+        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+
+ }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

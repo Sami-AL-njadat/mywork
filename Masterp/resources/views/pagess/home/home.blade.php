@@ -77,11 +77,11 @@
 
                 <div class="row justify-content-center">
                     <!-- Single Blog Post Area -->
-                    @foreach ($categories as $category)
+                    {{-- @foreach ($categories as $category)
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="single-blog-post mb-100">
                                 <div class="post-thumbnail mb-30">
-                                    <a href="shop.html"><img src="{{ $category->image }}" alt="" /></a>
+                                    <a href="{{ route('shops' $category->id) }}"><img src="{{ $category->image }}" alt="" /></a>
                                 </div>
                                 <div class="post-content">
                                     <a href="single-post.html" class="post-title">
@@ -96,7 +96,35 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    @endforeach --}}
+
+
+
+
+@foreach ($categories as $category)
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="single-blog-post mb-100">
+            <div class="post-thumbnail mb-30">
+                <a href="{{ route('shops', ['id' => $category->id]) }}"><img src="{{ $category->image }}" alt="" /></a>
+            </div>
+            <div class="post-content">
+                <a href="{{ route('shops', ['id' => $category->id]) }}" class="post-title">
+                    <h3>
+                        {{ $category->categoryName }}
+                    </h3>
+                </a>
+                <p class="post-excerpt">
+                    {{ $category->description }}
+                </p>
+            </div>
+        </div>
+    </div>
+@endforeach
+
+
+
+
+
 
                 </div>
 

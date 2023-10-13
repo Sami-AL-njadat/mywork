@@ -210,7 +210,9 @@
 
                                 <div class="products--meta">
                                     <p><span>SKU:</span> <span>CT201807</span></p>
-                                    <p><span>Category:</span> <span>Outdoor Plants</span></p>
+                                         <p><span>Category:</span> <span>{{ $selectedCategory->categoryName }}</span></p>
+
+                                    
                                     <p><span>Tags:</span> <span>plants, green, cactus </span></p>
                                     <p>
                                         <span>Share on:</span>

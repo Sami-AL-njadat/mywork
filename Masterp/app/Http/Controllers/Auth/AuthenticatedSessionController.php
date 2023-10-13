@@ -30,20 +30,30 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        // carts::where('customerId', auth()->user()->id)->delete();
+        carts::where('customerId', auth()->user()->id)->delete();
 
-        // $sessionCart = session('cart');
+        $sessioncart = session('cart');
 
-        // foreach ($sessionCart as $item) {
-        //     carts::create([
-        //         'productId' => $item['id'],
-        //         'customerId' => auth()->user()->id,
-        //         'quantity' => $item['quantity']
-        //     ]);
-        // }
+if (isset($sessioncart)) {
+
+            foreach ($sessioncart as $product) {
+                $cartData = [
+                    'productId' => $product['id'],
+                    'customerId' => auth()->user()->id,
+                    'quantity' => $product['quantity'],
+                ];
+
+                if (session()->has('coupon')) {
+                    $cartData['couponid'] = session('coupon');
+                }
+
+                carts::create($cartData);
+            }
+}
 
         return redirect()->intended('/');
     }
+    
 
     /**
      * Destroy an authenticated session.

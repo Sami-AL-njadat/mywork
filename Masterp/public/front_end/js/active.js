@@ -167,6 +167,7 @@ $(".slider-range-price").each(function () {
     var value_max = jQuery(this).data("value-max");
     var label_result = jQuery(this).data("label-result");
     var t = $(this);
+    
 
     $(this).slider({
         range: true,
@@ -174,17 +175,12 @@ $(".slider-range-price").each(function () {
         max: max,
         values: [value_min, value_max],
         slide: function (event, ui) {
-            var result =
-                label_result +
-                " " +
-                unit +
-                ui.values[0] +
-                " - " +
-                unit +
-                ui.values[1];
-            t.closest(".slider-range").find(".range-price").html(result);
+            // Update the range price display
+            $(".range-price").text(
+                "Price: $" + ui.values[0] + " - $" + ui.values[1]
+            );
 
-            // Update hidden input fields with selected values
+            // Update the hidden input values with the slider's values
             $("#min_price").val(ui.values[0]);
             $("#max_price").val(ui.values[1]);
         },

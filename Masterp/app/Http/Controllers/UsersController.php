@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
+use App\Models\User;
 use App\Models\users;
 use Illuminate\Http\Request;
 
@@ -12,9 +14,9 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(UsersDataTable $dataTable)
     {
-        //
+         return $dataTable->render('Admin.pages.users.index');
     }
 
     /**
@@ -22,9 +24,9 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(UsersDataTable $dataTable)
     {
-        //
+        return $dataTable->render('Admin.pages.users.create');
     }
 
     /**
@@ -55,10 +57,11 @@ class UsersController extends Controller
      * @param  \App\Models\users  $users
      * @return \Illuminate\Http\Response
      */
-    public function edit(users $users)
+    public function edit( $id)
     {
-        //
-    }
+        $users = User::findOrFail($id);
+
+        return view('Admin.pages.users.edit', compact('users'));    }
 
     /**
      * Update the specified resource in storage.

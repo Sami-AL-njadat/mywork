@@ -19,4 +19,8 @@ class carts extends Model
     {
         return $this->belongsTo(Products::class, 'productId');
     }
+    public function coupon()
+    {
+        return $this->belongsTo(coupons::class, 'couponid');
+    }
 }

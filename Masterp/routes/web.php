@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CartsController;
+use App\Http\Controllers\checKoutController;
 
 
 /*
@@ -19,7 +20,43 @@ use App\Http\Controllers\CartsController;
 */
 
 // Route::get('/', [CategoriesController::class, 'index']);;
+Route::get('/welcome', function () {
+    return view('Admin.layout.master');
+});
 
+Route::get('/adminlog', function () {
+    return view('Admin.loginadmin.login');
+});
+
+Route::get('/indexs', [CategoriesController::class, 'indexCategory'])->name('indexxxs');
+
+Route::get('/www', function () {
+    return view('Admin.pages.product.create');
+})->name('www');
+
+
+Route::get('/wwww', function () {
+    return view('Admin.pages.product.index');
+})->name('www');
+
+Route::get('/wwws', function () {
+    return view('Admin.pages.product.edit');
+})->name('wwws');
+
+ 
+
+
+
+
+
+
+
+
+
+
+Route::get('/dash', function () {
+    return view('Admin.bashboord');
+});
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -62,12 +99,17 @@ Route::get('/myacc', function () {
 
 
 
-
-Route::get('/shop/filterByPrice', [CategoriesController::class, 'filterByPrice'])->name('shop.filterByPrice');
+Route::get('/shop/filterByPrice', [CategoriesController::class, 'showProducts'])->name('shop.filterByPrice');
+Route::get('/shop/{id?}', [CategoriesController::class, 'showProducts'])->name('shop');
+Route::get('/shop', [CategoriesController::class, 'showProducts'])->name('products.index');
+// Route::get('/shop/filterByPrice', [CategoriesController::class, 'filterByPrice'])->name('shop.filterByPrice');
 // Route::get('/shop/showProduct/{id?}', [CategoriesController::class, 'showProduct'])->name('shop.showProduct');
+//this for in categouries in home page 
+Route::get('/shops/{id?}', [CategoriesController::class, 'showProducts'])->name('shops');
 
-Route::get('/shop/{id?}', [CategoriesController::class, 'showProduct'])->name('shop');
-Route::get('/products', [CategoriesController::class, 'showProduct'])->name('products.index');
+
+// Route::get('/shop/{id?}', [CategoriesController::class, 'showProduct'])->name('shop');
+// Route::get('/shop', [CategoriesController::class, 'showProduct'])->name('products.index');
 Route::get('/shopdetai/{id?}', [CategoriesController::class, 'shopdetai'])->name('shopdetai');
 
 
@@ -80,5 +122,8 @@ Route::get('delete/{id?}', [CartsController::class, 'destroy'])->name('cart.dest
 Route::get('add/{id?}', [CartsController::class, 'add'])->name('cart.add');
 Route::get('remove/{id?}', [CartsController::class, 'remove'])->name('cart.remove');
 
-Route::get('/checkout', [CategoriesController::class, 'checkout'])->middleware(['auth', 'verified'])->name('checkout');
+Route::get('/checkout', [checKoutController::class, 'checkout'])->middleware(['auth', 'verified'])->name('checkout');
 Route::post('/coupon', [CartsController::class, 'coupon'])->name('coupon');
+// Route::get('/checkout', [CategoriesController::class, 'shows'])->name('checkouts');
+Route::post('/update-shipping-cost', [CartsController::class, 'updateShippingCost'])
+    ->name('updateShippingCost');

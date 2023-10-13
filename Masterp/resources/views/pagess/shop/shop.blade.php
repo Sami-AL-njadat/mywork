@@ -34,7 +34,8 @@
                     <div class="shop-sorting-data d-flex flex-wrap align-items-center justify-content-between">
                         <!-- Shop Page Count -->
                         <div class="shop-page-count">
-                            <p>Showing 1-6 of {{ $counts }} results</p>
+                            <p>Showing 1-{{ Request::get('per_page') }} of {{ $counts }} results</p>
+
                         </div>
                         <!-- Search by Terms -->
                         <div class="search_by_terms">
@@ -70,7 +71,7 @@
                     <div class="shop-sidebar-area">
                         <!-- Shop Widget -->
 
-                        <form method="GET" action="{{ route('shop.filterByPrice') }}">
+                        <form method="GET" action="{{ route('shop.filterByPrice') }}" id="formeee">
                             <!-- Your other form elements (if any) here -->
 
                             <div class="shop-widget price mb-50">
@@ -82,7 +83,7 @@
                                             data-value-min="0" data-value-max="100" data-label-result="Price:">
 
                                             <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                            <span class="ui-slider-handle ui-state-default ui-corner-all first-handle"
+                                            <span class="ui-slider-handle ui-state-default ui-corner-all "
                                                 tabindex="0"></span>
                                             <span class="ui-slider-handle ui-state-default ui-corner-all"
                                                 tabindex="0"></span>
@@ -94,8 +95,10 @@
 
                             <!-- Add hidden input fields to capture price range -->
 
-                            <input type="hidden" name="min_price" id="min_price" value="0">
-                            <input type="hidden" name="max_price" id="max_price" value="30">
+                            <input type="hidden" name="min_price" id="min_price" value="0"
+                         >
+                            <input type="hidden" name="max_price" id="max_price" value="20"
+                              >
 
                             <button type="submit" class="btn alazea-btn active">Filter</button>
                         </form>
@@ -109,43 +112,21 @@
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
                                     <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                     <label class="custom-control-label" for="customCheck1">All plants <span
-                                            class="text-muted">(72)</span></label>
+                                            class="text-muted">{{ $counts }}</span></label>
                                 </div>
 
 
 
+                                @foreach ($allcategory as $items)
+                                    <!-- Single Checkbox -->
+                                    <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                                        <label class="custom-control-label" for="customCheck2">{{ $items->categoryName }}
+                                            <span class="text-muted">{{ $items->products->count() }}</span></label>
+                                    </div>
+                                @endforeach
 
 
-                                <!-- Single Checkbox -->
-                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck2" />
-                                    <label class="custom-control-label" for="customCheck2">Outdoor plants
-                                        <span class="text-muted">(20)</span></label>
-                                </div>
-                                <!-- Single Checkbox -->
-                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck3" />
-                                    <label class="custom-control-label" for="customCheck3">Indoor plants <span
-                                            class="text-muted">(15)</span></label>
-                                </div>
-                                <!-- Single Checkbox -->
-                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck4" />
-                                    <label class="custom-control-label" for="customCheck4">Office Plants <span
-                                            class="text-muted">(20)</span></label>
-                                </div>
-                                <!-- Single Checkbox -->
-                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck5" />
-                                    <label class="custom-control-label" for="customCheck5">Potted <span
-                                            class="text-muted">(15)</span></label>
-                                </div>
-                                <!-- Single Checkbox -->
-                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck6" />
-                                    <label class="custom-control-label" for="customCheck6">Others <span
-                                            class="text-muted">(2)</span></label>
-                                </div>
                             </div>
                         </div>
 
@@ -259,8 +240,8 @@
                                     <div class="single-product-area mb-50">
                                         <!-- Product Image -->
                                         <div class="product-img">
-                                            <a href="{{ route('shopdetai') }}/{{ $allproduct->id }}"><img
-                                                    src="{{ $allproduct->image1 }}" alt="" /></a>
+                                            <a href="{{ route('shopdetai') }}/{{ $allproduct->id }}">
+                                                <img src={{ asset($allproduct->image1) }} alt="" /></a>
                                             <div class="product-tag">
                                                 @if ($allproduct->status > 0)
                                                     <a href="#">{{ $allproduct->status }}</a>

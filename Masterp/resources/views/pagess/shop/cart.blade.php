@@ -27,7 +27,10 @@
     <!-- ##### Breadcrumb Area End ##### -->
 
     <!-- ##### Cart Area Start ##### -->
-    <div class="cart-area section-padding-0-100 clearfix">
+    @if (empty($products) || count($products) === 0)
+<h1 style="margin-left:35%; height: 250px;">No items in the cart</h1>
+       @else
+        <div class="cart-area section-padding-0-100 clearfix">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -52,7 +55,7 @@
 
                                 @php
                                     
-                                    if (session()->has('discounts')) {
+                                    if (session()->has('discounts')&&session()->get('discounts')!=null) {
                                         $codedd = session('discounts');
                                     }
                                     
@@ -78,6 +81,7 @@
                                         </td>
                                         <td class="qty">
                                             <div class="quantity">
+                                                
                                                 <a href={{ route('cart.remove', ['id' => $product['id']]) }}
                                                     class="qty-minus"><i class="fa fa-minus" aria-hidden="true"></i></a>
                                                 <input class="qty-text" id="qty" step="1" min="1"
@@ -133,8 +137,8 @@
 
                         <div class="subtotal d-flex justify-content-between">
                             <h5>COUPON </h5>
-                            @if (session()->has('discounts'))
-                                <h5>${{ $codedd }}</h5>
+                            @if (session()->has('discounts')&&session()->get('discounts')!=null)
+                                <h5>%{{ $codedd }}</h5>
                             @else
                                 <h5>$ 0</h5>
                             @endif
@@ -145,13 +149,13 @@
                         <div class="shipping d-flex justify-content-between">
                             <h5>Shipping</h5>
                             <div class="shipping-address">
-                                <form action="#" method="post">
+                                <form action="{{ route('updateShippingCost') }}" method="post">
                                     <select class="custom-select">
                                         <option selected>CITY</option>
-                                        <option value="1">AJLOUN</option>
-                                        <option value="2">AMMAN</option>
-                                        <option value="3">JARASH</option>
-                                        <option value="4">IRBID</option>
+                                        <option value="AJLOUN">AJLOUN</option>
+                                        <option value="AMMAN">AMMAN</option>
+                                        <option value="JARASH">JARASH</option>
+                                        <option value="IRBID">IRBID</option>
                                     </select>
                                     <input type="text" name="shipping-text" id="shipping-text" placeholder="TOWN" />
                                     <input type="text" name="shipping-zip" id="shipping-zip" placeholder="PHONE" />
@@ -160,10 +164,17 @@
                             </div>
                         </div>
                         <div class="total d-flex justify-content-between">
+
+
+                         
+                          
+                            </div>
+
+
                             <h5>Total</h5>
-                            <h5>
-                            @if (session()->has('discounts'))
-                            {{ $subtotal - $codedd }}
+                            <h5>jod
+                            @if (session()->has('discounts')&&session()->get('discounts')!=null)
+                                    {{ $subtotal-($subtotal * $codedd)/100 }}
                                 @else{{ $subtotal }}
                             @endif
                         </h5>
@@ -176,5 +187,7 @@
             </div>
         </div>
     </div>
+    @endif
+    
     <!-- ##### Cart Area End ##### -->
 @endsection
