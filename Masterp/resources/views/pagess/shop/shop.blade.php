@@ -95,10 +95,8 @@
 
                             <!-- Add hidden input fields to capture price range -->
 
-                            <input type="hidden" name="min_price" id="min_price" value="0"
-                         >
-                            <input type="hidden" name="max_price" id="max_price" value="20"
-                              >
+                            <input type="hidden" name="min_price" id="min_price" value="0">
+                            <input type="hidden" name="max_price" id="max_price" value="20">
 
                             <button type="submit" class="btn alazea-btn active">Filter</button>
                         </form>
@@ -110,21 +108,58 @@
                                 <!-- Single Checkbox -->
 
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                                    <label class="custom-control-label" for="customCheck1">All plants <span
-                                            class="text-muted">{{ $counts }}</span></label>
-                                </div>
+                                    {{-- <input type="checkbox" class="custom-control-input" id="customCheck1" />
+                                    <label class="custom-control-label" for="customCheck1">All plants
+                                        <span class="text-muted">{{ $counts }}</span>
+                                    </label> --}}
 
+                                    <a href="{{ route('shops') }}" class="btn alazea-btn active ">
+                                        All plants<span>{{ $counts }}</span>
+                                    </a>
+
+                                </div>
 
 
                                 @foreach ($allcategory as $items)
                                     <!-- Single Checkbox -->
-                                    <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck2" />
-                                        <label class="custom-control-label" for="customCheck2">{{ $items->categoryName }}
-                                            <span class="text-muted">{{ $items->products->count() }}</span></label>
+
+                                    <div class="custom-control custom d-flex align-items-center ">
+                                        {{-- <a href="{{ route('shops', ['id' => $items->id]) }}"> --}}
+                                        {{-- <h5 class="custom-control">{{ $items->categoryName }}
+
+                                                    <span class="text-muted"></span>
+                                                </h5> --}}
+
+                                        {{-- <button type="link"  class="btn alazea-btn active">{{ $items->categoryName }} <span>{{ $items->Products->count() }}</span> <a href="{{ route('shops', ['id' => $items->id]) }}"></a></button> --}}
+
+                                        {{-- </a> --}}
+
+
+                                        <a href="{{ route('shops', ['id' => $items->id]) }}"
+                                            class="btn alazea-btn active  mb-2 ">
+                                            {{ $items->categoryName }} <span>{{ $items->Products->count() }}</span>
+                                        </a>
+
+
                                     </div>
+
+
+                                    
                                 @endforeach
+
+                                {{-- @foreach ($allcategory as $category)
+    @if ($category->products->count() > 1)
+        <!-- Single Checkbox -->
+        <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+            <input type="checkbox" class="custom-control-input" id="customCheck2_{{ $category->id }}" />
+            <label class="custom-control-label" for="customCheck2_{{ $category->id }}">
+                {{ $category->categoryName }}
+                <span class="text-muted">{{ $category->products->count() }}</span>
+            </label>
+        </div>
+    @endif
+@endforeach --}}
+
 
 
                             </div>
@@ -140,9 +175,9 @@
                                     <label class="custom-control-label" for="customCheck7">New arrivals</label>
                                 </div>
                                 <!-- Single Checkbox -->
-                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck8" />
-                                    <label class="custom-control-label" for="customCheck8">Alphabetically, A-Z</label>
+                                <div  class="custom-control custom-checkbox d-flex align-items-center mb-2">
+                                    <input  type="checkbox" class="custom-control-input" id="customCheck8" href="" />
+                                    <label  class="custom-control-label" for="customCheck8">Alphabetically, A-Z</label>
                                 </div>
                                 <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">

@@ -346,23 +346,23 @@ class CartsController extends Controller
 
         return redirect()->back();
     }
-    public function updateShippingCost(Request $request)
-    {
-        $city = $request->input('city');
-        $shippingCosts = [
-            'AJLOUN' => 0.5,
-            'AMMAN' => 5,
-            'JARASH' => 5,
-            'IRBID' => 3,
-        ];
+    // public function updateShippingCost(Request $request)
+    // {
+    //     $city = $request->input('city');
+    //     $shippingCosts = [
+    //         'AJLOUN' => 0.5,
+    //         'AMMAN' => 5,
+    //         'JARASH' => 5,
+    //         'IRBID' => 3,
+    //     ];
 
-        // Calculate the updated total
+    //     // Calculate the updated total
  
-        // Store the updated total in the session
-        session()->put('updatedTotal', "shippingCosts", 'city');
+    //     // Store the updated total in the session
+    //     session()->put();
 
-        return redirect()->route('cart.index');
-    }
+    //     return redirect()->route('cart.index');
+    // }
 
 
 

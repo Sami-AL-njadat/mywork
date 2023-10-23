@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\categories;
 use Illuminate\Http\Request;
 use App\Models\Products;
+use App\Traits\ImageUploadTrait;
 use App\DataTables\CategoryDataTable;
+use Illuminate\Support\Facades\File;
 
 use function Pest\Laravel\get;
 
 class CategoriesController extends Controller
 {
+    use ImageUploadTrait;
+
 
     public function showProducts(Request $request, $id = null)
     {
@@ -31,7 +35,6 @@ class CategoriesController extends Controller
         if ($minPrice !== null && $maxPrice !== null) {
             $query->whereBetween('price', [$minPrice, $maxPrice]);
             session()->flash('success', 'parice change ');
-
         }
 
         // Apply category filter if $id is provided
@@ -63,7 +66,7 @@ class CategoriesController extends Controller
     //   }
 
 
- 
+
 
     function shopdetai(Request $request, $id = null)
     {
@@ -99,22 +102,22 @@ class CategoriesController extends Controller
 
     function indexCategory(CategoryDataTable $dataTable)
     {
+        // $product= products::all();
+        // dd($product[0]->Category->categoryName );
         return $dataTable->render('Admin.pages.category.index');
     }
-  
 
 
-     function index()
+
+    function index()
     {
-     $categories = categories::all();
+        $categories = categories::all();
 
         $product = Products::orderBy('created_at', 'desc')->take(4)->get();
-     return view ('pagess.home.home' ,compact('categories', 'product'));
-
-
+        return view('pagess.home.home', compact('categories', 'product'));
     }
 
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -123,8 +126,9 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        //
+        return view('Admin.pages.category.create');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -134,7 +138,24 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $request->validate([
+            'image' => ['required', 'image', 'max:4192'],
+            'name' => ['required', 'max:20'],
+            'description' => ['required', 'max:1000'],
+        ]);
+
+        $category = new categories();
+
+        $imagePath = $this->uploadImage($request, 'image', 'uploads');
+
+        $category->image =  $imagePath;
+        $category->categoryName = $request->name;
+        $category->description = htmlspecialchars($request->description);
+        $category->save();
+
+        toastr('Created Successfully!', 'success');
+
+        return redirect()->route('indexxxs');
     }
 
     /**
@@ -154,13 +175,12 @@ class CategoriesController extends Controller
      * @param  \App\Models\categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function edit(  $id )
+    public function edit($id)
     {
         $category = categories::findOrFail($id);
 
-return view('Admin.pages.category.edit' ,compact('category'));
-
-}
+        return view('Admin.pages.category.edit', compact('category'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -169,11 +189,27 @@ return view('Admin.pages.category.edit' ,compact('category'));
      * @param  \App\Models\categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, categories $categories)
+    public function update(Request $request, $id)
     {
- 
- 
- 
+        $request->validate([
+            'image' => ['image', 'max:4192'],
+            'name' => ['required', 'max:20'],
+            'description' => ['required', 'max:1000'],
+        ]);
+
+        $category = categories::findOrFail($id);
+        $imagePath = $this->updateImage($request, 'image', 'uploads', $category->image);
+
+        $category->image = empty(!$imagePath) ? $imagePath : $category->image;
+        $category->categoryName = $request->name;
+        $category->description = htmlspecialchars($request->description);
+        // $category->image = $request->image;
+        $category->save();
+
+        toastr('Updated Successfully!', 'success');
+
+
+        return redirect()->route('indexxxs');
     }
 
     /**
@@ -182,28 +218,14 @@ return view('Admin.pages.category.edit' ,compact('category'));
      * @param  \App\Models\categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id )
-    { 
+    public function destroy($id)
+    {
         $category = categories::findOrFail($id);
+        $this->deleteImage($category->image);
         $category->delete();
+
+       
+
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
-
- }}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
+}

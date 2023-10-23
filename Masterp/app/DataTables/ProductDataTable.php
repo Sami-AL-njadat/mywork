@@ -2,7 +2,8 @@
 
 namespace App\DataTables;
 
-use App\Models\Product;
+use App\Models\categories;
+use App\Models\Products;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -11,6 +12,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+// use App\Models\Category;
 
 class ProductDataTable extends DataTable
 {
@@ -23,10 +25,28 @@ class ProductDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'product.action')
-            ->setRowId('id');
+        ->addColumn('action', function ($query) {
+            $editBtn = "<a href='" . route('product.edit', $query->id) . "' class='btn btn-success'><i class='far fa-edit'></i></a>";
+            $deleteBtn = "<a href='" . route('product.destroy', $query->id) . "' class='btn btn-danger my-2 delete-item'><i class='fas fa-trash-alt'></i></a>";
 
-            
+            return $editBtn . $deleteBtn;
+        })
+        ->addColumn('image1', function ($query) {
+            return "<img width='100px' src='" . asset($query->image1) . "'></img>";
+        })
+        ->addColumn('image2', function ($query) {
+            return "<img width='100px' src='" . asset($query->image2) . "'></img>";
+        })
+        ->addColumn('image3', function ($query) {
+            return "<img width='100px' src='" . asset($query->image3) . "'></img>";
+        })
+        ->addColumn('category_name', function ($query) {
+            return $query->Category->categoryName;
+        })
+
+        ->rawColumns(['action', 'image1', 'image2', 'image3'])
+        ->setRowId('id');
+
     }
 
     /**
@@ -35,7 +55,7 @@ class ProductDataTable extends DataTable
      * @param \App\Models\Product $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Product $model): QueryBuilder
+    public function query(products $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -71,16 +91,26 @@ class ProductDataTable extends DataTable
      */
     public function getColumns(): array
     {
+   
+
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
             Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('productName'),
+            Column::make('Sdescription'),
+            Column::make('Ldescription'),
+            Column::make('price'),
+            Column::make('stockqty'),
+            Column::make('status'),
+            Column::make('category_name'),
+            Column::make('image1'),
+            Column::make('image2'),
+            Column::make('image3'),
+            // Column::make('updated_at'),
+            Column::computed('action')
+            ->exportable(false)
+            ->printable(false)
+            ->width(60)
+            ->addClass('text-center'),
         ];
     }
 

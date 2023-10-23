@@ -28,6 +28,7 @@
 
     <!-- ##### Cart Area Start ##### -->
     @if (empty($products) || count($products) === 0)
+    
 <h1 style="margin-left:35%; height: 250px;">No items in the cart</h1>
        @else
         <div class="cart-area section-padding-0-100 clearfix">

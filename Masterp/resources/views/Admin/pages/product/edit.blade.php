@@ -5,11 +5,9 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Category</h1>
+                <h1>Edit Product</h1>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Components</a></div>
-                    <div class="breadcrumb-item">Table</div>
+                    <!-- Add your breadcrumbs here if needed -->
                 </div>
             </div>
 
@@ -18,196 +16,85 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Edit</h4> Project</h4>
+                                <h4>Edit Product</h4>
                             </div>
-                            <div class="card-body p-0">
+                            <div class="card-body">
                                 <form 
-                                {{-- action="{{ route('projects.update', $project->id) }}"  --}}
-                                    method="POST"
-                                    enctype="multipart/form-data">
+                                 action="{{ route('product.update', $product->id) }}" 
+                                 method="POST" enctype="multipart/form-data">
                                     @csrf
-                                    {{-- @method('PUT') --}}
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="form-group">
-                                                <label>Preview</label>
-                                                <br>
-                                                <img width="200px" 
-                                                {{-- src="{{ asset($project->image) }}" --}}
-                                                >
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="form-group col-md-8">
-                                                    <label for="image">Image</label>
-                                                    <input type="file" name="image" class="form-control" id="image"
-                                                        placeholder="Choose an image">
-                                                </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="name">Project Name</label>
-                                                    <input type="name" name="name" 
-                                                    {{-- value="{{ $project->title }}" --}}
-                                                        class="form-control" id="inputEmail4"
-                                                        placeholder="Enter a project name">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="location">Location</label>
-                                                    <input type="text" name="location"
-                                                     {{-- value="{{ $project->location }}" --}}
-                                                        class="form-control" id="location"
-                                                        placeholder="Enter a project location">
-                                                </div>
-                                            </div>
+                                    @method('PUT')
 
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="startday">Start in :</label>
-                                                    <input type="date" name="startday" 
-                                                    {{-- value="{{ $project->start_day }}" --}}
-                                                        class="form-control" id="inputEmail4">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="endday">End in :</label>
-                                                    <input type="date" name="endday"
-                                                     {{-- value="{{ $project->end_day }}" --}}
-                                                        class="form-control" id="endday">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="starthour">From :</label>
-                                                    <input type="time" name="starthour"
-                                                        {{-- value="{{ $project->volunteering_hours_start }}" --}}
-                                                        class="form-control" id="inputEmail4">
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="endhour">To :</label>
-                                                    <input type="time" name="endhour"
-                                                        {{-- value="{{ $project->volunteering_hours_end }}"  --}}
-                                                        class="form-control"
-                                                        id="endday">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="volunteeringdays">Volunteering Days</label>
-                                                    <input type="text" name="volunteeringdays"
-                                                        {{-- value="{{ $project->volunteering_days }}"  --}}
-                                                        class="form-control"
-                                                        id="inputEmail4" placeholder="EX: Sunday - Monday - ....">
-                                                </div>
-
-
-                                                <div class="form-group col-md-6">
-                                                    <label for="status">Status</label>
-                                                    <select id="status" name="status" class="form-control">
-                                                        <option value="">Select a status:</option>
-                                                        {{-- <option @if ($project->status == '1') selected @endif --}}
-                                                            value="1">Compeleted</option>
-                                                        {{-- <option @if ($project->status == '0') selected @endif --}}
-                                                            value="0">Not Compeleted</option>
-                                                        <!-- Add more status options as needed -->
-                                                    </select>
-                                                </div>
-                                            </div>
-
-
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-12">
-                                                    <label for="description">Description</label>
-                                                    <textarea class="summernote-simple" name="long_description" id="description" placeholder="Enter a description">
-                                                        {{-- {!! $project->long_description !!} --}}
-                                                    </textarea>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="category">Category</label>
-                                                    <select id="category" name="category" class="form-control">
-                                                        <option value="">Select a category:</option>
-
-                                                        {{-- <option @if ($project->category_id == '2') selected @endif
-                                                            value="{{ $category->name }}">{{ $category->name }}</option>
-                                                        <option @if ($project->category_id == '3') selected @endif
-                                                            value=""{{ $category->name }}>{{ $category->name }}
-                                                        </option>
-                                                        <!-- Add more status options as needed -->
-                                                        @foreach ($category as $item)
-                                                            <option @if ($project->category_id == '1') selected @endif
-                                                                value="{{ $item->name }}">{{ $item->name }}
-                                                            </option>
-                                                        @endforeach --}}
-                                                        {{-- @foreach ($category as $categorys)
-                                                            <option value="{{ $categorys->id }}">{{ $categorys->name }}
-                                                            </option>
-                                                        @endforeach --}}
-                                                    </select>
-                                                </div>
-                                            </div>
-
-
-                                            {{-- ------------------- Optional ------------------ --}}
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="volunteeringnumber">Volunteering Number</label>
-                                                    <input type="number" name="volunteeringnumber"
-                                                        {{-- value="{{ $project->volunteering_number }}"  --}}
-                                                        class="form-control"
-                                                        id="endday" placeholder="Enter volunteering number">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="budget">Budget</label>
-                                                    <input type="number" name="budget"
-                                                     {{-- value="{{ $project->budget }}" --}}
-                                                        class="form-control" id="inputEmail4" min="0"
-                                                        step="0.01" placeholder="EX: 200.00 ">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="treetype">Tree Type</label>
-                                                    <input type="text" name="treetype"
-                                                        {{-- value="{{ $project->tree_type }}"  --}}
-                                                        class="form-control"
-                                                        id="inputEmail4" placeholder="Enter tree types">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="fertilizer">Fertilizer</label>
-                                                    <input type="text" name="fertilizer"
-                                                        {{-- value="{{ $project->fertilizer }}"  --}}
-                                                        class="form-control"
-                                                        id="inputEmail4" placeholder="Enter Fertilizer">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="equipments">Equipments</label>
-                                                    <input type="text" name="equipments" class="form-control"
-                                                        id="inputEmail4" placeholder="Enter Equipments"
-                                                        {{-- value="{{ $project->equipments }}" --}}
-                                                        >
-                                                </div>
-                                            </div>
-
-                                        </div>
+                                    <div class="form-group">
+                                        <label for="name">Product Name</label>
+                                        <input type="text" name="name" class="form-control" id="name" placeholder="Enter product name" value="{{ $product->productName }}">
                                     </div>
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                                    <div class="form-group">
+                                        <label for="Sdescription">Short Description</label>
+                                        <textarea class="form-control" name="Sdescription" id="Sdescription" placeholder="Enter short description">{{ $product->Sdescription }}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="Ldescription">Long Description</label>
+                                        <textarea class="form-control" name="Ldescription" id="Ldescription" placeholder="Enter long description">{{ $product->Ldescription }}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="price">Price</label>
+                                        <input type="number" name="price" class="form-control" id="price" placeholder="Enter price" value="{{ $product->price }}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="stockqty">Stock Quantity</label>
+                                        <input type="number" name="stockqty" class="form-control" id="stockqty" placeholder="Enter stock quantity" value="{{ $product->stockqty }}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="status">Status</label>
+                                        {{-- <select id="status" name="status" class="form-control">
+                                            <option value="1" {{ $product->status == 1 ? 'selected' : '' }}>Active</option>
+                                            <option value="0" {{ $product->status == 0 ? 'selected' : '' }}>Inactive</option>
+                                        </select> --}}
+                              <input type="text" id="status" name="status" class="form-control" id="stockqty" placeholder="Enter status " value="{{ $product->status }}">
 
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="categoryId">Category ID</label>
+                                        <input type="number" name="categoryId" class="form-control" id="categoryId" placeholder="Enter category ID" value="{{ $product->categoryId }}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="image1">Image 1</label>
+                                        <input type="file" name="image1" class="form-control" id="image1" accept="image/*">
+                                        @if ($product->image1)
+                                            <br>
+                                            <img src="{{ asset($product->image1) }}" width="100" alt="Image 1 Preview">
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="image2">Image 2</label>
+                                        <input type="file" name="image2" class="form-control" id="image2" accept="image/*">
+                                        @if ($product->image2)
+                                            <br>
+                                            <img src="{{ asset($product->image2) }}" width="100" alt="Image 2 Preview">
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="image3">Image 3</label>
+                                        <input type="file" name="image3" class="form-control" id="image3" accept="image/*">
+                                        @if ($product->image3)
+                                            <br>
+                                            <img src="{{ asset($product->image3) }}" width="100" alt="Image 3 Preview">
+                                        @endif
+                                    </div>
+
+                                    <!-- Add more form fields as needed for your product -->
+
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
                             </div>
                         </div>

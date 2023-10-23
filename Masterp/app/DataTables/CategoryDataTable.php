@@ -25,16 +25,19 @@ class CategoryDataTable extends DataTable
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
                 $editBtn = "<a href='" . route('category.edit', $query->id) . "' class='btn btn-success'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href='" . route('category.destroy', $query->id) . "' class='btn btn-danger my-2 delete-item'><i class='fas fa-trash-alt'></i></a>";
+            $deleteBtn = "<a href='" . route('category.destroy', $query->id) . "' class='btn btn-danger my-2 delete-item'><i class='fas fa-trash-alt'></i></a>";
 
                 return $editBtn . $deleteBtn;
                 
             })
-
-            ->rawColumns(['action'])
-
+            ->addColumn('image', function ($query) {
+                return "<img width='100px' src='" . asset($query->image) . "'></img>";
+            })
+            ->rawColumns(['action', 'image'])
             ->setRowId('id');
-    }
+
+ 
+     }
 
     /**
      * Get query source of dataTable.

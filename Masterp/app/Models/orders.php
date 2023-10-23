@@ -7,5 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class orders extends Model
 {
-    use HasFactory;
+    protected $table = 'orders';
+
+    protected $fillable = [
+        'totalPrice',
+        'customerId',
+        'shipmentId',
+        'paymentId',
+
+    ];
+    public function shipment()
+    {
+        return $this->hasOne(shipments::class);
+    }
+    public function payment()
+    {
+        return $this->hasOne(payments::class);
+    }
 }

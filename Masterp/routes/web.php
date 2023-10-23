@@ -30,18 +30,10 @@ Route::get('/adminlog', function () {
 
 Route::get('/indexs', [CategoriesController::class, 'indexCategory'])->name('indexxxs');
 
-Route::get('/www', function () {
-    return view('Admin.pages.product.create');
-})->name('www');
+ 
 
-
-Route::get('/wwww', function () {
-    return view('Admin.pages.product.index');
-})->name('www');
-
-Route::get('/wwws', function () {
-    return view('Admin.pages.product.edit');
-})->name('wwws');
+ 
+ 
 
  
 
@@ -56,7 +48,7 @@ Route::get('/wwws', function () {
 
 Route::get('/dash', function () {
     return view('Admin.bashboord');
-});
+})->name('dash')->middleware('isLoggedIn');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -122,8 +114,14 @@ Route::get('delete/{id?}', [CartsController::class, 'destroy'])->name('cart.dest
 Route::get('add/{id?}', [CartsController::class, 'add'])->name('cart.add');
 Route::get('remove/{id?}', [CartsController::class, 'remove'])->name('cart.remove');
 
-Route::get('/checkout', [checKoutController::class, 'checkout'])->middleware(['auth', 'verified'])->name('checkout');
+// Route::get('/checkout', [checKoutController::class, 'checkout'])->middleware(['auth', 'verified'])->name('checkout');
 Route::post('/coupon', [CartsController::class, 'coupon'])->name('coupon');
 // Route::get('/checkout', [CategoriesController::class, 'shows'])->name('checkouts');
 Route::post('/update-shipping-cost', [CartsController::class, 'updateShippingCost'])
     ->name('updateShippingCost');
+
+
+// web.php
+Route::get('/checkout', [CheckoutController::class, 'checkout'])->middleware(['auth', 'verified'])->name('checkout');
+
+Route::post('/store-shipment', [checKoutController::class, 'storeShipment'])->name('store-shipment');

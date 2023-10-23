@@ -6,17 +6,25 @@ use App\DataTables\UsersDataTable;
 use App\Models\User;
 use App\Models\users;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Traits\ImageUploadTrait;
+
+
+
 
 class UsersController extends Controller
 {
+    use ImageUploadTrait;
+
     /**
+     * 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(UsersDataTable $dataTable)
     {
-         return $dataTable->render('Admin.pages.users.index');
+        return $dataTable->render('Admin.pages.users.index');
     }
 
     /**
@@ -24,9 +32,9 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(UsersDataTable $dataTable)
+    public function create()
     {
-        return $dataTable->render('Admin.pages.users.create');
+        return view('Admin.pages.users.create');
     }
 
     /**
@@ -37,7 +45,18 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name' => ['required', 'max:30'],
+            'email' => ['required', 'email']
+
+        ]);
+        $users = new User();
+        $users->name = $request->name;
+        $users->email = $request->email;
+        $users->password = Hash::make('password');
+        $users->save();
+        return redirect()->route('users.index');
     }
 
     /**
@@ -46,7 +65,7 @@ class UsersController extends Controller
      * @param  \App\Models\users  $users
      * @return \Illuminate\Http\Response
      */
-    public function show(users $users)
+    public function show(user $users)
     {
         //
     }
@@ -57,11 +76,12 @@ class UsersController extends Controller
      * @param  \App\Models\users  $users
      * @return \Illuminate\Http\Response
      */
-    public function edit( $id)
+    public function edit($id)
     {
         $users = User::findOrFail($id);
 
-        return view('Admin.pages.users.edit', compact('users'));    }
+        return view('Admin.pages.users.edit', compact('users'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -70,9 +90,19 @@ class UsersController extends Controller
      * @param  \App\Models\users  $users
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, users $users)
+    public function update(Request $request, $id)
     {
-        //
+
+        $request->validate([
+            'name' => ['required', 'max:30'],
+            'email' => ['required', 'email']
+
+        ]);
+        $users =  User::findOrFail($id);
+        $users->name = $request->name;
+        $users->email = $request->email;
+        $users->save();
+        return redirect()->route('users.index');
     }
 
     /**
@@ -81,8 +111,13 @@ class UsersController extends Controller
      * @param  \App\Models\users  $users
      * @return \Illuminate\Http\Response
      */
-    public function destroy(users $users)
+    public function destroy($id)
     {
-        //
+        $users = User::findOrFail($id);
+        if($users->image >= 1)
+        $this->deleteImage($users->image);
+        $users->delete();
+        
+        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 }

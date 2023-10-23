@@ -17,10 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('address');
             $table->string('city');
-            $table->string('country');
-            $table->integer('phone');
-            $table->string('zip');
-            $table->dateTime('shipmentDate');
+            $table->string('company')->nullable();
             $table->unsignedBigInteger('customerId');
             $table->timestamps();
         });

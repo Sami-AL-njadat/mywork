@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\carts;
+
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -20,7 +22,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        // return view('auth.register');
+        return view('pagess.login.login');
     }
 
     /**
@@ -42,10 +45,41 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+        Auth::login($user); // Log in the newly registered user
+
+        $request->session()->regenerate();
+
+
+        carts::where('customerId', auth()->user()->id)->delete();
+
+        $sessioncart = session('cart');
+
+        if (isset($sessioncart)) {
+
+            foreach ($sessioncart as $product) {
+                $cartData = [
+                    'productId' => $product['id'],
+                    'customerId' => auth()->user()->id,
+                    'quantity' => $product['quantity'],
+                ];
+
+                if (session()->has('coupon')) {
+                    $cartData['couponid'] = session('coupon');
+                }
+
+                carts::create($cartData);
+            }
+        }
+
+
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect('/');
+        $request->session()->regenerate();
+        return redirect()->intended('/');
+
+         
+
     }
 }

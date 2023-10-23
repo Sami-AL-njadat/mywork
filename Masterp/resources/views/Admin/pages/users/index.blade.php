@@ -19,7 +19,7 @@
                             <div class="card-header">
                                 <h4>Users</h4>
                                 <div class="card-header-action">
-                                    {{-- <a href="{{ route('category.create') }}" class="btn btn-primary">+ Create</a> --}}
+                                    <a href="{{ route('users.create') }}" class="btn btn-primary">+ Create</a>
                                 </div>
                             </div>
                             <div class="card-body p-0">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contactt;
 
+use App\DataTables\messageDataTable;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ContactRequest;
@@ -26,7 +27,10 @@ class ContactController extends Controller
     //     return view('pagess.contact.contact');
     // }
 
-
+    public function index(messageDataTable $dataTable)
+    {
+        return $dataTable->render('Admin.pages.messages.index');
+    }
 
 
     public function showContact()

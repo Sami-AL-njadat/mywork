@@ -38,65 +38,36 @@
                 <div class="col-12 col-lg-7">
                     <div class="checkout_details_area clearfix">
                         <h5>Billing Details</h5>
-                        <form action="#" method="post">
+                        <form action="{{ route('store-shipment') }}" method="post">
+                            @csrf
                             <div class="row">
                                 <div class="col-12 mb-4">
                                     <label for="first_name">Full Name *</label>
-                                    <input type="text" class="form-control" id="first_name" value=" " required>
+                                    <input type="text" class="form-control" name="name" id="first_name" value=" {{ Auth::user()->name }}" >
                                 </div>
                                 <div class="col-12 mb-4">
                                     <label for="email_address">Email Address *</label>
-                                    <input type="email" class="form-control" id="email_address" value="">
+                                    <input type="email" name="email" class="form-control" id="email_address" value="{{ Auth::user()->email }}">
                                 </div>
                                 <div class="col-12 mb-4">
                                     <label for="phone_number">Phone Number *</label>
-                                    <input type="number" class="form-control" id="phone_number" min="0"
-                                        value="">
+                                    <input type="number" name="phone" class="form-control" id="phone_number" min="0"
+                                        value="{{ Auth::user()->phone }}">
                                 </div>
                                 <div class="col-12 mb-4">
                                     <label for="company">Company Name</label>
-                                    <input type="text" class="form-control" id="company" value="">
+                                    <input type="text" class="form-control" id="company" value="" name="company">
                                 </div>
                                 <div class="col-12 mb-4">
                                     <label for="address">Address *</label>
-                                    <input type="text" class="form-control" id="address" value="">
+                                    <input name="address" type="text" class="form-control" id="address" value="">
                                 </div>
-                                <div class="col-md-6 mb-4">
-                                    <label for="city">Town/City *</label>
-                                    <input type="text" class="form-control" id="city" value="">
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <label for="state">State/Province *</label>
-                                    <input type="text" class="form-control" id="state" value="">
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <label for="country">Country</label>
-                                    <select class="custom-select d-block w-100" id="country">
-                                        <option value="1">United States</option>
-                                        <option value="2">Canada</option>
-                                        <option value="3">United Kingdom</option>
-                                        <option value="4">Australia</option>
-                                    </select>
-                                </div>
-
                                 <div class="col-md-12 mb-4">
-                                    <label for="order-notes">Order Notes</label>
-                                    <textarea class="form-control" id="order-notes" cols="30" rows="10"
-                                        placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <div class="d-flex align-items-center">
-
-                                        <!-- Single Checkbox -->
-                                        {{-- <div class="custom-control custom-checkbox d-flex align-items-center">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                            <label class="custom-control-label" for="customCheck2">Create an
-                                                account?</label>
-                                        </div> --}}
-                                    </div>
+                                    <label for="city">Town/City *</label>
+                                    <input name="city" type="text" class="form-control" id="city" value="">
                                 </div>
                             </div>
-                        </form>
+                       
                     </div>
                 </div>
 
@@ -112,6 +83,7 @@
                                             <tr>
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Price</th>
+                                                <th scope="col">Qut</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -120,6 +92,9 @@
                                                     <td>{{ $items->productName }}</td>
                                                     <td>
                                                         <h5>{{ $items->price }}</h5>
+                                                    </td>
+                                                    <td>
+                                                        <h5>{{ $items->quantity }}</h5>
                                                     </td>
                                                 </tr>
 
@@ -159,12 +134,20 @@
                                     @else{{ $subtotal }}
                                 @endif
                             </h5>
+                            <input hidden name="total" type="text" class="form-control" id="city" value="@if (session()->has('discounts') && session()->get('discounts') != null)
+                                    {{ $subtotal-($subtotal * $codedd)/100 }}
+                                    @else{{ $subtotal }}
+                                @endif">
                         </div>
                         <div class="checkout-btn mt-30">
-                            <a href="#" class="btn alazea-btn w-100">Place Order</a>
+                            <input type="submit" name="paypal" class="btn alazea-btn w-100" value="paypal">  
+                        </div>
+                        <div class="checkout-btn mt-30">
+                            <input type="submit" name="cash" class="btn alazea-btn w-100" value="cash on delivary">
                         </div>
                     </div>
                 </div>
+                 </form>
             </div>
         </div>
     </div>

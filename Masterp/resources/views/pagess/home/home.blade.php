@@ -30,6 +30,12 @@
                     </div>
                 </div>
             </div>
+@if(session('success'))
+    <div id="flash-message" class="flash-message">
+        {{ session('success') }}
+    </div>
+@endif
+
 
             <!-- Single Hero Post -->
             <div class="single-hero-post bg-overlay">
@@ -105,7 +111,7 @@
     <div class="col-12 col-md-6 col-lg-4">
         <div class="single-blog-post mb-100">
             <div class="post-thumbnail mb-30">
-                <a href="{{ route('shops', ['id' => $category->id]) }}"><img src="{{ $category->image }}" alt="" /></a>
+                <a href="{{ route('shops', ['id' => $category->id]) }}"><img style="width: 290px; height: 257.61px;" src="{{ $category->image }}" alt="" /></a>
             </div>
             <div class="post-content">
                 <a href="{{ route('shops', ['id' => $category->id]) }}" class="post-title">
@@ -199,8 +205,8 @@
 
                 <div class="col-12 col-lg-6">
                     <div class="alazea-video-area bg-overlay mb-100">
-                        <img src="{{ asset('img/bg-img/23.jpg') }}" alt="">
-                        <a href="http://www.youtube.com/watch?v=7HKoqNJtMTQ" class="video-icon">
+                        <img src="{{ asset('front_end/img/bg-img/23.jpg') }}" alt="">
+                        <a href="{http://www.youtube.com/watch?v=7HKoqNJtMTQ}" class="video-icon">
                             <i class="fa fa-play" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -232,7 +238,7 @@
                         <div class="single-product-area mb-50 wow fadeInUp" data-wow-delay="100ms">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <a href="{{ route('shopdetai', $newarrvel->id) }}"><img src="{{ $newarrvel->image1 }}"
+                                <a href="{{ route('shopdetai', $newarrvel->id) }}"><img style="width: 210px; height: 248.89px;" src="{{ $newarrvel->image1 }}"
                                         alt="" /></a>
                                 <!-- Product Tag -->
                                 <div class="product-tag">
