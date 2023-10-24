@@ -124,4 +124,9 @@ Route::post('/update-shipping-cost', [CartsController::class, 'updateShippingCos
 // web.php
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->middleware(['auth', 'verified'])->name('checkout');
 
-Route::post('/store-shipment', [checKoutController::class, 'storeShipment'])->name('store-shipment');
+Route::post('/store-shipment', [CheckoutController::class, 'storeShipment'])->name('store-shipment');
+Route::get('paypal/success', [CheckoutController::class, 'success'])->name('paypal_success');
+Route::get('paypal/cancel', [CheckoutController::class, 'cancel'])->name('paypal_cancel');
+
+
+ 
