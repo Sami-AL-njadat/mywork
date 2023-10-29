@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\categories;
 use Illuminate\Http\Request;
 use App\Models\Products;
+use App\Models\reviwes;
 use App\Traits\ImageUploadTrait;
 use App\DataTables\CategoryDataTable;
 use Illuminate\Support\Facades\File;
@@ -70,10 +71,12 @@ class CategoriesController extends Controller
 
     function shopdetai(Request $request, $id = null)
     {
+
         $allcategory = Categories::orderBy('categoryName', 'ASC')->get();
 
         if ($id !== null) {
             $product = Products::find($id);
+            $review = reviwes::where('productId', $id)->get();
 
             // Retrieve the category name of the selected product
             $selectedCategory = Categories::find($product->categoryId);
@@ -83,13 +86,15 @@ class CategoriesController extends Controller
                 ->limit(4)
                 ->get();
 
-            return view('pagess.shop.shopDetailes', compact('product', 'allcategory', 'reproduct', 'selectedCategory'));
+            return view('pagess.shop.shopDetailes', compact('product', 'allcategory', 'reproduct', 'selectedCategory' , "review"));
         } else {
             $product = Products::all();
             $reproduct = Products::inRandomOrder()->limit(4)->get();
             return view('pagess.shop.shopDetailes', compact('product', 'allcategory', 'reproduct'));
         }
     }
+
+ 
 
 
     public function checkout()

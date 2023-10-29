@@ -16,4 +16,12 @@ class orderItems extends Model
         "productId"
     ];
     use HasFactory;
+    public function order()
+    {
+        return $this->belongsTo(order::class);
+    }
+    public function product()
+    {
+        return $this->belongsTo(products::class, "productId");
+    }
 }

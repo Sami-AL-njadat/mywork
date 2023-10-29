@@ -24,7 +24,8 @@ class ReviwesController extends Controller
      */
     public function create()
     {
-        //
+                //
+ 
     }
 
     /**
@@ -33,11 +34,19 @@ class ReviwesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id )
     {
-        //
-    }
+        $review = $request->all();
+        $review['customerId'] = auth()->user()->id;
+        $review['productId']  = $id;
+// dd($review);
+        // $newreview = NEW reviwes::
+        reviwes::create($review);
+        session()->flash('success', 'review successfully added!');
 
+        return redirect()->back();
+    }
+    
     /**
      * Display the specified resource.
      *

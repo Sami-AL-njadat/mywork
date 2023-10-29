@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\orderItems;
+use App\Models\orders;
 
 class ProfileController extends Controller
 {
@@ -16,8 +18,24 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        $userId = auth()->user()->id;
+        $orders = Orders::where('customerId', $userId)->get();
+        $orderItems = [];
+
+        foreach ($orders as $item) {
+            $orderItems[] = OrderItems::where('customerId', $userId)
+                ->where('orderId', $item->id)
+                ->with('product')
+                ->get();
+                // dd($item);
+        }
+        // dd($orders->orderItems);
+
+
+        return view('pagess.profile1.yousef', [
             'user' => $request->user(),
+            'orderItems' => $orderItems,
+            'orders' => $orders,
         ]);
     }
 
@@ -31,7 +49,7 @@ class ProfileController extends Controller
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
-
+        // dd($request);
         $request->user()->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');

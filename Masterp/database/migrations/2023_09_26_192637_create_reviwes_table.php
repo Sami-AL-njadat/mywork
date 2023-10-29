@@ -16,13 +16,20 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('productId');
+            $table->foreign('productId')->references('id')->on('products')->onDelete('cascade');
             $table->unsignedBigInteger('customerId');
-            $table->string('review');
-            $table->integer('rating');
+            $table->foreign('customerId')->references('id')->on('users')->onDelete('cascade');
+            $table->string('review')->nullable();
+            $table->string('name')->nullable();
+            $table->integer('rating')->nullable();
+            $table->string('reason')->nullable();
             $table->timestamps();
         });
     }
 
+
+
+            
     /**
      * Reverse the migrations.
      *

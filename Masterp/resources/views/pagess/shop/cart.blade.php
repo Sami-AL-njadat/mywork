@@ -158,8 +158,7 @@
                                         <option value="JARASH">JARASH</option>
                                         <option value="IRBID">IRBID</option>
                                     </select>
-                                    <input type="text" name="shipping-text" id="shipping-text" placeholder="TOWN" />
-                                    <input type="text" name="shipping-zip" id="shipping-zip" placeholder="PHONE" />
+                                    
                                     <button type="submit">Update Total</button>
                                 </form>
                             </div>

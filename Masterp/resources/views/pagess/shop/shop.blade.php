@@ -98,7 +98,7 @@
                             <input type="hidden" name="min_price" id="min_price" value="0">
                             <input type="hidden" name="max_price" id="max_price" value="20">
 
-                            <button type="submit" class="btn alazea-btn active">Filter</button>
+                            <button type="submit" class="btn alazea-btn active mb-2">Filter</button>
                         </form>
 
                         <!-- Shop Widget -->
@@ -107,13 +107,13 @@
                             <div class="widget-desc">
                                 <!-- Single Checkbox -->
 
-                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+                                <div class="custom-control custom-control d-flex align-items-start p-0 mb-2">
                                     {{-- <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                     <label class="custom-control-label" for="customCheck1">All plants
                                         <span class="text-muted">{{ $counts }}</span>
                                     </label> --}}
 
-                                    <a href="{{ route('shops') }}" class="btn alazea-btn active ">
+                                    <a href="{{ route('shops') }}" class="btn alazea-btn active  ">
                                         All plants<span>{{ $counts }}</span>
                                     </a>
 
@@ -121,27 +121,26 @@
 
 
                                 @foreach ($allcategory as $items)
-                                    <!-- Single Checkbox -->
+                                    {{-- <!-- Single Checkbox -->
 
-                                    <div class="custom-control custom d-flex align-items-center ">
-                                        {{-- <a href="{{ route('shops', ['id' => $items->id]) }}"> --}}
-                                        {{-- <h5 class="custom-control">{{ $items->categoryName }}
-
-                                                    <span class="text-muted"></span>
-                                                </h5> --}}
-
-                                        {{-- <button type="link"  class="btn alazea-btn active">{{ $items->categoryName }} <span>{{ $items->Products->count() }}</span> <a href="{{ route('shops', ['id' => $items->id]) }}"></a></button> --}}
-
-                                        {{-- </a> --}}
+                                <div  class="custom-control d-flex align-items-start p-0  mb-2 ">
+                                             
 
 
                                         <a href="{{ route('shops', ['id' => $items->id]) }}"
-                                            class="btn alazea-btn active  mb-2 ">
+                                            class="btn alazea-btn  ">
                                             {{ $items->categoryName }} <span>{{ $items->Products->count() }}</span>
-                                        </a>
+                                        </a> 
 
 
-                                    </div>
+                                    </div> --}}
+
+                                    <div class="custom-control d-flex align-items-start p-0 mb-2">
+    <a href="{{ route('shops', ['id' => $items->id]) }}" class="custom-link-style">
+        {{ $items->categoryName }} <span>{{ $items->Products->count() }}</span>
+    </a>
+</div>
+
 
 
                                     

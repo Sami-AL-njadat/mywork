@@ -43,16 +43,18 @@
                             <div class="row">
                                 <div class="col-12 mb-4">
                                     <label for="first_name">Full Name *</label>
-                                    <input type="text" class="form-control" name="name" id="first_name" value=" {{ Auth::user()->name }}" >
+                                    <input type="text" class="form-control" name="name" id="first_name"
+                                        value=" {{ Auth::user()->name }}">
                                 </div>
                                 <div class="col-12 mb-4">
                                     <label for="email_address">Email Address *</label>
-                                    <input type="email" name="email" class="form-control" id="email_address" value="{{ Auth::user()->email }}">
+                                    <input type="email" name="email" class="form-control" id="email_address"
+                                        value="{{ Auth::user()->email }}">
                                 </div>
                                 <div class="col-12 mb-4">
                                     <label for="phone_number">Phone Number *</label>
-                                    <input type="number" name="phone" class="form-control" id="phone_number" min="0"
-                                        value="{{ Auth::user()->phone }}">
+                                    <input type="number" name="phone" class="form-control" id="phone_number"
+                                        min="0" value="{{ Auth::user()->phone }}">
                                 </div>
                                 <div class="col-12 mb-4">
                                     <label for="company">Company Name</label>
@@ -66,8 +68,21 @@
                                     <label for="city">Town/City *</label>
                                     <input name="city" type="text" class="form-control" id="city" value="">
                                 </div>
+
+                                {{-- <div class="col-md-12 mb-4">
+                                    <form id="shippingForm" action="{{ route('store-shipment') }}" method="post">
+                                        @csrf
+                                        <select id="citySelect" class="custom-select" onchange="submitForm()">
+                                            <option selected>CITY</option>
+                                            <option value="AJLOUN">AJLOUN</option>
+                                            <option value="AMMAN">AMMAN</option>
+                                            <option value="JARASH">JARASH</option>
+                                            <option value="IRBID">IRBID</option>
+                                        </select>
+                                    </form>
+                                </div> --}}
                             </div>
-                       
+
                     </div>
                 </div>
 
@@ -78,7 +93,7 @@
                             <div class="products-data">
                                 <h5>Products:</h5>
                                 <div class="single-products">
-                                   <table class="table table-striped">
+                                    <table class="table table-striped">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Name</th>
@@ -117,7 +132,7 @@
                         </div>
                         <div class="shipping d-flex justify-content-between align-items-center">
                             <h5>Shipping</h5>
-                            <h5>$5.00</h5>
+                            <h5 id="shippingPrice">$5.00</h5>
                         </div>
                         <div class="shipping d-flex justify-content-between align-items-center">
                             <h5>COUPON</h5>
@@ -130,28 +145,38 @@
                         <div class="order-total d-flex justify-content-between align-items-center">
                             <h5>Order Total = </h5>
                             <h5>$ @if (session()->has('discounts') && session()->get('discounts') != null)
-                                    {{ $subtotal-($subtotal * $codedd)/100 }}
+                                    {{ $subtotal - ($subtotal * $codedd) / 100 }}
                                     @else{{ $subtotal }}
                                 @endif
                             </h5>
                             <input hidden name="total" type="text" class="form-control" id="city" value="@if (session()->has('discounts') && session()->get('discounts') != null)
-                                    {{ $subtotal-($subtotal * $codedd)/100 }}
+                                    {{ $subtotal-($subtotal * $codedd)/100}}
                                     @else{{ $subtotal }}
                                 @endif">
                         </div>
                         <div class="checkout-btn mt-30">
-                            <input type="submit" name="paypal" class="btn alazea-btn w-100" value="paypal">  
+                            <input type="submit" name="paypal" class="btn alazea-btn w-100" value="paypal">
                         </div>
                         <div class="checkout-btn mt-30">
                             <input type="submit" name="cash" class="btn alazea-btn w-100" value="cash on delivary">
                         </div>
                     </div>
                 </div>
-                 </form>
+                </form>
             </div>
         </div>
     </div>
     <!-- ##### Checkout Area End ##### -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let form = document.querySelector('#shippingForm');
 
-    <!-- ##### Footer Area Start ##### -->
+            function submitForm() {
+                if (form) {
+                    form.submit();
+                }
+            }
+        });
+    </script> --}}
 @endsection

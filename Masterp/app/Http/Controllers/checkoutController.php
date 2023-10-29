@@ -196,7 +196,6 @@ class checKoutController extends Controller
                 "paymentId" => $payment->id,
                 "customerId" => Auth::user()->id,
             ]);
-            dd($order);
             $cart = carts::where("customerId", $user->id)->get();
 
             // dd($cart);
@@ -211,9 +210,9 @@ class checKoutController extends Controller
                 $product->delete();
             }
         }
-        session()->flash('success', 'Thank you for your purchase. Your order will be shipped to you soon.!');
+        // session()->flash('success', 'Thank you for your purchase. Your order will be shipped to you soon.!');
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success', 'Thank you for your purchase. Your order will be shipped to you soon.!');
     }
 
 
@@ -248,7 +247,7 @@ class checKoutController extends Controller
                 ]);
                 $product->delete();
             }
-            return redirect()->route('home');
+            return redirect()->route('home')->with('success', 'Thank you for your purchase. Your order will be shipped to you soon.!');
         } else {
             return redirect()->route('paypal_cancel');
         }

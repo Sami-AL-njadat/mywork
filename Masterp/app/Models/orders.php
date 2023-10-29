@@ -24,4 +24,8 @@ class orders extends Model
     {
         return $this->hasOne(payments::class);
     }
+    public function orderItems()
+    {
+        return $this->hasMany(orderItems::class,'orderId');
+    }
 }

@@ -25,6 +25,7 @@
 
 
 
+<link href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 
 
 
@@ -66,7 +67,7 @@
                             <!-- Top Header Content -->
                             <div class="top-header-meta d-flex">
                                 <!-- Language Dropdown -->
-                                <!-- <div class="language-dropdown">
+                                 {{-- <div class="language-dropdown">
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle mr-30" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language</button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -78,7 +79,7 @@
                                             <a class="dropdown-item" href="#">Latin</a>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div> --}}
                                 <!-- Login -->
                                 <div class="login">
                                     <a href="login.html"><i class="fa fa-user" style="font-size: 25px; "

@@ -248,7 +248,7 @@
                                 <div class="product-meta d-flex">
                                     <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
                                     <a href="{{ route('cartstor') }}/{{ $newarrvel->id }}" class="add-to-cart-btn">Add to cart</a>
-                                    <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+                                    <a href="{{ route('shopdetai', ['id' => $newarrvel->id]) }}" class="compare-btn" ><i alt="MORE" class="arrow_left-right_alt"></i></a>
                                 </div>
                             </div>
                             <!-- Product Info -->

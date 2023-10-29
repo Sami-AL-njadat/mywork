@@ -1,5 +1,33 @@
 @extends('layout.master')
 @section('content')
+
+
+
+                                @if (count($review)>0)
+                                    @php
+                                        $R1 = 0;
+                                        $R2 = 0;
+                                        $R3 = 0;
+                                        $R4 = 0;
+                                        $R5 = 0;
+                                        foreach ($review as $reviews) {
+                                            if ($reviews->rating == 1) {
+                                                $R1++;
+                                            } elseif ($reviews->rating == 2) {
+                                                $R2++;
+                                            } elseif ($reviews->rating == 3) {
+                                                $R3++;
+                                            } elseif ($reviews->rating == 4) {
+                                                $R4++;
+                                            } elseif ($reviews->rating == 5) {
+                                                $R5++;
+                                            }
+                                        }
+                                        $AVG = ($R1 + $R2 * 2 + $R3 * 3 + $R4 * 4 + $R5 * 5) / count($review);
+                                        $roundedAVG = round($AVG, 1);
+                                    @endphp
+                                @endif
+
     <!-- ##### Breadcrumb Area Start ##### -->
     <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
@@ -188,7 +216,7 @@
                                                     class="fa fa-plus" aria-hidden="true"></i></span>
                                         </div>
                                         <button type="submit" name="addtocart" value="5"
-                                            class="btn alazea-btn ml-15" href="{{ route('cartstoree')}}/{{ $product->id }} }}" >
+                                            class="btn alazea-btn ml-15" href="{{ route('cartstoree')}}/{{ $product->id }}" >
                                             Add to cart
                                         </button>
                                     </form>
@@ -223,6 +251,28 @@
                                             <a href="#"><i class="fa fa-google-plus"></i></a>
                                         </span>
                                     </p>
+
+
+
+
+
+
+                                     <p>
+                                        <span>Rating:</span>
+
+            
+
+                                        <span style="color:rgb(56, 239, 40); "><b>
+                                         @if (isset($roundedAVG))
+                                         
+                                         {{ $roundedAVG }}    
+                                         <i  class="fa fa-star"  style="color: #1dc328;"></i>
+                                         @else
+                                         NO rating yet
+                                         @endif
+                                        </b>
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -246,7 +296,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#reviews" class="nav-link" data-toggle="tab" role="tab">Reviews <span
-                                    class="text-muted">(1)</span></a>
+                                    class="text-muted">({{ count($review) }})  </span></a>
                         </li>
                     </ul>
                     <!-- Tab Content -->
@@ -293,80 +343,111 @@
                         <div role="tabpanel" class="tab-pane fade" id="reviews">
                             <div class="reviews_area">
                                 <ul>
+                                    @foreach ($review as $reviews )
+                                        
+                                    
                                     <li>
                                         <div class="single_user_review mb-15">
                                             <div class="review-rating">
+                                                {{-- <i class="fa fa-star" aria-hidden="true"></i>
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                 <i class="fa fa-star" aria-hidden="true"></i>
                                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <span>for Quality</span>
+                                                <i class="fa fa-star" aria-hidden="true"></i> --}}
+                                                   @for ($i = 0; $i < 5; $i++)
+                                                    @if ($reviews->rating > $i)
+                                                        <i class="fa fa-star"></i>
+                                                    @else
+                                                        <i class="fa fa-star-o"></i>
+                                                    @endif
+                                                @endfor
+
+
+
+                                                <span>for {{ $reviews->reason }}</span>
                                             </div>
+                                             <h4> "{{ $reviews->review }}"</h4>
+
                                             <div class="review-details">
                                                 <p>
-                                                    by <a href="#">Colorlib</a> on
-                                                    <span>12 Sep 2018</span>
+                                                    
+                                                    by <a href="#">{{ $reviews->name }}</a> on
+                                                    <span>{{ $reviews->created_at }}</span>
                                                 </p>
+
+                                                
                                             </div>
                                         </div>
-                                        <div class="single_user_review mb-15">
-                                            <div class="review-rating">
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <span>for Design</span>
-                                            </div>
-                                            <div class="review-details">
-                                                <p>
-                                                    by <a href="#">Colorlib</a> on
-                                                    <span>12 Sep 2018</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="single_user_review">
-                                            <div class="review-rating">
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <span>for Value</span>
-                                            </div>
-                                            <div class="review-details">
-                                                <p>
-                                                    by <a href="#">Colorlib</a> on
-                                                    <span>12 Sep 2018</span>
-                                                </p>
-                                            </div>
-                                        </div>
+                                         
+                                        
                                     </li>
+                                            @endforeach
+
+{{-- 
+                                    @foreach ($Reviews as $review)
+                                    <div class="review_item">
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img style="width: 70px; height: 70px; border-radius: 50%;"
+                                                    src="{{ url($review->User->image ? $review->User->image : 'userSide/img/user.jpg') }}"
+                                                    alt="image">
+                                            </div>
+                                            <div class="media-body">
+                                                <h4>{{ $review->User->name }}</h4>
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    @if ($review->rating > $i)
+                                                        <i class="fa fa-star"></i>
+                                                    @else
+                                                        <i class="fa fa-star-o"></i>
+                                                    @endif
+                                                @endfor
+                                            </div>
+                                        </div>
+                                        <p>{{ $review->review_text }}</p>
+                                    </div>
+                                @endforeach --}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 </ul>
                             </div>
 
                             <div class="submit_a_review_area mt-50">
                                 <h4>Submit A Review</h4>
-                                <form action="#" method="post">
+                                @if (auth()->user())
+
+                                    
+                                <form action="{{ route('review', $product->id ) }}" method="post">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group d-flex align-items-center">
                                                 <span class="mr-15">Your Ratings:</span>
                                                 <div class="stars">
-                                                    <input type="radio" name="star" class="star-1"
+                                                    <input  type="radio"   value="1" name="rating" class="star-1"
                                                         id="star-1" />
                                                     <label class="star-1" for="star-1">1</label>
-                                                    <input type="radio" name="star" class="star-2"
+                                                    <input type="radio"  value="2"name="rating" class="star-2"
                                                         id="star-2" />
                                                     <label class="star-2" for="star-2">2</label>
-                                                    <input type="radio" name="star" class="star-3"
+                                                    <input type="radio" value="3" name="rating" class="star-3"
                                                         id="star-3" />
                                                     <label class="star-3" for="star-3">3</label>
-                                                    <input type="radio" name="star" class="star-4"
+                                                    <input type="radio"  value="4" name="rating" class="star-4"
                                                         id="star-4" />
                                                     <label class="star-4" for="star-4">4</label>
-                                                    <input type="radio" name="star" class="star-5"
+                                                    <input type="radio"  value="5" name="rating" class="star-5"
                                                         id="star-5" />
                                                     <label class="star-5" for="star-5">5</label>
                                                     <span></span>
@@ -375,27 +456,27 @@
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <div class="form-group">
-                                                <label for="name">Nickname</label>
-                                                <input type="email" class="form-control" id="name"
+                                                <label for="name">Name</label>
+                                                <input name="name" type="text" class="form-control" id="name"
                                                     placeholder="Nazrul" />
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <div class="form-group">
                                                 <label for="options">Reason for your rating</label>
-                                                <select class="form-control" id="options">
-                                                    <option>Quality</option>
-                                                    <option>Value</option>
-                                                    <option>Design</option>
-                                                    <option>Price</option>
-                                                    <option>Others</option>
+                                                <select name="reason" class="form-control" id="options">
+                                                    <option value="Quality">Quality</option>
+                                                    <option value="Value">Value</option>
+                                                    <option value="Design">Design</option>
+                                                    <option value="Price">Price</option>
+                                                    <option value="Others">Others</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="comments">Comments</label>
-                                                <textarea class="form-control" id="comments" rows="5" data-max-length="150"></textarea>
+                                                <textarea name="review" class="form-control" id="comments" rows="5" data-max-length="150"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -405,6 +486,10 @@
                                         </div>
                                     </div>
                                 </form>
+                                @else
+                                <h3> IF YOU  WANT TO  MAKE REVIEW YOU MUST BE LOGGED IN</h3>
+                                @endif
+
                             </div>
                         </div>
                     </div>
