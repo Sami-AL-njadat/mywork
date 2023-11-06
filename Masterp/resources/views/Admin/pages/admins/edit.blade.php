@@ -27,51 +27,65 @@
                                     @method('PUT') <!-- Use the PUT method for updating -->
 
                                     <div class="card">
-                                        <div class="card-body">
-                                            <div class="form-row">
-                                                <div class="form-group col-md-4">
-                                                    <label for="name">Name</label>
-                                                    <input type="text" name="name" class="form-control" id="name"
-                                                        value="{{ $admin->name }}">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="image">Current Image</label>
-                                                    <br>
-                                                    @if ($admin->image)
-                                                        <img src="{{ asset($admin->image) }}"
-                                                            style="max-width: 300px; max-height: 200px;"
-                                                            alt="Current Image">
-                                                    @else
-                                                        <p>No image uploaded.</p>
-                                                    @endif
-                                                </div>
+                                        <div class="form-group m-4">
+                                            <label for="image">Current Image</label>
+                                            <br>
+                                            @if ($admin->image)
+                                                <img src="{{ asset($admin->image) }}"
+                                                    style="max-width: 300px; max-height: 200px;" alt="Current Image">
+                                            @else
+                                                <p>No image uploaded.</p>
+                                            @endif
 
-                                                <div class="form-row">
-                                                    <div class="form-group col-md-8">
+
+                                              <div class="form-row">
+                                                    <div class="form-group col-md-6">
                                                         <label for="image">New Image</label>
                                                         <input type="file" name="image" class="form-control"
                                                             id="image" accept="image/*">
                                                     </div>
                                                 </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-row ">
 
-                                                <div class="form-group col-md-4">
+
+
+
+                                                <div class="form-group col-md-6">
+                                                    <label for="name">Name</label>
+                                                    <input type="text" name="name" class="form-control" id="name"
+                                                        value="{{ $admin->name }}">
+                                                </div>
+
+                                                <div class="form-group col-md-6">
                                                     <label for="email">Email</label>
+                                                    <b>YOUR Email Will <span style="color: red">Not Change</span> </b>
+
                                                     <input type="email" name="email" class="form-control" id="email"
                                                         value="{{ $admin->email }}">
                                                 </div>
-                                            </div>
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="phone">Phone</label>
-                                                    <input type="tel" name="phone" class="form-control" id="phone"
-                                                        value="{{ $admin->phone }}">
+
+                                              
+
+
+
+                                             
+                                                    <div class="form-group col-md-6">
+                                                        <label for="phone">Phone</label>
+                                                        <input type="tel" name="phone" class="form-control"
+                                                            id="phone" value="{{ $admin->phone }}">
+                                                    </div>   <div class="form-row">
+                                                    {{-- <div class="form-group col-md-6">
+                                                        <label for="password">Password</label>
+                                                        <input type="password" name="password" class="form-control"
+                                                            id="password" placeholder="Enter a new password">
+                                                    </div> --}}
                                                 </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="password">Password</label>
-                                                    <input type="password" name="password" class="form-control"
-                                                        id="password" placeholder="Enter a new password">
-                                                </div>
+
+
                                             </div>
+
                                         </div>
                                         <div class="card-footer">
                                             <button type="submit" class="btn btn-primary">Update</button>

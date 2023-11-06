@@ -1,4 +1,4 @@
-@extends('admin.layout.master')
+@extends('Admin.layout.master')
 
 @section('content')
     <!-- Main Content -->
@@ -32,6 +32,7 @@
         </section>
     </div>
 @endsection
+
 
 @push('scripts')
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}

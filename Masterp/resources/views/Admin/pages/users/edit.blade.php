@@ -1,4 +1,4 @@
-@extends('admin.layout.master')
+@extends('Admin.layout.master')
 
 @section('content')
     <!-- Main Content -->
@@ -21,50 +21,74 @@
                                 <h4>Create user</h4>
                             </div>
                             <div class="card-body p-0">
-                                <form  action="{{ route('users.update', $users->id) }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('users.update', $users->id) }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="name">Name</label>
-                                                    <input  value="{{ $users->name }}" type="name" name="name" class="form-control"
-                                                        id="inputEmail4" placeholder="Enter name">
+
+
+
+                                                <div class="form-group">
+                                                    <label for="image">Current Image</label>
+                                                    <br>
+                                                    @if ($users->image)
+                                                        <img src="{{ asset($users->image) }}" alt="Current Image"
+                                                            style="max-width: 100px; max-height:120px ">
+                                                        <br>
+                                                    @else
+                                                        <p>No image uploaded.</p>
+                                                    @endif
                                                 </div>
-                                                <div class="form-group col-md-6">
-                                                    <label for="location">email</label>
-                                                    <input value="{{ $users->email }}" type="email" name="email" class="form-control" id="location"
-                                                        placeholder="Enter email">
+
+                                                <div class="form-group col-md-12">
+                                                    <div class="form-group col-md-6 ">
+                                                        <label for="image">New Image</label>
+                                                        <input type="file" name="image" class="form-control"
+                                                            id="image" accept="image/*">
+                                                    </div>
                                                 </div>
+                                                <div class="form-group col-md-12">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="name">Name</label>
+                                                        <input value="{{ $users->name }}" type="name" name="name"
+                                                            class="form-control" id="inputEmail4" placeholder="Enter name">
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <label for="location">email</label>
+                                                        <b>YOUR Email Will <span style="color: red">Not Change</span> </b>
+
+                                                        <input value="{{ $users->email }}" type="email" name="email"
+                                                            class="form-control" id="location" placeholder="Enter email">
+                                                    </div>
+
+
+
+                                                    <div class="form-group col-md-6">
+                                                        <label for="phone">Phone</label>
+                                                        <input type="tel" name="phone" class="form-control"
+                                                            id="phone" value="{{ $users->phone }}">
+                                                    </div>
+
+                                                </div>
+
+
+
+
+
+
+
                                             </div>
-
-
-
-
-
-                                            {{-- 
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="image">Image</label>
-                                                    <input type="file" name="image" class="form-control" id="image"
-                                                        placeholder="Choose an image" accept="image/*">
-                                                </div>
-                                            </div> --}}
-
-
-
-
-                                            {{-- ------------------- Optional ------------------ --}}
-
-
-
-
                                         </div>
                                         <div class="card-footer">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-primary">Update</button>
 
                                         </div>
+                                    </div>
+
                                 </form>
                             </div>
                         </div>

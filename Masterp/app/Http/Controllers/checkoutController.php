@@ -131,8 +131,8 @@ class checKoutController extends Controller
 
         ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
+        // $user->name = $request->name;
+        // $user->email = $request->email;
         $user->phone = $request->phone;
         $user->update();
 

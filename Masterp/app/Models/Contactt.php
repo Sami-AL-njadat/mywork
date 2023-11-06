@@ -31,4 +31,6 @@ class Contactt extends Model
             Mail::to($adminEmail)->send(new ContactMail($item));
         });
     }
+
+    
 }

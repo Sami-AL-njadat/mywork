@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\orderItems;
 use Illuminate\Http\Request;
+use App\DataTables\OrdersDataTable;
 
 class OrderItemsController extends Controller
 {
@@ -12,9 +13,9 @@ class OrderItemsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(OrdersDataTable $dataTable)
     {
-        //
+        return $dataTable->render('Admin.pages.orders.index');
     }
 
     /**

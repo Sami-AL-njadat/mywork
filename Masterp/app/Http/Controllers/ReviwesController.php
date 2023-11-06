@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\reviwes;
 use Illuminate\Http\Request;
+use App\DataTables\ReviewsDataTable;
 
 class ReviwesController extends Controller
 {
@@ -12,9 +13,10 @@ class ReviwesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ReviewsDataTable $dataTable  )
     {
-        //
+        return $dataTable->render('Admin.pages.review.index');
+
     }
 
     /**
@@ -39,8 +41,7 @@ class ReviwesController extends Controller
         $review = $request->all();
         $review['customerId'] = auth()->user()->id;
         $review['productId']  = $id;
-// dd($review);
-        // $newreview = NEW reviwes::
+ 
         reviwes::create($review);
         session()->flash('success', 'review successfully added!');
 
@@ -87,8 +88,13 @@ class ReviwesController extends Controller
      * @param  \App\Models\reviwes  $reviwes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(reviwes $reviwes)
+    public function destroy($id)
     {
-        //
+        $review = reviwes::findOrFail($id);
+        
+        $review->delete();
+
+        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+    
     }
 }

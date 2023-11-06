@@ -28,4 +28,7 @@ class orders extends Model
     {
         return $this->hasMany(orderItems::class,'orderId');
     }
+
+  
+
 }

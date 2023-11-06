@@ -40,9 +40,10 @@
                             <thead>
                                 <tr>
                                     <th>Products</th>
-                                    <th>Quantity</th>
+                                     <th>Quantity</th>
                                     <th>Price</th>
                                     <th>TOTAL</th>
+                                    <th>Delete</th>
                                     <th></th>
                                 </tr>
                             </thead>

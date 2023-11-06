@@ -76,7 +76,8 @@ class messageDataTable extends DataTable
             Column::make('email'),
             Column::make('subject'),
             Column::make('message'),
-            // Column::make('created_at'),
+            Column::make('created_at')
+            
             // Column::make('updated_at'),
             // Column::computed('action')
             // ->exportable(false)

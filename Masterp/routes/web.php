@@ -31,12 +31,6 @@ Route::get('/adminlog', function () {
 
 Route::get('/indexs', [CategoriesController::class, 'indexCategory'])->name('indexxxs');
 
- 
-
- 
- 
-
- 
 
 
 
@@ -47,9 +41,20 @@ Route::get('/indexs', [CategoriesController::class, 'indexCategory'])->name('ind
 
 
 
-Route::get('/dash', function () {
-    return view('Admin.bashboord');
-})->name('dash')->middleware('isLoggedIn');
+
+
+
+
+
+
+// Route::get('/dash', function () {
+//     return view('Admin.bashboord');
+// })->name('dash')->middleware('isLoggedIn');
+
+// Route::get('/sami', function () {
+//     return view('pagess.profile1.sami');
+// });
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -77,9 +82,9 @@ Route::get('/about', function () {
 })->name('about');
 
 
-Route::get('/myacc', function () {
-    return view('pagess.profile1.porfile');
-})->name('myacc');
+// Route::get('/myacc', function () {
+//     return view('pagess.profile1.porfile');
+// })->name('myacc');
 
 // Route::get('/shop', function () {
 //     return view('pagess.shop.shop');
@@ -111,6 +116,11 @@ Route::get('/shopdetai/{id?}', [CategoriesController::class, 'shopdetai'])->name
 Route::get('/cart', [CartsController::class, 'show'])->name('cart.index');
 Route::get('cart/{id?}', [CartsController::class, 'store'])->name('cartstor');
 Route::get('carttt/{id?}', [CartsController::class, 'storee'])->name('cartstoree');
+
+
+ 
+
+
 // Route::get('/cart', [CartsController::class, 'index'])->name('cart.index');
 Route::get('delete/{id?}', [CartsController::class, 'destroy'])->name('cart.destroy');
 Route::get('add/{id?}', [CartsController::class, 'add'])->name('cart.add');
@@ -134,6 +144,3 @@ Route::get('paypal/cancel', [CheckoutController::class, 'cancel'])->name('paypal
 
 
 Route::post('review/{id?}', [ReviwesController::class, 'store'])->name('review');
- 
-
- 

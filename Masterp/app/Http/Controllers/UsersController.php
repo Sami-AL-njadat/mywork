@@ -8,6 +8,7 @@ use App\Models\users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\ImageUploadTrait;
+use App\Rules\StartsWithZero;
 
 
 
@@ -47,15 +48,26 @@ class UsersController extends Controller
     {
 
         $request->validate([
-            'name' => ['required', 'max:30'],
-            'email' => ['required', 'email']
+            'image' => ['required', 'image', 'max:4192'],
+            'name' => ['required', 'max:40'],
+            'email' => ['required', 'email'],
+            'phone' => ['required', 'digits:10', new StartsWithZero],
 
-        ]);
+                        ]);
         $users = new User();
+
+
+        $imagePath = $this->uploadImage($request, 'image', 'uploads');
+
         $users->name = $request->name;
         $users->email = $request->email;
+        $users->image = $imagePath;
+        $users->phone = $request->phone;
         $users->password = Hash::make('password');
         $users->save();
+
+        toastr('Updated Successfully', 'success');
+
         return redirect()->route('users.index');
     }
 
@@ -90,20 +102,72 @@ class UsersController extends Controller
      * @param  \App\Models\users  $users
      * @return \Illuminate\Http\Response
      */
+    // public function update(Request $request, $id)
+    // {
+
+    //     $request->validate([
+    //         'image' => ['image', 'max:4192'],
+    //         'name' => ['required', 'max:20'],
+    //         'email' => ['required', 'email'],
+    //         'phone' => ['required', 'digits:10'],
+
+    //     ]);
+
+    //     $users =  User::findOrFail($id)->first();
+    //     $users->name = $request->name;
+    //     $users->email = $request->email;
+    //     $users->save();
+    //     return redirect()->route('users.index');
+    // }
+
     public function update(Request $request, $id)
     {
-
         $request->validate([
-            'name' => ['required', 'max:30'],
-            'email' => ['required', 'email']
-
+            'image' => ['image', 'max:4192'],
+            'name' => ['required', 'max:20'],
+            'email' => ['required', 'email'],
+            'phone' => ['required', 'digits:10', new StartsWithZero],
+  
         ]);
-        $users =  User::findOrFail($id);
-        $users->name = $request->name;
-        $users->email = $request->email;
+
+        // Check if the admin with the given email already exists
+        $users = User::where('id', $id)->first();
+
+        // If an users with the email exists, it's an update; otherwise, create a new users
+        if ($users) {
+            // Perform update
+            if ($request->hasFile('image')) {
+                // Update image if a new one is provided
+                $imagePath = $this->uploadImage($request, 'image', 'uploads');
+                $users->image = $imagePath;
+            }
+
+            $users->name = $request->name;
+            $users->phone = $request->phone;
+
+            // You can update the password if needed
+            // $admin->password = Hash::make($request->password);
+        } else {
+            // Perform create
+            $imagePath = $this->uploadImage($request, 'image', 'uploads');
+
+            $users = new User();
+            $users->image = $imagePath;
+            $users->name = $request->name;
+            $users->email = $request->email;
+            $users->phone = $request->phone;
+        }
+
         $users->save();
+
+        toastr('users' . ($users ? 'Updated' : 'Created') . ' Successfully', 'success');
         return redirect()->route('users.index');
     }
+
+
+
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -114,10 +178,10 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $users = User::findOrFail($id);
-        if($users->image >= 1)
-        $this->deleteImage($users->image);
+        if ($users->image >= 1)
+            $this->deleteImage($users->image);
         $users->delete();
-        
+
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 }

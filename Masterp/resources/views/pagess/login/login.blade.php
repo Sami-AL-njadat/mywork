@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>look</title>
+    <title>LOGIN</title>
     <!-- log CSS -->
     <link rel="stylesheet" href="{{ asset('front_end/login.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -25,8 +25,8 @@
 
     <!-- <h2>WELCOME</h2> -->
     <div class="container" id="container">
-        <div id="singipp" class="form-container sign-up-container">
-            <form method="POST" action="{{ route('register') }}">
+        <div   class="form-container sign-up-container">
+            <form   method="POST" action="{{ route('register') }}">
                 @csrf
                 <h1>Create Account</h1>
                 <!-- <div class="social-container">
@@ -73,14 +73,14 @@
         <!--sign in here baby  -->
 
 
-        <div id="signinn" class="form-container sign-in-container">
+        <div   class="form-container sign-in-container">
             <!-- <a href="index.html"> <button  type="button" class="btn btn-outline-success" >Back Home</button></a> -->
             <!-- <i  href="index.html" class="fa-solid fa-arrow-left-long" style="color: #94ee58;"></i> -->
 
 
-            <a href="{{ ('/') }}"> <i class="fa fa-arrow-left" aria-hidden="true"
+            {{-- <a href="{{ ('/') }}"> <i class="fa fa-arrow-left" aria-hidden="true"
                     style="color: #94ee58; font-size: x-large;"></i>
-            </a>
+            </a> --}}
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <h1>Sign in</h1>
@@ -144,7 +144,7 @@
     </div>
 
 
-    <script>
+    {{-- <script>
         document.addEventListener("DOMContentLoaded", function() {
             const signUpButton = document.getElementById("signUp");
             const signInButton = document.getElementById("signIn");
@@ -164,7 +164,7 @@
                 sessionStorage.removeItem("isSignUpActive");
             });
 
-            // Check if the sign-up form was active before the refresh
+            Check if the sign-up form was active before the refresh
             const isSignUpActive = sessionStorage.getItem("isSignUpActive");
 
             if (isSignUpActive === "true") {
@@ -182,13 +182,51 @@
                 // Handle sign-in form submission logic here
             });
         });
-    </script>
+    </script> --}}
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const signUpButton = document.getElementById("signUp");
+    const signInButton = document.getElementById("signIn");
+    const container = document.getElementById("container");
+    const signUpForm = document.getElementById("signUp-form");
+    const signInForm = document.getElementById("signIn-form");
 
+    signUpButton.addEventListener("click", () => {
+        container.classList.add("right-panel-active");
+        // Store the state in sessionStorage
+        sessionStorage.setItem("isSignUpActive", "true");
+    });
+
+    signInButton.addEventListener("click", () => {
+        container.classList.remove("right-panel-active");
+        // Remove the state from sessionStorage
+        sessionStorage.removeItem("isSignUpActive");
+    });
+
+    // Check if the sign-up form was active before the refresh
+    const isSignUpActive = sessionStorage.getItem("isSignUpActive");
+
+    if (isSignUpActive === "true") {
+        container.classList.add("right-panel-active");
+    }
+
+    // Handle sign-up and sign-in form submissions as needed
+    signUpForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        // Handle sign-up form submission logic here
+    });
+
+    signInForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        // Handle sign-in form submission logic here
+    });
+});
+</script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
-    <script src="{{ asset('front_end/login.js') }}"></script>
+    {{-- <script src="{{ asset('front_end/login.js') }}"></script> --}}
     <script src="{{ asset('https://code.jquery.com/jquery-3.3.1.slim.min.js') }}"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
     </script>

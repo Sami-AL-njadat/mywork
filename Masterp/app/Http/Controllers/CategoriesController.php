@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\categories;
 use Illuminate\Http\Request;
-use App\Models\Products;
+use App\Models\products;
 use App\Models\reviwes;
 use App\Traits\ImageUploadTrait;
 use App\DataTables\CategoryDataTable;
@@ -21,7 +21,7 @@ class CategoriesController extends Controller
     {
         $perPage = $request->input('per_page', 6);
         $allcategory = categories::orderBy('categoryName', 'ASC')->get();
-        $counts = Products::count();
+        $counts = products::count();
         // $categoryes = Products::where('categoryName')->count();
 
         $category = categories::all();
@@ -71,11 +71,12 @@ class CategoriesController extends Controller
 
     function shopdetai(Request $request, $id = null)
     {
+        
 
         $allcategory = Categories::orderBy('categoryName', 'ASC')->get();
 
         if ($id !== null) {
-            $product = Products::find($id);
+            $product = products::find($id);
             $review = reviwes::where('productId', $id)->get();
 
             // Retrieve the category name of the selected product
@@ -88,8 +89,8 @@ class CategoriesController extends Controller
 
             return view('pagess.shop.shopDetailes', compact('product', 'allcategory', 'reproduct', 'selectedCategory' , "review"));
         } else {
-            $product = Products::all();
-            $reproduct = Products::inRandomOrder()->limit(4)->get();
+            $product = products::all();
+            $reproduct = products::inRandomOrder()->limit(4)->get();
             return view('pagess.shop.shopDetailes', compact('product', 'allcategory', 'reproduct'));
         }
     }
@@ -118,7 +119,7 @@ class CategoriesController extends Controller
     {
         $categories = categories::all();
 
-        $product = Products::orderBy('created_at', 'desc')->take(4)->get();
+        $product = products::orderBy('created_at', 'desc')->take(4)->get();
         return view('pagess.home.home', compact('categories', 'product'));
     }
 

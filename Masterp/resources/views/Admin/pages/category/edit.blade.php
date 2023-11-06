@@ -1,4 +1,4 @@
-@extends('admin.layout.master')
+@extends('Admin.layout.master')
 
 @section('content')
      <div class="main-content">
@@ -52,8 +52,11 @@
                                             <div class="form-row">
                                                 <div class="form-group col-md-8">
                                                     <label for="description">Description</label>
-                                                    <textarea class="summernote-simple" name="description" id="description" placeholder="Enter a description">
+                                                    <textarea class="summernote-simple" name="description" id="description" placeholder="Enter a description"
+ 
+                                                    >
                                                         {!! $category->description !!}
+
                                                     </textarea>
 
 

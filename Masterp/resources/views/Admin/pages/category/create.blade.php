@@ -1,4 +1,4 @@
-@extends('admin.layout.master')
+@extends('Admin.layout.master')
 
 @section('content')
     <!-- Main Content -->
@@ -25,6 +25,7 @@
                                 action="{{ route('category.store') }}"
                                  method="POST" enctype="multipart/form-data">
                                     @csrf
+                                    @method('POST')
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="form-row">

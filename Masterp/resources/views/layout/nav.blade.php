@@ -93,7 +93,7 @@
                                 <div class="cart">
                                     <a href="{{ route('cart.index') }}"><i class="fa fa-shopping-cart"
                                             style="font-size: 25px;" aria-hidden="true"></i>
-                                        <span>Cart <span class="cart-quantity">(1)</span></span></a>
+                                        <span>Cart <span class="cart-quantity">(5)</span></span></a>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +180,7 @@
                                     @auth
                                         <li><a>My Account</a>
                                             <ul class="dropdown text-center">
-                                                <li><a href="{{ route('myacc') }}">Profile</a></li>
+                                                <li><a href="{{ route('profile.edit') }}">Profile</a></li>
 
                                                 <form style="display: inline-block" method="POST" class="nav-item"
                                                     action="{{ route('logout') }}">
@@ -200,10 +200,10 @@
                                             </ul>
                                         </li>
                                     @else
-                                        <li><a class="btn alazea-btn mr-30" href="{{ route('login') }}"
+                                        <li><a class="btn alazea-btn mr-30" href="/login"
                                                 class="">Login</a></li>
                                         @if (Route::has('register'))
-                                            <li><a class="btn alazea-btn active" href="{{ route('login') }}"
+                                            <li><a class="btn alazea-btn active" href="/register"
                                                     class="">Register</a></li>
                                         @endif
                                     @endauth
@@ -217,7 +217,7 @@
                                     <li style="margin-top: -6px">
                                         <a href="{{ route('cart.index') }}"><i class="fa fa-shopping-cart"
                                                 style="font-size: 25px;" aria-hidden="true"></i>
-                                            <span>Cart <span class="cart-quantity">(1)</span></span></a>
+                                            <span>Cart <span class="cart-quantity">(0)</span></span></a>
 
                                     </li>
 

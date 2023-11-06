@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\coupons;
 use Illuminate\Http\Request;
+use App\DataTables\CouponsDataTable;
 
 class CouponsController extends Controller
 {
@@ -12,9 +13,10 @@ class CouponsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CouponsDataTable $dataTable)
     {
-        //
+        return $dataTable->render('Admin.pages.coupons.index');
+        
     }
 
     /**
@@ -24,7 +26,7 @@ class CouponsController extends Controller
      */
     public function create()
     {
-        //
+        return view('Admin.pages.coupons.create');
     }
 
     /**
@@ -35,9 +37,27 @@ class CouponsController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => ['required', 'max:7'],
+            'discount' => ['required', 'digits:2'],
+            'beginning' => ['required', ],
+            'ending' => ['required', ],
 
+        ]);
+        $coupons = new coupons();
+
+
+ 
+        $coupons->couponName = $request->name;
+        $coupons->discount	 = $request->discount;
+        $coupons->beginning =$request->beginning;
+        $coupons->ending = $request->ending;
+        $coupons->save();
+
+        toastr('Updated Successfully', 'success');
+
+        return redirect()->route('coupons.index');
+    }
     /**
      * Display the specified resource.
      *
@@ -55,9 +75,13 @@ class CouponsController extends Controller
      * @param  \App\Models\coupons  $coupons
      * @return \Illuminate\Http\Response
      */
-    public function edit(coupons $coupons)
+    public function edit( $id)
     {
-        //
+        $coupons = coupons::findOrFail($id);
+        return view('Admin.pages.coupons.edit', compact('coupons'));
+
+ 
+         
     }
 
     /**
@@ -67,10 +91,29 @@ class CouponsController extends Controller
      * @param  \App\Models\coupons  $coupons
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, coupons $coupons)
+    public function update(Request $request,  $id)
     {
-        //
-    }
+
+        $request->validate([
+            'name' => ['required', 'max:7'],
+            'discount' => ['required', 'digits:2'],
+            'beginning' => ['required',],
+            'ending' => ['required',],
+
+        ]);
+        $coupons = coupons::where('id', $id)->first();
+
+
+
+        $coupons->couponName = $request->name;
+        $coupons->discount = $request->discount;
+        $coupons->beginning = $request->beginning;
+        $coupons->ending = $request->ending;
+        $coupons->save();
+
+        toastr('Updated Successfully', 'success');
+
+        return redirect()->route('coupons.index');    }
 
     /**
      * Remove the specified resource from storage.
@@ -78,8 +121,15 @@ class CouponsController extends Controller
      * @param  \App\Models\coupons  $coupons
      * @return \Illuminate\Http\Response
      */
-    public function destroy(coupons $coupons)
+    public function destroy( $id)
     {
-        //
+
+        $coupons = coupons::findOrFail($id);
+         $coupons->delete();
+
+
+
+        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+    
     }
 }

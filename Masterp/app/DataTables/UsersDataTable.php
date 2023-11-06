@@ -29,10 +29,14 @@ class UsersDataTable extends DataTable
 
                 return $editBtn . $deleteBtn;
             })
+          
 
-            ->rawColumns(['action'])
-
+            ->addColumn('image', function ($query) {
+                return "<img width='100px' src='" . asset($query->image) . "'></img>";
+            })
+            ->rawColumns(['action', 'image'])
             ->setRowId('id');
+
     }
 
     /**
@@ -82,6 +86,8 @@ class UsersDataTable extends DataTable
             Column::make('id'),
             Column::make('name'),
             Column::make('email'),
+            Column::make('image'),
+            Column::make('phone'),
             Column::computed('action')
             ->exportable(false)
             ->printable(false)

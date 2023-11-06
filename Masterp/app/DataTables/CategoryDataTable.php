@@ -61,7 +61,7 @@ class CategoryDataTable extends DataTable
                     ->setTableId('category-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
+                    ->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
@@ -83,6 +83,7 @@ class CategoryDataTable extends DataTable
     {
         //col. name =  to the name in database
         return [
+            Column::make('id'),
             Column::make('categoryName'),
             Column::make('description'),
             Column::make('image'),

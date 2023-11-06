@@ -105,6 +105,12 @@ class CartsController extends Controller
 
         return redirect()->back();
     }
+
+
+
+
+
+
     public function storee(Request $request, $id)
     {
 
@@ -132,8 +138,7 @@ class CartsController extends Controller
                 carts::create([
                     'customerId' => $iduser,
                     'productId' => $productId,
-                    'quantity' => 1,
-
+                    'quantity' => $request->input('quantity', 1),
                 ]);
             }
         } else {
@@ -148,7 +153,7 @@ class CartsController extends Controller
                     'id' => $id,
                     'productname' => $product->productName,
                     'shortdes' => $product->Sdescription,
-                    'quantity' => 1,
+                    'quantity' => $request->input('quantity', 1),
                     'image' => $product->image1,
                     'price' => $product->price,
 
@@ -185,6 +190,7 @@ class CartsController extends Controller
                     foreach ($cart as $product) {
                         $product->update(['couponid' => $code->id]);
                         session()->flash('success', 'coupons add successfully !');
+                    //  @dd($product);
 
                         return redirect()->route("cart.index");
                     }
@@ -192,7 +198,6 @@ class CartsController extends Controller
 
                     $discounts = $code->discount;
                     session()->put('coupon', $code->id);
-                    // dd($discounts);
                 }
                 session()->flash('success', 'coupons add successfully !');
                 return redirect()->back()->with('discounts', $discounts);
@@ -329,8 +334,8 @@ class CartsController extends Controller
                 $cart->update(['quantity' => $cart->quantity - 1]);
                 session()->flash('success', 'Product successfully removed!');
             } else {
-                carts::where('customerId', $iduser)->where('id', $id)->with('product')->delete();
-                session()->flash('success', 'you have only 1 product');
+                carts::where('customerId', $iduser)->where('id', $id)->with('product') ;
+                session()->flash('warning', 'you have only 1 product');
             }
         } else {
             if ($cart[$id]["quantity"] > 1) {
@@ -338,8 +343,8 @@ class CartsController extends Controller
                 session()->put('cart', $cart);
                 session()->flash('success', 'Product successfully removed!');
             } else {
-                session()->unset($cart[$id]);
-                session()->flash('success', 'you have only 1 product');
+                session()->forget($cart[$id]);
+                session()->flash('warning', 'you have only 1 product');
             }
         }
         // }}
@@ -357,7 +362,7 @@ class CartsController extends Controller
     //     ];
 
     //     // Calculate the updated total
- 
+
     //     // Store the updated total in the session
     //     session()->put();
 

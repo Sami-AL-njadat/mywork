@@ -96,6 +96,7 @@ class ProductDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('productName'),
+            Column::make('categoryId'),
             Column::make('Sdescription'),
             Column::make('Ldescription'),
             Column::make('price'),
@@ -109,7 +110,7 @@ class ProductDataTable extends DataTable
             Column::computed('action')
             ->exportable(false)
             ->printable(false)
-            ->width(60)
+            ->width(90)
             ->addClass('text-center'),
         ];
     }

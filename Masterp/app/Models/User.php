@@ -22,7 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'image',
-        'phone'
+        'phone',
     ];
 
     /**
@@ -56,3 +56,4 @@ class User extends Authenticatable
 
 
 }
+

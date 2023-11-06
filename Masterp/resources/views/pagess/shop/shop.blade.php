@@ -121,29 +121,25 @@
 
 
                                 @foreach ($allcategory as $items)
-                                    {{-- <!-- Single Checkbox -->
+                                    <!-- Single Checkbox -->
 
                                 <div  class="custom-control d-flex align-items-start p-0  mb-2 ">
                                              
 
 
                                         <a href="{{ route('shops', ['id' => $items->id]) }}"
-                                            class="btn alazea-btn  ">
-                                            {{ $items->categoryName }} <span>{{ $items->Products->count() }}</span>
+                                            class="btn alazea-btn active ">
+                                            {{ $items->categoryName }} <span> {{ $items->Products->count() }}</span>
                                         </a> 
 
 
+                                    </div>
+
+                                    {{-- <div class="custom-control d-flex align-items-start p-0 mb-2">
+                                        <a href="{{ route('shops', ['id' => $items->id]) }}" class="custom-link-style">
+                                            {{ $items->categoryName }} <span>{{ $items->products->count() }}</span>
+                                        </a>
                                     </div> --}}
-
-                                    <div class="custom-control d-flex align-items-start p-0 mb-2">
-    <a href="{{ route('shops', ['id' => $items->id]) }}" class="custom-link-style">
-        {{ $items->categoryName }} <span>{{ $items->Products->count() }}</span>
-    </a>
-</div>
-
-
-
-                                    
                                 @endforeach
 
                                 {{-- @foreach ($allcategory as $category)
@@ -164,6 +160,18 @@
                             </div>
                         </div>
 
+
+
+                        {{-- <div class="product-sidebarsingle">
+                            <h3>Categories</h3>
+                            <ul class="list-unstyled product-sidebarlinks">
+                                <li><a href="{{ route('shops') }}">All<i class="fa fa-angle-right"></i></a></li>
+                               @foreach ($allcategory as $items) 
+                               <li><a href="{{ route('shops', ['id' => $items->id]) }}">{{ $items->name }} <i class="fa fa-angle-right"></i></a></li>
+                               @endforeach
+                            </ul>
+                        </div> --}}
+
                         <!-- Shop Widget -->
                         <div class="shop-widget sort-by mb-50">
                             <h4 class="widget-title">Sort by</h4>
@@ -174,9 +182,9 @@
                                     <label class="custom-control-label" for="customCheck7">New arrivals</label>
                                 </div>
                                 <!-- Single Checkbox -->
-                                <div  class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input  type="checkbox" class="custom-control-input" id="customCheck8" href="" />
-                                    <label  class="custom-control-label" for="customCheck8">Alphabetically, A-Z</label>
+                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck8" href="" />
+                                    <label class="custom-control-label" for="customCheck8">Alphabetically, A-Z</label>
                                 </div>
                                 <!-- Single Checkbox -->
                                 <div class="custom-control custom-checkbox d-flex align-items-center mb-2">

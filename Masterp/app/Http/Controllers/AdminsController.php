@@ -18,18 +18,23 @@ class AdminsController extends Controller
 
 
 
-
-
-
-
-
-
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * 
+     * 
+     * 
      */
+
+
+    public function indexs()
+    {
+        return view('Admin.dashboord');
+    }
+
+
+
     public function index(AdminsDataTable $dataTable)
     {
         return $dataTable->render('Admin.pages.admins.index');
@@ -56,7 +61,7 @@ class AdminsController extends Controller
         $request->validate([
             'image' => ['required', 'image', 'max:4192'],
             'name' => ['required', 'max:20'],
-            'email' => ['required', 'email', 'unique:users,email'],
+            'email' => ['required', 'email'],
             'phone' => ['required', 'digits:10'],
             'password' => ['required'],
         ]);
@@ -69,12 +74,11 @@ class AdminsController extends Controller
         $admin->name = $request->name;
         $admin->email = $request->email;
         $admin->phone = $request->phone;
-        $admin->password = bcrypt($request->password);
+        $admin->password = Hash::make($request->password);
 
-        // $admin->password = Hash::make('password');
         $admin->save();
 
-        toastr('Updated Successfully', 'success');
+        toastr('Admin Created Successfully', 'success');
         return redirect()->route('admins.index');
     }
 
@@ -84,9 +88,24 @@ class AdminsController extends Controller
      * @param  \App\Models\admins  $admins
      * @return \Illuminate\Http\Response
      */
-    public function show(admins $admins)
+    public function show()
     {
-        //
+
+
+        if (session('loginId')) {
+            // dd(session('admin_id'));
+            // return 'hh';
+            $id =  session('loginId');
+
+
+            $admin = admins::find($id);
+
+            // $name =  session('loginimage');
+            //     dd($name);
+
+            // dd($admin->name);
+            return view('Admin.pages.profile.profile', ['admin' => $admin]);
+        }
     }
 
     /**
@@ -112,48 +131,40 @@ class AdminsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'image' => [ 'image', 'max:4192'],
+            'image' => ['image', 'max:4192'],
             'name' => ['required', 'max:20'],
-            'email' => ['required', 'email'],
             'phone' => ['required', 'digits:10'],
         ]);
 
-        // Check if the admin with the given email already exists
-        $admin = admins::where('id', $id)->first();
+        $admin = admins::find($id);
 
-        // If an admin with the email exists, it's an update; otherwise, create a new admin
-        if ($admin) {
-            // Perform update
-            if ($request->hasFile('image')) {
-                // Update image if a new one is provided
-                $imagePath = $this->uploadImage($request, 'image', 'uploads');
-                $admin->image = $imagePath;
-            }
-
-            $admin->name = $request->name;
-            $admin->phone = $request->phone;
-
-            // You can update the password if needed
-            // $admin->password = Hash::make($request->password);
-        } else {
-            // Perform create
-            $imagePath = $this->uploadImage($request, 'image', 'uploads');
-
-            $admin = new admins();
-            $admin->image = $imagePath;
-            $admin->name = $request->name;
-            $admin->email = $request->email;
-            $admin->phone = $request->phone;
-            // $admin->password = Hash::make($request->password);
-            $admin->password = bcrypt($request->password);
-
+        if (!$admin) {
+            return redirect()->route('admins.index')->with('error', 'Admin not found');
         }
+
+        // Check if the admin being updated is the same as the one currently logged in
+        if ($admin->id !== session('loginId')) {
+            return redirect()->route('admins.index')->with('error', 'Unauthorized');
+        }
+
+        // Update the admin's information
+        if ($request->hasFile('image')) {
+            $imagePath = $this->uploadImage($request, 'image', 'uploads');
+            $admin->image = $imagePath;
+            session(['loginimage' => $imagePath]);
+        }
+
+        $admin->name = $request->name;
+        session(['loginname' => $admin->name]);
+
+        $admin->phone = $request->phone;
 
         $admin->save();
 
-        toastr('Admin ' . ($admin ? 'Updated' : 'Created') . ' Successfully', 'success');
+        toastr('Admin Updated Successfully', 'success');
         return redirect()->route('admins.index');
-        }
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -167,5 +178,36 @@ class AdminsController extends Controller
         $this->deleteImage($admin->image);
         $admin->delete();
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+    }
+
+
+
+
+
+
+    public function resetPasswordPage()
+    {
+        return view('Admin.pages.profile.resetPassword');
+    }
+
+
+
+    public function resetPassword(Request $request)
+    {
+
+        $id =  session('loginId');
+
+
+        $admin = admins::find($id);
+
+        if (Hash::check($request->old_password, $admin->password)) {
+            $admin->update([
+                'password' => bcrypt($request->input('new_password'))
+            ]);
+
+            return redirect()->route('admin.dashboard')->with('success', 'Password updated successfully.');
+        } else {
+            return back()->with('fail', 'Old password is incorrect.');
+        }
     }
 }

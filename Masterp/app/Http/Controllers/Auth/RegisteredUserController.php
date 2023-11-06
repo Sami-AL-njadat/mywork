@@ -23,7 +23,7 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         // return view('auth.register');
-        return view('pagess.login.login');
+        return view('pagess.login.register');
     }
 
     /**
@@ -44,7 +44,6 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
         Auth::login($user); // Log in the newly registered user
 
         $request->session()->regenerate();
