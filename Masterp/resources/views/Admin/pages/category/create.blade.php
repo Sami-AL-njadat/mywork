@@ -46,9 +46,9 @@
                                             <div class="form-row">
                                                 <div class="form-group col-md-8">
                                                     <label for="description">Description</label>
-                                                    <textarea class="summernote-simple" name="description" id="description" placeholder="Enter a description"></textarea>
+                                                    <textarea type="text" class="form-control" id="textAreaExample3"  name="description" id="description" placeholder="Enter a description"></textarea>
                                                 </div>
-                                            </div>
+                                            {{-- </div>class="summernote-simple" --}}
 
 
 

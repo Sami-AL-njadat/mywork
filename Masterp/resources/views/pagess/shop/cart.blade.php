@@ -96,7 +96,7 @@
                                         <td class="total_price"><span>{{ $product['price'] * $product['quantity'] }}</span>
                                         </td>
                                         <td class="action">
-                                            <a href="{{ route('cart.destroy') }}/{{ $product['id'] }}"><i
+                                            <a href="{{ route('cart.destroy', ['id' => $product['id']]) }}"><i
                                                     class="icon_close"></i></a>
                                         </td>
                                     </tr>

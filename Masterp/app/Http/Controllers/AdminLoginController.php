@@ -87,15 +87,11 @@ class AdminLoginController extends Controller
             
             $incomeCount =orders::sum('totalPrice');
 
-            // Concatenate 'budget' in all projects
             $projects = products::whereNotNull('id')->get(); // Get all projects with a valid 'id'
-            // Use the pluck method to extract the 'budget' values as an array
-            $budgetsArray = $projects->pluck('budget')->toArray();
+            //  $budgetsArray = $projects->pluck('budget')->toArray();
 
-            // Calculate the sum of 'budget' values
-            $totalBudget = array_sum($budgetsArray);
-            //  dd(Session('loginimage'));   
-            return view('Admin.dashboord', compact('admin', 'usersCount', 'adminsCount', 'productsCount', 'totalBudget', 'incomeCount'));
+            //  $totalBudget = array_sum($budgetsArray);
+              return view('Admin.dashboord', compact('admin', 'usersCount', 'adminsCount', 'productsCount', 'incomeCount'));
         }
     }
 

@@ -66,6 +66,8 @@
             </div>
         </div>
 
+
+
         <!-- ##### Blog Area Start ##### -->
         <section class="alazea-blog-area section-padding-100-0">
             <div class="container">
@@ -110,7 +112,7 @@
                     @foreach ($categories as $category)
                         <div class="col-12 col-md-6 col-lg-4">
                             <div class="single-blog-post mb-100">
-                                <div class="post-thumbnail mb-30">
+                                <div {{-- class="product-img" --}} class="side-img wow fadeInUp" data-wow-delay="900ms">
                                     <a href="{{ route('shops', ['id' => $category->id]) }}"><img
                                             style="width: 290px; height: 257.61px;" src="{{ $category->image }}"
                                             alt="" /></a>
@@ -142,9 +144,10 @@
         <!-- ##### Blog Area End ##### -->
 
         <!-- ##### Hero Area End ##### -->
+        @include('pagess.aboutUs.Counter')
 
         <!-- ##### Service Area Start ##### -->
-        <section class="our-services-area bg-gray section-padding-100-0">
+        <section class="our-services-area bg-white section-padding-100-0">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -219,6 +222,7 @@
         <!-- ##### Service Area End ##### -->
 
 
+        @include('pagess.aboutUs.testimonial')
 
         <!-- ##### Product Area Start ##### -->
         <section class="new-arrivals-products-area section-padding-100">
@@ -240,8 +244,7 @@
                             <div class="single-product-area mb-50 wow fadeInUp" data-wow-delay="100ms">
                                 <!-- Product Image -->
                                 <div class="product-img">
-                                    <a href="{{ route('shopdetai', $newarrvel->id) }}"><img
-                                            style="width: 210px; height: 248.89px;" src="{{ $newarrvel->image1 }}"
+                                    <a href="{{ route('shopdetai', $newarrvel->id) }}"><img src="{{ $newarrvel->image1 }}"
                                             alt="" /></a>
                                     <!-- Product Tag -->
                                     <div class="product-tag">
@@ -249,8 +252,11 @@
                                     </div>
 
                                     <div class="product-meta d-flex">
-                                        <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                        <a href="{{ route('cartstor') }}/{{ $newarrvel->id }}"
+                                        <a href="{{ route('WishListStore', ['id' => $newarrvel->id]) }}"
+                                      
+                                            class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+                                       
+                                            <a href="{{ route('cartstor') }}/{{ $newarrvel->id }}"
                                             class="add-to-cart-btn">Add to cart</a>
                                         <a href="{{ route('shopdetai', ['id' => $newarrvel->id]) }}"
                                             class="compare-btn"><i alt="MORE" class="arrow_left-right_alt"></i></a>
@@ -268,7 +274,7 @@
                     @endforeach
 
                     <div class="col-12 text-center">
-                        <a href="{{ route('shop') }}" class="btn alazea-btn">View All</a>
+                        <a href="{{ route('shops') }}" class="btn alazea-btn">View All</a>
                     </div>
                 </div>
             </div>

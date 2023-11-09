@@ -55,14 +55,14 @@
                             <!-- Top Header Content -->
 
                             <!-- كومنت على الايمل  -->
-                            <div class="top-header-meta">
+                            {{-- <div class="top-header-meta">
                                 <a href="#" data-toggle="tooltip" data-placement="bottom"
                                     title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
                                         aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
                                 <a href="#" data-toggle="tooltip" data-placement="bottom"
                                     title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i> <span>Call Us:
                                         +1 234 122 122</span></a>
-                            </div>
+                            </div> --}}
 
                             <!-- Top Header Content -->
                             <div class="top-header-meta d-flex">
@@ -135,9 +135,9 @@
                                         <a href="#">Pages</a>
                                         <ul class="dropdown">
 
-                                            <li> <a href="{{ route('shop') }}">Shop</a>
+                                            <li> <a href="{{ route('shops') }}">Shop</a>
                                                 <ul class="dropdown">
-                                                    <li><a href="{{ route('shop') }}">Shop</a></li>
+                                                    <li><a href="{{ route('shops') }}">Shop</a></li>
                                                     <li>
                                                         {{-- <a href="{{ route('shopdetai') }}">Shop Details</a> --}}
                                                     </li>
@@ -203,7 +203,7 @@
                                         <li><a class="btn alazea-btn mr-30" href="/login"
                                                 class="">Login</a></li>
                                         @if (Route::has('register'))
-                                            <li><a class="btn alazea-btn active" href="/register"
+                                            <li><a class="btn alazea-btn active" href="{{ url('register') }}"
                                                     class="">Register</a></li>
                                         @endif
                                     @endauth
@@ -218,6 +218,13 @@
                                         <a href="{{ route('cart.index') }}"><i class="fa fa-shopping-cart"
                                                 style="font-size: 25px;" aria-hidden="true"></i>
                                             <span>Cart <span class="cart-quantity">(0)</span></span></a>
+
+                                    </li>
+
+                                                       <li style="margin-top: -6px">
+                                        <a href="{{ route('wishlist.index') }}"><i class="fa fa-shopping-cart"
+                                                style="font-size: 25px;" aria-hidden="true"></i>
+                                            <span>wish <span class="cart-quantity">(0)</span></span></a>
 
                                     </li>
 

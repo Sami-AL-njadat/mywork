@@ -76,28 +76,42 @@ class ProfileController extends Controller
         }
 
         $request->user()->save();
+        session()->flash('success', 'profile edit successfully!');
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit');
     }
 
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
+  
+
+
+    public function destroyAccount(Request $request): RedirectResponse
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current-password'],
-        ]);
+      // Validate the request to ensure the user provides their password
+    $request->validate([
+        'password' => ['required', 'current-password'],
+    ]);
 
-        $user = $request->user();
+    // Get the authenticated user
+    $user = auth()->user();
 
-        Auth::logout();
+    // Log out the user
+    Auth::logout();
 
-        $user->delete();
+     User::where('id', $user->id)->delete();
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
-    }
+     $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    session()->flash('success', 'Account deleted successfully!');
+     return redirect()->to('/');
 }
+
+    }
+
+
+
+
+
+

@@ -37,15 +37,35 @@
                             <p>Showing 1-{{ Request::get('per_page') }} of {{ $counts }} results</p>
 
                         </div>
+
+                        <div class="search_by_terms">
+
+
+
+                            <form method="get" action="{{ route('shops', ['id' => $id]) }}" class="form-inline">
+                                <label for="sortSelect">Sort by:</label>
+                                <select class="custom-select widget-title" name="sort" id="sortSelect"
+                                    onchange="this.form.submit()">
+                                    <option value="az" {{ Request::get('sort') === 'az' ? 'selected' : '' }}>A - Z
+                                    </option>
+
+                                    <option value="za" {{ Request::get('sort') === 'za' ? 'selected' : '' }}>Z - A
+                                    </option>
+                                    <option value="high_price"
+                                        {{ Request::get('sort') === 'high_price' ? 'selected' : '' }}>High Price</option>
+                                    <option value="low_price" {{ Request::get('sort') === 'low_price' ? 'selected' : '' }}>
+                                        Low Price
+                                </select>
+                            </form>
+
+                        </div>
+
                         <!-- Search by Terms -->
                         <div class="search_by_terms">
-                            <form method="get" action="{{ route('products.index') }}" class="form-inline">
-                                {{-- <select class="custom-select widget-title">
-                                    <option selected>Short by Popularity</option>
-                                    <option value="1">Short by Newest</option>
-                                    <option value="2">Short by Sales</option>
-                                    <option value="3">Short by Ratings</option>
-                                </select> --}}
+
+
+                            <form method="get" action="{{ route('shops', ['id' => $id]) }}" class="form-inline">
+
                                 <label for="perPageSelect">Short by Popularity:</label>
                                 <select class="custom-select widget-title" name="per_page" id="perPageSelect"
                                     onchange="this.form.submit()">
@@ -67,15 +87,20 @@
 
             <div class="row">
                 <!-- Sidebar Area -->
-                <div class="col-12 col-md-4 col-lg-3">
+                <div class="col-12 col-md-4 col-lg-3"
+                    style="border-bottom: 1px solid #ebebeb; border-right: 1px solid #ebebeb;">
                     <div class="shop-sidebar-area">
                         <!-- Shop Widget -->
-
-                        <form method="GET" action="{{ route('shop.filterByPrice') }}" id="formeee">
+                        <form method="GET" action="{{ route('shop.filterByPrice', ['id' => $id]) }}" id="formeee">
                             <!-- Your other form elements (if any) here -->
 
-                            <div class="shop-widget price mb-50">
+                            <div class="shop-widget price ">
                                 <h4 class="widget-title">Prices</h4>
+                                <p> <b style="color: red">NOTE</b> <b>THAT :
+                                    "We Proudly Present Our Products to You, as Our Prices Range from <b style="color: #70c745"> $ {{ $maxPrices }}</b> To <b style="color: #70c745"> $
+                                        {{ $minPrices }}</b> per Unit."</b></p>
+                                 
+                                 
                                 <div class="widget-desc">
                                     <div class="slider-range">
                                         <div data-min="0" data-max="100" data-unit="$"
@@ -88,182 +113,94 @@
                                             <span class="ui-slider-handle ui-state-default ui-corner-all"
                                                 tabindex="0"></span>
                                         </div>
-                                        <div class="range-price">Price: $0 - $100</div>
+                                        <div class="range-price">Price: $ 0- $ 100</div>
                                     </div>
                                 </div>
                             </div>
+                            <button type="submit" class=" btn alazea-btn active btn-ls mt-2 mb-2">Filter</button>
 
                             <!-- Add hidden input fields to capture price range -->
 
-                            <input type="hidden" name="min_price" id="min_price" value="0">
-                            <input type="hidden" name="max_price" id="max_price" value="20">
+                            <input type="hidden" name="min_price" id="min_price" value="{{ $minPrice }}">
+                            <input type="hidden" name="max_price" id="max_price" value="{{ $maxPrice }}">
 
-                            <button type="submit" class="btn alazea-btn active mb-2">Filter</button>
                         </form>
 
                         <!-- Shop Widget -->
-                        <div class="shop-widget catagory mb-50">
+                        <div class="shop-widget catagory  mt-5 mb-5">
                             <h4 class="widget-title">Categories</h4>
                             <div class="widget-desc">
-                                <!-- Single Checkbox -->
 
                                 <div class="custom-control custom-control d-flex align-items-start p-0 mb-2">
-                                    {{-- <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                                    <label class="custom-control-label" for="customCheck1">All plants
-                                        <span class="text-muted">{{ $counts }}</span>
-                                    </label> --}}
 
-                                    <a href="{{ route('shops') }}" class="btn alazea-btn active  ">
-                                        All plants<span>{{ $counts }}</span>
+
+                                    <a href="{{ route('shops') }}" class="btn alazea-btn ">
+                                        All plants <span class="badge badge-success">{{ $counts }}</span>
                                     </a>
 
                                 </div>
 
 
                                 @foreach ($allcategory as $items)
-                                    <!-- Single Checkbox -->
-
-                                <div  class="custom-control d-flex align-items-start p-0  mb-2 ">
-                                             
+                                    <div class="custom-control d-flex align-items-start p-0  mb-2 ">
 
 
-                                        <a href="{{ route('shops', ['id' => $items->id]) }}"
-                                            class="btn alazea-btn active ">
-                                            {{ $items->categoryName }} <span> {{ $items->Products->count() }}</span>
-                                        </a> 
+
+                                        <a href="{{ route('shops', ['id' => $items->id]) }}" style="padding: 0 7px;"
+                                            class="btn alazea-btn  ">
+                                            {{ $items->categoryName }} <span class="badge badge-success">
+                                                {{ $items->Products->count() }}</span>
+                                        </a>
 
 
                                     </div>
-
-                                    {{-- <div class="custom-control d-flex align-items-start p-0 mb-2">
-                                        <a href="{{ route('shops', ['id' => $items->id]) }}" class="custom-link-style">
-                                            {{ $items->categoryName }} <span>{{ $items->products->count() }}</span>
-                                        </a>
-                                    </div> --}}
                                 @endforeach
-
-                                {{-- @foreach ($allcategory as $category)
-    @if ($category->products->count() > 1)
-        <!-- Single Checkbox -->
-        <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-            <input type="checkbox" class="custom-control-input" id="customCheck2_{{ $category->id }}" />
-            <label class="custom-control-label" for="customCheck2_{{ $category->id }}">
-                {{ $category->categoryName }}
-                <span class="text-muted">{{ $category->products->count() }}</span>
-            </label>
-        </div>
-    @endif
-@endforeach --}}
-
-
 
                             </div>
                         </div>
 
 
 
-                        {{-- <div class="product-sidebarsingle">
-                            <h3>Categories</h3>
-                            <ul class="list-unstyled product-sidebarlinks">
-                                <li><a href="{{ route('shops') }}">All<i class="fa fa-angle-right"></i></a></li>
-                               @foreach ($allcategory as $items) 
-                               <li><a href="{{ route('shops', ['id' => $items->id]) }}">{{ $items->name }} <i class="fa fa-angle-right"></i></a></li>
-                               @endforeach
-                            </ul>
+
+
+                        <!-- Shop Widget -->
+                        {{-- <div class="shop-widget sort-by mb-50">
+                            <h4 class="widget-title">Sort by</h4>
+                            <div class="widget-desc">
+                                 
+                               
+                            </div>
                         </div> --}}
 
                         <!-- Shop Widget -->
-                        <div class="shop-widget sort-by mb-50">
-                            <h4 class="widget-title">Sort by</h4>
-                            <div class="widget-desc">
-                                <!-- Single Checkbox -->
-                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck7" />
-                                    <label class="custom-control-label" for="customCheck7">New arrivals</label>
-                                </div>
-                                <!-- Single Checkbox -->
-                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck8" href="" />
-                                    <label class="custom-control-label" for="customCheck8">Alphabetically, A-Z</label>
-                                </div>
-                                <!-- Single Checkbox -->
-                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck9" />
-                                    <label class="custom-control-label" for="customCheck9">Alphabetically, Z-A</label>
-                                </div>
-                                <!-- Single Checkbox -->
-                                <div class="custom-control custom-checkbox d-flex align-items-center mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck10" />
-                                    <label class="custom-control-label" for="customCheck10">Price: low to high</label>
-                                </div>
-                                <!-- Single Checkbox -->
-                                <div class="custom-control custom-checkbox d-flex align-items-center">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck11" />
-                                    <label class="custom-control-label" for="customCheck11">Price: high to low</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Shop Widget -->
-                        <div class="shop-widget best-seller mb-50">
+                        <div class="shop-widget best-seller mt-5 mb-5">
                             <h4 class="widget-title">Best Seller</h4>
                             <div class="widget-desc">
                                 <!-- Single Best Seller Products -->
-                                <div class="single-best-seller-product d-flex align-items-center">
-                                    <div class="product-thumbnail">
-                                        <a href="shop-details.html"><img src="{{ asset('front_end/img/bg-img/4.jpg') }}"
-                                                alt="" /></a>
-                                    </div>
-                                    <div class="product-info">
-                                        <a href="shop-details.html">Cactus Flower</a>
-                                        <p>$10.99</p>
-                                        <div class="ratings">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                @isset($newproducts)
+                                    @foreach ($newproducts as $new)
+                                        <div class="single-best-seller-product d-flex align-items-center">
+                                            <div class="product-thumbnail">
+                                                <a href="{{ route('shopdetai') }}/{{ $new->id }}"><img
+                                                        src="{{ asset($new->image1) }}" alt="" /></a>
+                                            </div>
+                                            <div class="product-info">
+                                                <a
+                                                    href="{{ route('shopdetai') }}/{{ $new->id }}">{{ $new->productName }}</a>
+                                                <p>${{ $new->price }}</p>
+                                                <div class="ratings">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    @endforeach
+                                @endisset
 
-                                <!-- Single Best Seller Products -->
-                                <div class="single-best-seller-product d-flex align-items-center">
-                                    <div class="product-thumbnail">
-                                        <a href="shop-details.html"><img src="{{ asset('front_end/img/bg-img/5.jpg') }}"
-                                                alt="" /></a>
-                                    </div>
-                                    <div class="product-info">
-                                        <a href="shop-details.html">Tulip Flower</a>
-                                        <p>$11.99</p>
-                                        <div class="ratings">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <!-- Single Best Seller Products -->
-                                <div class="single-best-seller-product d-flex align-items-center">
-                                    <div class="product-thumbnail">
-                                        <a href="shop-details.html"><img src="{{ asset('front_end/img/bg-img/34.jpg') }}"
-                                                alt="" /></a>
-                                    </div>
-                                    <div class="product-info">
-                                        <a href="shop-details.html">Recuerdos Plant</a>
-                                        <p>$9.99</p>
-                                        <div class="ratings">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -290,10 +227,11 @@
                                                 @endif
                                             </div>
                                             <div class="product-meta d-flex">
-                                                <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+                                                <a href="{{ route('WishListStore', ['id' => $allproduct->id]) }}"
+                                                    class="wishlist-btn"><i class="icon_heart_alt"></i></a>
                                                 <a href="{{ route('cartstor') }}/{{ $allproduct->id }}"
                                                     class="add-to-cart-btn">Add to cart</a>
-                                                <a href="#" class="compare-btn"><i
+                                                <a href="{{ route('shopdetai', ['id' => $allproduct->id]) }}" class="compare-btn"><i
                                                         class="arrow_left-right_alt"></i></a>
                                             </div>
 

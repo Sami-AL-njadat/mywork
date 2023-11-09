@@ -68,14 +68,12 @@
                                     <div class="carousel-item active">
                                         <a class="product-img" href="{{ asset($product->image1) }} }}"
                                             title="Product Image">
-                                            <img class="d-block w-100" src="{{ asset($product->image1) }}"
-                                                alt="1" />
+                                            <img class="d-block w-100" src="{{ asset($product->image1) }}" alt="1" />
                                         </a>
                                     </div>
                                     <div class="carousel-item">
                                         <a class="product-img" href="{{ asset($product->image2) }}" title="Product Image">
-                                            <img class="d-block w-100" src="{{ asset($product->image2) }}"
-                                                alt="1" />
+                                            <img class="d-block w-100" src="{{ asset($product->image2) }}" alt="1" />
                                         </a>
                                     </div>
                                     <div class="carousel-item">
@@ -105,88 +103,88 @@
                                 <p>{{ $product->Ldescription }}</p>
                                 {{-- ******* --}}
                                 <!-- <div class="form1" style="display: flex; gap: 50px">
-                            <form class="form">
-                              <div class="form__group">
-                                <div class="form__radio-group">
-                                  <input
-                                    type="radio"
-                                    class="form__radio-input"
-                                    id="1"
-                                    name="radiogroup"
-                                  />
-                                  <label for="1" class="form__radio-label">
-                                    <span class="form__radio-button">Small</span>
-                                  </label>
-                                </div>
+                                            <form class="form">
+                                              <div class="form__group">
+                                                <div class="form__radio-group">
+                                                  <input
+                                                    type="radio"
+                                                    class="form__radio-input"
+                                                    id="1"
+                                                    name="radiogroup"
+                                                  />
+                                                  <label for="1" class="form__radio-label">
+                                                    <span class="form__radio-button">Small</span>
+                                                  </label>
+                                                </div>
 
-                                <div class="form__radio-group">
-                                  <input
-                                    type="radio"
-                                    class="form__radio-input"
-                                    id="2"
-                                    name="radiogroup"
-                                  />
-                                  <label for="2" class="form__radio-label">
-                                    <span class="form__radio-button">Medium</span>
-                                  </label>
-                                </div>
+                                                <div class="form__radio-group">
+                                                  <input
+                                                    type="radio"
+                                                    class="form__radio-input"
+                                                    id="2"
+                                                    name="radiogroup"
+                                                  />
+                                                  <label for="2" class="form__radio-label">
+                                                    <span class="form__radio-button">Medium</span>
+                                                  </label>
+                                                </div>
 
-                                <div class="form__radio-group">
-                                  <input
-                                    type="radio"
-                                    class="form__radio-input"
-                                    id="3"
-                                    name="radiogroup"
-                                  />
-                                  <label for="3" class="form__radio-label">
-                                    <span class="form__radio-button">Larg</span>
-                                  </label>
-                                </div>
-                              </div>
-                            </form>
-                            <form class="form">
-                              <div class="form__group">
-                                <div class="form__radio-group">
-                                  <input
-                                    type="radio"
-                                    class="form__radio-input"
-                                    id="1"
-                                    name="radiogroup"
-                                  />
-                                  <label for="1" class="form__radio-label">
-                                    <span class="form__radio-button">clay</span>
-                                  </label>
-                                </div>
+                                                <div class="form__radio-group">
+                                                  <input
+                                                    type="radio"
+                                                    class="form__radio-input"
+                                                    id="3"
+                                                    name="radiogroup"
+                                                  />
+                                                  <label for="3" class="form__radio-label">
+                                                    <span class="form__radio-button">Larg</span>
+                                                  </label>
+                                                </div>
+                                              </div>
+                                            </form>
+                                            <form class="form">
+                                              <div class="form__group">
+                                                <div class="form__radio-group">
+                                                  <input
+                                                    type="radio"
+                                                    class="form__radio-input"
+                                                    id="1"
+                                                    name="radiogroup"
+                                                  />
+                                                  <label for="1" class="form__radio-label">
+                                                    <span class="form__radio-button">clay</span>
+                                                  </label>
+                                                </div>
 
-                                <div class="form__radio-group">
-                                  <input
-                                    type="radio"
-                                    class="form__radio-input"
-                                    id="2"
-                                    name="radiogroup"
-                                  />
-                                  <label for="2" class="form__radio-label">
-                                    <span class="form__radio-button">blastic</span>
-                                  </label>
-                                </div>
-                              </div>
-                            </form>
-                            <form class="form">
-                              <div class="form__group">
-                                <div class="form__radio-group">
-                                  <input
-                                    type="color"
-                                    class="form__radio-input"
-                                    id="1"
-                                    name="radiogroup"
-                                  />
-                                  <label for="1" class="form__radio-label">
-                                    <span class="form__radio-button">clay</span>
-                                  </label>
-                                </div>
-                              </div>
-                            </form>
-                          </div> -->
+                                                <div class="form__radio-group">
+                                                  <input
+                                                    type="radio"
+                                                    class="form__radio-input"
+                                                    id="2"
+                                                    name="radiogroup"
+                                                  />
+                                                  <label for="2" class="form__radio-label">
+                                                    <span class="form__radio-button">blastic</span>
+                                                  </label>
+                                                </div>
+                                              </div>
+                                            </form>
+                                            <form class="form">
+                                              <div class="form__group">
+                                                <div class="form__radio-group">
+                                                  <input
+                                                    type="color"
+                                                    class="form__radio-input"
+                                                    id="1"
+                                                    name="radiogroup"
+                                                  />
+                                                  <label for="1" class="form__radio-label">
+                                                    <span class="form__radio-button">clay</span>
+                                                  </label>
+                                                </div>
+                                              </div>
+                                            </form>
+                                          </div> -->
                             </div>
 
                             <div class="cart--area d-flex flex-wrap align-items-center">
@@ -196,16 +194,16 @@
                                     @csrf
                                     <div class="quantity">
                                         <a class="qty-minus"
-                                             onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i
+                                            onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i
                                                 class="fa fa-minus" aria-hidden="true"></i></a>
                                         <input type="number" class="qty-text" id="qty" step="1"
-                                            min="1" max="99" name="quantity"  value="1" />
-                                        <a class="qty-plus" 
-                                             onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i
+                                            min="1" max="99" name="quantity" value="1" />
+                                        <a class="qty-plus"
+                                            onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i
                                                 class="fa fa-plus" aria-hidden="true"></i></a>
                                     </div>
 
-             
+
 
 
 
@@ -216,17 +214,17 @@
                                 </form>
                                 <!-- Wishlist & Compare -->
                                 <div class="wishlist-compare d-flex flex-wrap align-items-center">
-                                    <a href="#" class="wishlist-btn ml-15"><i class="icon_heart_alt"></i></a>
-                                    <a href="#" class="compare-btn ml-15"><i class="arrow_left-right_alt"></i></a>
+                                    <a href="{{route ('wishlist.updated') }}/{{ $product->id }}" class="wishlist-btn ml-15"><i class="icon_heart_alt"></i></a>
+                                    <a href="{{ route('shops') }}" class="compare-btn ml-15"><i class="arrow_left_alt"></i></a>
                                 </div>
 
                                 <!-- <select name="" id="">
-                            <option value="0">Type of pots</option>
-                            <option value="1">plastic</option>
-                            <option value="2">
-                              <img src="img/bg-img/1.jpg" alt="" srcset="" /> cycle
-                            </option>
-                          </select> -->
+                                            <option value="0">Type of pots</option>
+                                            <option value="1">plastic</option>
+                                            <option value="2">
+                                              <img src="img/bg-img/1.jpg" alt="" srcset="" /> cycle
+                                            </option>
+                                          </select> -->
                             </div>
 
                             <div class="products--meta">
@@ -415,68 +413,72 @@
 
                                 <div class="submit_a_review_area mt-50">
                                     <h4>Submit A Review</h4>
-                                    @if (auth()->user())
-                                        <form action="{{ route('review', $product->id) }}" method="post">
-                                            @csrf
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="form-group d-flex align-items-center">
-                                                        <span class="mr-15">Your Ratings:</span>
-                                                        <div class="stars">
-                                                            <input type="radio" value="1" name="rating"
-                                                                class="star-1" id="star-1" />
-                                                            <label class="star-1" for="star-1">1</label>
-                                                            <input type="radio" value="2"name="rating"
-                                                                class="star-2" id="star-2" />
-                                                            <label class="star-2" for="star-2">2</label>
-                                                            <input type="radio" value="3" name="rating"
-                                                                class="star-3" id="star-3" />
-                                                            <label class="star-3" for="star-3">3</label>
-                                                            <input type="radio" value="4" name="rating"
-                                                                class="star-4" id="star-4" />
-                                                            <label class="star-4" for="star-4">4</label>
-                                                            <input type="radio" value="5" name="rating"
-                                                                class="star-5" id="star-5" />
-                                                            <label class="star-5" for="star-5">5</label>
-                                                            <span></span>
+                                    @auth
+                                        @if ($hasBeenBought)
+                                            <form action="{{ route('review', $product->id) }}" method="post">
+                                                @csrf
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group d-flex align-items-center">
+                                                            <span class="mr-15">Your Ratings:</span>
+                                                            <div class="stars">
+                                                                <input type="radio" value="1" name="rating"
+                                                                    class="star-1" id="star-1" />
+                                                                <label class="star-1" for="star-1">1</label>
+                                                                <input type="radio" value="2"name="rating"
+                                                                    class="star-2" id="star-2" />
+                                                                <label class="star-2" for="star-2">2</label>
+                                                                <input type="radio" value="3" name="rating"
+                                                                    class="star-3" id="star-3" />
+                                                                <label class="star-3" for="star-3">3</label>
+                                                                <input type="radio" value="4" name="rating"
+                                                                    class="star-4" id="star-4" />
+                                                                <label class="star-4" for="star-4">4</label>
+                                                                <input type="radio" value="5" name="rating"
+                                                                    class="star-5" id="star-5" />
+                                                                <label class="star-5" for="star-5">5</label>
+                                                                <span></span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-12 col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="name">Name</label>
-                                                        <input name="name" type="text" class="form-control"
-                                                            id="name" placeholder="Nazrul" />
+                                                    <div class="col-12 col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="name">Name</label>
+                                                            <input name="name" type="text" class="form-control"
+                                                                id="name" placeholder="Nazrul" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="options">Reason for your rating</label>
+                                                            <select name="reason" class="form-control" id="options">
+                                                                <option value="Quality">Quality</option>
+                                                                <option value="Value">Value</option>
+                                                                <option value="Design">Design</option>
+                                                                <option value="Price">Price</option>
+                                                                <option value="Others">Others</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <label for="comments">Comments</label>
+                                                            <textarea name="review" class="form-control" id="comments" rows="5" data-max-length="150"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <button type="submit" class="btn alazea-btn">
+                                                            Submit Your Review
+                                                        </button>
                                                     </div>
                                                 </div>
-                                                <div class="col-12 col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="options">Reason for your rating</label>
-                                                        <select name="reason" class="form-control" id="options">
-                                                            <option value="Quality">Quality</option>
-                                                            <option value="Value">Value</option>
-                                                            <option value="Design">Design</option>
-                                                            <option value="Price">Price</option>
-                                                            <option value="Others">Others</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-group">
-                                                        <label for="comments">Comments</label>
-                                                        <textarea name="review" class="form-control" id="comments" rows="5" data-max-length="150"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <button type="submit" class="btn alazea-btn">
-                                                        Submit Your Review
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        @else
+                                            <h3>You must purchase this product to leave a review.</h3>
+                                        @endif
                                     @else
-                                        <h3> IF YOU WANT TO MAKE REVIEW YOU MUST BE LOGGED IN</h3>
-                                    @endif
+                                        <h3>If you want to make a review, you must be logged in.</h3>
+                                    @endauth
 
                                 </div>
                             </div>
@@ -513,15 +515,15 @@
                                         src="{{ asset($reproducts->image1) }}" alt="" /></a>
                                 <!-- Product Tag -->
                                 <div class="product-tag">
-                                    <a href="#">Hot</a>
+                                    <a href="#">{{ $reproducts->status }}</a>
                                 </div>
 
                                 <div class="product-meta d-flex">
 
-                                    <a href="#" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+                                    <a href="{{route ('WishListStore') }}/{{ $reproducts->id }}" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
                                     <a href="{{ route('cartstor', $reproducts->id) }}" class="add-to-cart-btn">Add to
                                         cart</a>
-                                    <a href="#" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+                                    <a href="{{ route('shopdetai', $reproducts->id)}}" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
                                 </div>
                             </div>
                             <!-- Product Info -->

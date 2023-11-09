@@ -285,7 +285,7 @@ input {
 
 .alert{
 border: #0c2a5c solid 2px;
-	width: fit-content;
+ 	width: fit-content;
 	height: fit-content;
 	background-color: #3c97bf;
 	color: #222;

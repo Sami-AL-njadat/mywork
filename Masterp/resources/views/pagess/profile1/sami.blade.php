@@ -46,6 +46,13 @@
                                              aria-selected="false">Account Details</a>
                                      </li>
 
+
+                                     <li class="nav-item">
+                                         <a class="nav-link" id="account-delete-tab" data-toggle="tab"
+                                             href="#account-delete" role="tab" aria-controls="account-delete"
+                                             aria-selected="false"> Delete Account </a>
+                                     </li>
+
                                      {{-- start of logout --}}
 
                                      <li class="nav-item">
@@ -264,12 +271,12 @@
 
                                                      <button class="btn alazea-btn  mt-5">{{ __('SUBMIT') }}</button>
 
-                                                     @if (session('status') === 'profile-updated')
+                                                     {{-- @if (session('status') === 'profile-updated')
                                                          <p x-data="{ show: true }" x-show="show" x-transition
                                                              x-init="setTimeout(() => show = false, 2000)"
                                                              class="text-sm text-gray-600 dark:text-gray-400">
                                                              {{ __('Saved.') }}</p>
-                                                     @endif
+                                                     @endif --}}
 
 
                                                  </div>
@@ -322,12 +329,12 @@
                                                      </div>
 
 
-                                                     @if (session('status') === 'password-updated')
+                                                     {{-- @if (session('status') === 'password-updated')
                                                          <p x-data="{ show: true }" x-show="show" x-transition
                                                              x-init="setTimeout(() => show = false, 2000)"
                                                              class="text-sm text-gray-600 dark:text-gray-400">
                                                              {{ __('Saved.') }}</p>
-                                                     @endif
+                                                     @endif --}}
                                                  </div>
                                              </form>
                                          </div>
@@ -337,6 +344,30 @@
 
                                          {{-- //////////////////////s --}}
                                      </div>
+
+
+                                     <div class="tab-pane fade" id="account-delete" role="tabpanel"
+                                         aria-labelledby="account-delete-tab">
+                                         <div class="myaccount-delete">
+                                             <div>
+
+
+                                                 <form method="POST" action="{{ route('profile.destroyAccount') }}">
+                                                     @csrf
+                                                     @method('DELETE')
+                                                     <label for="password">Password:</label>
+                                                     <input type="password" name="password" id="password" required>
+                                                     <button type="submit">Delete Account</button>
+                                                 </form>
+
+
+                                             </div>
+                                         </div>
+                                     </div>
+
+
+
+
                                  </div>
                              </div>
                          </div>
