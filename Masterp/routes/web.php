@@ -29,21 +29,6 @@ Route::get('/indexs', [CategoriesController::class, 'indexCategory'])->name('ind
 
  
 
-<<<<<<< HEAD
-
-
-
-
-
-
-
-
-
-// Route::get('/dash', function () {
-//     return view('Admin.bashboord');
-// })->name('dash')->middleware('isLoggedIn');
-=======
->>>>>>> e15611dcaeb2d2a0f21c4258193c530cc0f6703c
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
