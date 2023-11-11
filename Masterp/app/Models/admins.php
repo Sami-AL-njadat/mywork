@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class admins extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'name',
+        'email',
+        'password', // Add 'password' to the fillable fields
+        // Other fields...
+    ];
+
+    // Other model code...
 }

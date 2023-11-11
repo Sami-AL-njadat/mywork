@@ -18,6 +18,6 @@ class reviwes extends Model
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'productId');
+        return $this->belongsTo(products::class, 'productId' );
     }
 }

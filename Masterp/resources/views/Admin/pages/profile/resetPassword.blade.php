@@ -18,7 +18,6 @@
                             </div>
 
                             <div class="card-body">
-                                <p class="text-muted">We will send a link to reset your password</p>
 
                                 <div class="card-header">
                                     <img style="width: 100px; border-radius: 50%;  margin: auto;
@@ -42,10 +41,11 @@
 
                                     @csrf
 
-                                    <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
+                                    <div class="mt-1 mb-2 hide-sidebar-mini " tabindex="4">
                                         <a href=" {{ route('admin.dashboard') }}"
                                             class="btn btn-primary btn-lg btn-block btn-icon-split">
-                                            <i class="fas fa-rocket"></i> home
+                                            <i class="fas fa-rocket"></i> Back To Home
+                                            {{-- <button  class="btn btn-primary btn-lg btn-block" > --}}
 
 
                                         </a>

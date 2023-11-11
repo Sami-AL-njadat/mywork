@@ -22,9 +22,6 @@ class products extends Model
     }
 
 
-
-    
-
 }
 
 

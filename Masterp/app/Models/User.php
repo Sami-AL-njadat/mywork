@@ -22,7 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'image',
-        'phone'
+        'phone',
     ];
 
     /**
@@ -51,9 +51,11 @@ class User extends Authenticatable
     }
     public function payment()
     {
-        return $this->hasMany(payments::class,"customerId");
+        return $this->hasMany(payments::class, "customerId");
     }
 
- 
-
+    public function orderItems()
+    {
+        return $this->hasMany(orderItems::class, 'customerId', 'id');
+    }
 }

@@ -2,10 +2,15 @@
 <html lang="en">
 
 <head>
+    
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Ecommerce Dashboard &mdash; Stisla</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>Mashtal Dashboard &mdash; SAM</title>
+
+    <link rel="icon" href="{{ asset('front_end/img/core-img/mashtal.jpg') }}" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
@@ -19,8 +24,7 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/modules/owlcarousel2/dist/assets/owl.carousel.min.css') }}">
     <link rel="stylesheet"
         href="{{ asset('admin/assets/modules/owlcarousel2/dist/assets/owl.theme.default.min.css') }}">
-
-    <!-- Template CSS -->
+     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/css/components.css') }}">
     <!-- Start GA -->
@@ -42,9 +46,13 @@
         gtag('config', 'UA-94034622-3');
     </script>
     <!-- /END GA -->
-</head>
 
+
+    
+</head>
+ 
 <body>
+ 
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
             <div class="navbar-bg"></div>
@@ -54,9 +62,12 @@
             @include('Admin.layout.sidebar')
 
             @yield('content')
-<footer class="main-footer">
+            
+            
+            
+            <footer class="main-footer">
     <div class="footer-left">
-        Copyright &copy; 2023 <div class="bullet"></div> Design By <a href="#">Mashtal onlian</a>
+        Copyright &copy; 2023 <div class="bullet"></div> Design By <a href="{{ route('admin.dashboard') }}">Mashtal online</a>
     </div>
     <div class="footer-right">
 
@@ -64,6 +75,7 @@
 </footer>
 </div>
 </div>
+  {{-- <script src="{{ asset('index.js') }}"></script> --}}
 
 <!-- General JS Scripts -->
 <script src="{{ asset('admin/assets/modules/jquery.min.js') }}"></script>
@@ -83,7 +95,7 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('admin/assets/js/page/index.js') }}"></script>
-
+ 
 <!-- Template JS File -->
 <script src="{{ asset('admin/assets/js/scripts.js') }}"></script>
 <script src="{{ asset('admin/assets/js/custom.js') }}"></script>
@@ -127,7 +139,7 @@
                     $.ajax({
                         type: 'DELETE',
                         url: deleteUrl,
-                        // dataType: JSON,
+                      data: { '_token': $('meta[name="csrf-token"]').attr('content') },
                         success: function(data) {
 
                             if (data.status == 'success') {
@@ -163,9 +175,8 @@
         $('#myTable').DataTable();
     });
 </script>
-{{-- @stack('scripts') --}}
-            @stack('scripts')
-
+ @stack('scripts') 
+ 
 
 </body>
 

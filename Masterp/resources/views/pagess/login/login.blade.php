@@ -1,8 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>look</title>
+    <title>LOGIN</title>
     <!-- log CSS -->
     <link rel="stylesheet" href="{{ asset('front_end/login.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -25,10 +25,15 @@
 
     <!-- <h2>WELCOME</h2> -->
     <div class="container" id="container">
+<<<<<<< HEAD
         <div id="singipp" class="form-container sign-up-container">
             <form method="POST" action="{{ route('register') }}" >
+=======
+        <div   class="form-container sign-up-container">
+            <form   method="POST" action="{{ route('register') }}">
+>>>>>>> e15611dcaeb2d2a0f21c4258193c530cc0f6703c
                 @csrf
-                <h1>Create Account</h1>
+                <h1 class="h1">Create Account</h1>
                 <!-- <div class="social-container">
                     <a href="#" class="social"><i class="fa-brands fa-facebook-f" style="color: #4b82e2;"></i></a>
                     <a href="#" class="social"><i class="fa-brands fa-linkedin-in" style="color: #2e64c2;"></i></a>
@@ -73,17 +78,22 @@
         <!--sign in here baby  -->
 
 
-        <div id="signinn" class="form-container sign-in-container">
+        <div   class="form-container sign-in-container">
             <!-- <a href="index.html"> <button  type="button" class="btn btn-outline-success" >Back Home</button></a> -->
             <!-- <i  href="index.html" class="fa-solid fa-arrow-left-long" style="color: #94ee58;"></i> -->
 
-
+{{-- 
             <a href="{{ ('/') }}"> <i class="fa fa-arrow-left" aria-hidden="true"
                     style="color: #94ee58; font-size: x-large;"></i>
+<<<<<<< HEAD
             </a>
             <form method="POST" action="{{ route('login') }}"  >
+=======
+            </a> --}}
+            <form method="POST" action="{{ route('login') }}">
+>>>>>>> e15611dcaeb2d2a0f21c4258193c530cc0f6703c
                 @csrf
-                <h1>Sign in</h1>
+                <h1 class="h1">Sign in</h1>
                 <!-- <div class="social-container">
                     <a href="#" class="social"><i class="fa-brands fa-facebook-f" style="color: #4b82e2;"></i></a>
                     <a href="#" class="social"><i class="fa-brands fa-linkedin-in" style="color: #2e64c2;"></i></a>
@@ -143,50 +153,44 @@
         <p class="spase"></p>
     </div>
 
+{{-- 
+         <script>
+   document.addEventListener("DOMContentLoaded", function() {
+    const signUpButton = document.getElementById("signUp");
+    const signInButton = document.getElementById("signIn");
+    const container = document.getElementById("container");
+    const signUpForm = document.getElementById("signUp-form");
+    const signInForm = document.getElementById("signIn-form");
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const signUpButton = document.getElementById("signUp");
-            const signInButton = document.getElementById("signIn");
-            const container = document.getElementById("container");
-            const signUpForm = document.getElementById("signUp-form");
-            const signInForm = document.getElementById("signIn-form");
+    signUpButton.addEventListener("click", () => {
+        container.classList.add("right-panel-active");
+        // Store the state in sessionStorage
+        sessionStorage.setItem("isSignUpActive", "true");
+    });
 
-            signUpButton.addEventListener("click", () => {
-                container.classList.add("right-panel-active");
-                // Store the state in sessionStorage
-                sessionStorage.setItem("isSignUpActive", "true");
-            });
+    signInButton.addEventListener("click", () => {
+        container.classList.remove("right-panel-active");
+        // Remove the state from sessionStorage
+        sessionStorage.removeItem("isSignUpActive");
+    });
 
-            signInButton.addEventListener("click", () => {
-                container.classList.remove("right-panel-active");
-                // Remove the state from sessionStorage
-                sessionStorage.removeItem("isSignUpActive");
-            });
+    // Check if the sign-up form was active before the refresh
+    const isSignUpActive = sessionStorage.getItem("isSignUpActive");
 
-            // Check if the sign-up form was active before the refresh
-            const isSignUpActive = sessionStorage.getItem("isSignUpActive");
+    if (isSignUpActive === "true") {
+        container.classList.add("right-panel-active");
+    }
 
-            if (isSignUpActive === "true") {
-                container.classList.add("right-panel-active");
-            }
-
-            // Handle sign-up and sign-in form submissions as needed
-            signUpForm.addEventListener("submit", function(e) {
-                e.preventDefault();
-                // Handle sign-up form submission logic here
-            });
-
-            signInForm.addEventListener("submit", function(e) {
-                e.preventDefault();
-                // Handle sign-in form submission logic here
-            });
-        });
-    </script>
-
+  
+});
+</script>  --}}
+ 
+ 
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="{{ asset('front_end/login.js') }}"></script>
+
 
     <script src="{{ asset('front_end/login.js') }}"></script>
     <script src="{{ asset('https://code.jquery.com/jquery-3.3.1.slim.min.js') }}"

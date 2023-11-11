@@ -90,7 +90,8 @@
   .uren-form-boxed {
     padding: 30px;
     border-radius: 0;
-    border: 1px solid #e5e5e5;
+    border: 1.5px solid #495057;
+;
   }
   
   .uren-form .uren-form-inner,
