@@ -29,8 +29,7 @@
                                             <div class="row">
                                                 <div class="col-xl-3">
                                                     <div class="mb-3 ">
-                                                        <img id="showImage" width="100px"
-                                                            src="{{ url('front_end/no-category-image.jpg') }}">
+                                                        <img id="showImage" width="100px" src="{{ url('front_end/no-category-image.jpg') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-5">
@@ -64,7 +63,7 @@
                                                             id="inputAddress" placeholder="EX: 077 777 7777">
                                                     </div>
                                                 </div>
-                                                {{-- 
+{{-- 
 
                                                 <div class="form-group col-md-4">
                                                     <label for="name">Image</label>

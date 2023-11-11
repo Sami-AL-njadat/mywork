@@ -20,9 +20,6 @@
                             <div class="card-header">
                                 <h4>Create user</h4>
                             </div>
-
-
-
                             <div class="card-body p-0">
                                 <form action="{{ route('users.update', $users->id) }}" method="POST"
                                     enctype="multipart/form-data">

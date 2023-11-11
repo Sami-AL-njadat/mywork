@@ -35,12 +35,12 @@
 
 <body>
     <!-- Preloader -->
-    {{-- <div class="preloader d-flex align-items-center justify-content-center">
+    <div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-circle"></div>
         <div class="preloader-img">
             <img src="{{ asset('front_end/img/core-img/leaf.png') }}" alt="" />
         </div>
-    </div> --}}
+    </div>
 
 
 
@@ -66,7 +66,20 @@
 
                             <!-- Top Header Content -->
                             <div class="top-header-meta d-flex">
-                           
+                                <!-- Language Dropdown -->
+                                 {{-- <div class="language-dropdown">
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle mr-30" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="#">USA</a>
+                                            <a class="dropdown-item" href="#">UK</a>
+                                            <a class="dropdown-item" href="#">Bangla</a>
+                                            <a class="dropdown-item" href="#">Hindi</a>
+                                            <a class="dropdown-item" href="#">Spanish</a>
+                                            <a class="dropdown-item" href="#">Latin</a>
+                                        </div>
+                                    </div>
+                                </div> --}}
                                 <!-- Login -->
                                 <div class="login">
                                     <a href="login.html"><i class="fa fa-user" style="font-size: 25px; "
@@ -76,16 +89,12 @@
 
 
                                 </div>
-
-                                {{-- liveware --}}
                                 <!-- Cart -->
-                                {{-- <div class="cart">
+                                <div class="cart">
                                     <a href="{{ route('cart.index') }}"><i class="fa fa-shopping-cart"
                                             style="font-size: 25px;" aria-hidden="true"></i>
-                                        <span>Cart <span class="cart-quantity">(1)</span></span></a>
-                                </div> --}}
-
-                                @livewire('cart-iqoun')
+                                        <span>Cart <span class="cart-quantity">(5)</span></span></a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -106,7 +115,8 @@
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
-                         </div>
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
 
                         <!-- Menu -->
                         <div class="classy-menu">
@@ -205,7 +215,16 @@
                                 <ul>
 
                                     <li style="margin-top: -6px">
-                                   @livewire('cart-iqoun')
+                                        <a href="{{ route('cart.index') }}"><i class="fa fa-shopping-cart"
+                                                style="font-size: 25px;" aria-hidden="true"></i>
+                                            <span>Cart <span class="cart-quantity">(0)</span></span></a>
+
+                                    </li>
+
+                                                       <li style="margin-top: -6px">
+                                        <a href="{{ route('wishlist.index') }}"><i class="fa fa-heart"
+                                                style="font-size: 25px;" aria-hidden="true"></i>
+                                            <span>wish <span class="cart-quantity">(0)</span></span></a>
 
                                     </li>
 

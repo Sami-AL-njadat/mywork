@@ -25,13 +25,8 @@
 
     <!-- <h2>WELCOME</h2> -->
     <div class="container" id="container">
-<<<<<<< HEAD
-        <div id="singipp" class="form-container sign-up-container">
-            <form method="POST" action="{{ route('register') }}" >
-=======
         <div   class="form-container sign-up-container">
             <form   method="POST" action="{{ route('register') }}">
->>>>>>> e15611dcaeb2d2a0f21c4258193c530cc0f6703c
                 @csrf
                 <h1 class="h1">Create Account</h1>
                 <!-- <div class="social-container">
@@ -85,13 +80,8 @@
 {{-- 
             <a href="{{ ('/') }}"> <i class="fa fa-arrow-left" aria-hidden="true"
                     style="color: #94ee58; font-size: x-large;"></i>
-<<<<<<< HEAD
-            </a>
-            <form method="POST" action="{{ route('login') }}"  >
-=======
             </a> --}}
             <form method="POST" action="{{ route('login') }}">
->>>>>>> e15611dcaeb2d2a0f21c4258193c530cc0f6703c
                 @csrf
                 <h1 class="h1">Sign in</h1>
                 <!-- <div class="social-container">

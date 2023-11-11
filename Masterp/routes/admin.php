@@ -32,9 +32,6 @@ Route::resource('orders', OrderItemsController::class)->middleware('isLoggedIn')
 // Route::post('/loginadmin', [AdminLoginController::class,'login'])->name('loginadmin');
 
 
-Route::post('/login/admin', [AdminLoginController::class,'login'])->name('loginadmin');
- 
-
 Route::get('admin/login', [AdminLoginController::class, 'index'])->name('admin.login');
 Route::post('loginprocess', [AdminLoginController::class, 'login'])->name('loginprocess');
 

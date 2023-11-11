@@ -31,49 +31,12 @@
         <h1 style="margin-left:35%; height: 250px;">No items in the cart</h1>
     @else
         <div class="cart-area section-padding-0-100 clearfix">
-<<<<<<< HEAD
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="cart-table clearfix">
-                        <table class="table table-responsive">
-                            <thead>
-                                <tr>
-                                    <th>Products</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>TOTAL</th>
-                                    <th>Delete</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {{-- @dd($products)   --}}
-                                @php
-                               $subtotal = 0;
- 
-                                @endphp
-
-
-                                @php
-                                    
-                                    if (session()->has('discounts')&&session()->get('discounts')!=null) {
-                                        $codedd = session('discounts');
-                                    }
-                                    
-                                @endphp
-
-
-
-                                @foreach ($products as $product)
-=======
             <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="cart-table clearfix">
                             <table class="table table-responsive">
                                 <thead>
->>>>>>> e15611dcaeb2d2a0f21c4258193c530cc0f6703c
                                     <tr>
                                         <th>Products</th>
                                         <th>Quantity</th>

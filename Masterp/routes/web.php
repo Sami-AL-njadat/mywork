@@ -19,9 +19,9 @@ Route::get('/welcome', function () {
     return view('Admin.layout.master');
 });
 
-// Route::get('/adminlog', function () {
-//     return view('Admin.loginadmin.login');
-// });
+Route::get('/adminlog', function () {
+    return view('Admin.loginadmin.login');
+});
 
 Route::get('/indexs', [CategoriesController::class, 'indexCategory'])->name('indexxxs');
 

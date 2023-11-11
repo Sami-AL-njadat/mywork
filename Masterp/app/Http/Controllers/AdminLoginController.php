@@ -37,10 +37,10 @@ class AdminLoginController extends Controller
      */
     public function index()
     {
-        return view('Admin.pages.login.loginAdmin');
+     return view('Admin.pages.login.loginAdmin');
     }
 
-
+   
     /**
      * Show the form for creating a new resource.
      *
@@ -84,14 +84,14 @@ class AdminLoginController extends Controller
             $adminsCount = admins::whereNotNull('id')->count();
             // Count the number of projects
             $productsCount = products::whereNotNull('id')->count();
-
-            $incomeCount = orders::sum('totalPrice');
+            
+            $incomeCount =orders::sum('totalPrice');
 
             $projects = products::whereNotNull('id')->get(); // Get all projects with a valid 'id'
             //  $budgetsArray = $projects->pluck('budget')->toArray();
 
             //  $totalBudget = array_sum($budgetsArray);
-            return view('Admin.dashboord', compact('admin', 'usersCount', 'adminsCount', 'productsCount', 'incomeCount'));
+              return view('Admin.dashboord', compact('admin', 'usersCount', 'adminsCount', 'productsCount', 'incomeCount'));
         }
     }
 
@@ -198,4 +198,7 @@ class AdminLoginController extends Controller
     {
         //
     }
+
+
+    
 }

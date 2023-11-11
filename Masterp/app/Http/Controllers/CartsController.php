@@ -277,15 +277,13 @@ class CartsController extends Controller
      * @param  \App\Models\carts  $carts
      * @return \Illuminate\Http\Response
      */
-
-     
     public function destroy(Request $request)
     {
         if (auth()->user()) {
             $customerId = auth()->user()->id;
             $productId = $request->id;
 
-            $cart = carts::where('customerId', $customerId) 
+            $cart = carts::where('customerId', $customerId)
                 ->where('id', $productId)
                 ->delete();
         } else {
@@ -300,9 +298,6 @@ class CartsController extends Controller
         }
         return redirect()->back();
     }
-
-
-
     public function add($id)
     {
 
@@ -320,23 +315,27 @@ class CartsController extends Controller
                 session()->put('cart', $cart);
             }
         }
-        session()->flash('success', 'Product Quantity added!');
+        session()->flash('success', 'Product successfully added!');
 
         return redirect()->back();
     }
 
     public function remove($id)
-    { 
+    {
+        // if (auth()->user()) {
+        //     carts::remove($id);
+        // }else{
 
 
         $cart = session()->get('cart');
 
+        // if (isset($cart[$id])) {
         if (auth()->user()) {
             $iduser = auth()->user()->id;
             $cart = carts::where('customerId', $iduser)->where('id', $id)->with('product')->first();
             if ($cart->quantity > 1) {
                 $cart->update(['quantity' => $cart->quantity - 1]);
-                session()->flash('success', 'Product Quantity deducted !');
+                session()->flash('success', 'Product successfully removed!');
             } else {
                 carts::where('customerId', $iduser)->where('id', $id)->with('product');
                 session()->flash('warning', 'you have only 1 product');
@@ -345,13 +344,13 @@ class CartsController extends Controller
             if ($cart[$id]["quantity"] > 1) {
                 $cart[$id]["quantity"] -= 1;
                 session()->put('cart', $cart);
-                session()->flash('success', 'Product Quantity deducted !');
+                session()->flash('success', 'Product successfully removed!');
             } else {
                 session()->forget($cart[$id]);
                 session()->flash('warning', 'you have only 1 product');
             }
         }
-        
+        // }}
 
         return redirect()->back();
     }
