@@ -1,4 +1,5 @@
  @extends('layout.master')
+
  @section('content')
      <div class="breadcrumb-area">
          <!-- Top Breadcrumb Area -->
@@ -84,13 +85,20 @@
                                      <div class="tab-pane fade show active" id="account-dashboard" role="tabpanel"
                                          aria-labelledby="account-dashboard-tab">
                                          <div class="myaccount-dashboard col-12 ">
+                                             <h3>DASHBOARD</h3>
+
                                              @php
                                                  $user = auth()->user();
                                              @endphp
                                              <div class="card-body media align-items-center ">
-                                                 <img src="{{ asset('' . Auth::user()->image) }}"
-                                                     style=" ; padding:10px ;width:150px" alt=""
-                                                     class="d-block ui-w-80">
+                                                 @if (Auth::user()->image)
+                                                     <img src="{{ asset('' . Auth::user()->image) }}"
+                                                         style=" ; padding:10px ;width:150px" alt=""
+                                                         class="d-block ui-w-80">
+                                                 @else
+                                                     <img src="{{ url('front_end/no-category-image.jpg') }}"
+                                                         style="height: 200px;  " alt="" class="d-block ui-w-80 ">
+                                                 @endif
                                                  <div>
                                                      <strong>Hello <b> {{ Auth::user()->name }} </b></strong>
                                                      <strong><span
@@ -116,7 +124,7 @@
                                              <h4 class="small-title">MY ORDERS</h4>
                                              <div class="table-responsive">
                                                  <table class="table table-bordered table-hover">
-                                                     <thead>
+                                                     <thead class="thead-dark">
                                                          <tr>
                                                              <th>Order ID</th>
                                                              <th>Date</th>
@@ -129,12 +137,12 @@
                                                          @php $No = 0; @endphp
                                                          @foreach ($orders as $item)
                                                              @php $No++; @endphp
-                                                             <tr>
+                                                             <tr style="background-color:#000000c4; color:white">
                                                                  <td>{{ $No }}</td>
                                                                  <td>{{ $item->created_at }}</td>
                                                                  <td>{{ $item->totalPrice }}</td>
                                                                  <td>
-                                                                     <button class="btn btn-success view-details-btn"
+                                                                     <button class="btn alazea-btn active view-details-btn"
                                                                          data-order-id="{{ $item->id }}">View
                                                                          Details</button>
                                                                  </td>
@@ -144,8 +152,11 @@
                                                                  style="display: none;">
                                                                  <td colspan="4">
                                                                      <table class="table table-bordered">
-                                                                         <thead>
+                                                                         <thead class="thead-info"
+                                                                             style="background-color:#70c745; color:white">
                                                                              <tr>
+
+
                                                                                  <th>Product Image</th>
                                                                                  <th>Product Name</th>
                                                                                  <th>Price</th>
@@ -157,12 +168,12 @@
                                                                                  <tr>
                                                                                      <td>
                                                                                          @if (isset($items->product))
-                                                                                             <img src="{{ asset('' . $items->product->image1 . '') }}"
+                                                                                             <img src="{{ asset($items->product->image1) }}"
                                                                                                  alt=""
                                                                                                  style="width:80px">
                                                                                          @else
                                                                                              <!-- Provide a default image or handle the case where the product is not set -->
-                                                                                             <img src="{{ asset('path/to/default/image.jpg') }}"
+                                                                                             <img src="{{ url('front_end/no-category-image.jpg') }}"
                                                                                                  alt="Default Image"
                                                                                                  style="width:80px">
                                                                                          @endif
@@ -171,19 +182,18 @@
                                                                                          @if (isset($items->product))
                                                                                              {{ $items->product->productName }}
                                                                                          @else
-                                                                                             N/A
+                                                                                             PRODUCT REMOVE
                                                                                          @endif
                                                                                      </td>
                                                                                      <td>
                                                                                          @if (isset($items->product))
                                                                                              {{ $items->product->price }}
                                                                                          @else
-                                                                                             N/A
+                                                                                             PRICE REMOVE
                                                                                          @endif
                                                                                      </td>
                                                                                      <td>{{ $items->quantity }}
-                                                                                        
-                                                                                    </td>
+                                                                                     </td>
                                                                                  </tr>
                                                                              @endforeach
 
@@ -218,6 +228,7 @@
                                              </div>
                                          </div>
                                      </div>
+
                                      {{-- end form of order  --}}
 
 
@@ -226,10 +237,12 @@
                                      <div class="tab-pane fade" id="account-address" role="tabpanel"
                                          aria-labelledby="account-address-tab">
                                          <div class="myaccount-address">
+                                             <h3>YOUR ADDERSS</h3>
+
                                              <p>The following addresses will be used on the checkout page by default.</p>
                                              <div class="row">
                                                  <table class="table table-bordered">
-                                                     <thead>
+                                                     <thead class="thead-dark">
                                                          <tr>
                                                              <th>Address</th>
                                                              <th>City</th>
@@ -263,17 +276,22 @@
                                                  enctype="multipart/form-data" class="uren-form">
                                                  @csrf
                                                  @method('PUT')
-                                                 <h3>CHANGE profile information</h3>
+                                                 <h3>CHANGE PROFILE INFORMATION</h3>
 
                                                  <div class="uren-form-inner">
 
 
                                                      <div class="media-body mt-3">
-
-                                                         <img src="{{ asset('' . Auth::user()->image) }}"
-                                                             style="height: 200px;  " alt=""
-                                                             class="d-block ui-w-80 ">
-
+                                                         @if (Auth::user()->image)
+                                                             <img id="showImage"
+                                                                 src="{{ asset('' . Auth::user()->image) }}"
+                                                                 style="height: 200px;  " alt=""
+                                                                 class="d-block ui-w-80 ">
+                                                         @else
+                                                             <img src="{{ url('front_end/no-category-image.jpg') }}"
+                                                                 style="height: 200px;  " alt=""
+                                                                 class="d-block ui-w-80 ">
+                                                         @endif
                                                          <x-text-input id="image" name="image" type="file"
                                                              class="account-settings-fileinput" :value="old('image', $user->image)" autofocus
                                                              autocomplete="name" />
@@ -412,7 +430,18 @@
 
 
          </div>
-
+         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+         <script>
+             $(document).ready(function() {
+                 $('#image').change(function(e) {
+                     var reader = new FileReader();
+                     reader.onload = function(e) {
+                         $('#showImage').attr('src', e.target.result);
+                     }
+                     reader.readAsDataURL(e.target.files[0]);
+                 })
+             });
+         </script>
 
      </div>
  @endsection

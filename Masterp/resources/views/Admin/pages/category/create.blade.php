@@ -21,20 +21,30 @@
                                 <h4>Create Category</h4>
                             </div>
                             <div class="card-body p-0">
-                                <form 
-                                action="{{ route('category.store') }}"
-                                 method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('POST')
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="form-row">
-                                                <div class="form-group col-md-8">
-                                                    <label for="image">Image</label>
-                                                    <input type="file" name="image" class="form-control" id="image"
-                                                        placeholder="Choose an image">
+
+                                            <div class="row">
+                                                <div class="col-xl-3">
+                                                    <div class="mb-3">
+                                                        <img id="showImage" width="100px"
+                                                            src="{{ url('front_end/no-category-image.jpg') }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-5">
+                                                    <div class="mb-5">
+                                                        <label class="text-dark font-weight-medium"
+                                                            for="">Image</label>
+                                                        <input type="file" class="form-control" name="image"
+                                                            id="image">
+                                                    </div>
                                                 </div>
                                             </div>
+
+
                                             <div class="form-row">
                                                 <div class="form-group col-md-8">
                                                     <label for="name">Name</label>
@@ -46,17 +56,18 @@
                                             <div class="form-row">
                                                 <div class="form-group col-md-8">
                                                     <label for="description">Description</label>
-                                                    <textarea type="text" class="form-control" id="textAreaExample3"  name="description" id="description" placeholder="Enter a description"></textarea>
+                                                    <textarea type="text" class="form-control" id="textAreaExample3" name="description" id="description"
+                                                        placeholder="Enter a description"></textarea>
                                                 </div>
-                                            {{-- </div>class="summernote-simple" --}}
+                                                {{-- </div>class="summernote-simple" --}}
 
 
 
-                                            <div class="card-footer">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                <div class="card-footer">
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -65,4 +76,18 @@
             </div>
         </section>
     </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#image').change(function(e) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#showImage').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            })
+        });
+    </script>
 @endsection

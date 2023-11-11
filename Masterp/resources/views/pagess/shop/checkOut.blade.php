@@ -68,8 +68,8 @@
                                     <label for="city">Town/City *</label>
                                     <input name="city" type="text" class="form-control" id="city" value="">
                                 </div>
-
-                                {{-- <div class="col-md-12 mb-4">
+{{-- 
+                                <div class="col-md-12 mb-4">
                                     <form id="shippingForm" action="{{ route('store-shipment') }}" method="post">
                                         @csrf
                                         <select id="citySelect" class="custom-select" onchange="submitForm()">
@@ -130,11 +130,7 @@
                             <h5>Subtotal</h5>
                             <h5>${{ $subtotal }}</h5>
                         </div>
-                        <div class="shipping d-flex justify-content-between align-items-center">
-                            <h5>Shipping</h5>
-                            <h5 id="shippingPrice">$5.00</h5>
-                        </div>
-                        <div class="shipping d-flex justify-content-between align-items-center">
+                         <div class="shipping d-flex justify-content-between align-items-center">
                             <h5>COUPON</h5>
                             @if (session()->has('discounts') && session()->get('discounts') != null)
                                 <h5>%{{ $codedd }}</h5>
@@ -142,6 +138,24 @@
                                 <h5>$ 0</h5>
                             @endif
                         </div>
+                        <div class="shipping d-flex justify-content-between align-items-center">
+                            <h5>Shipping</h5>
+                            <h5 id="shippingPrice">$5.00</h5>
+                        </div>
+                        {{-- <div class="col-md-6 mb-4">
+                                    <form id="shippingForm" action="{{ route('store-shipment') }}" method="post">
+                                        @csrf
+                                        <select id="citySelect" class="custom-select" onchange="submitForm()">
+                                            <option selected>CITY</option>
+                                            <option value="AJLOUN">AJLOUN</option>
+                                            <option value="AMMAN">AMMAN</option>
+                                            <option value="JARASH">JARASH</option>
+                                            <option value="IRBID">IRBID</option>
+                                        </select>
+                                    </form>
+                                </div> --}}
+
+                       
                         <div class="order-total d-flex justify-content-between align-items-center">
                             <h5>Order Total = </h5>
                             <h5>$ @if (session()->has('discounts') && session()->get('discounts') != null)
@@ -150,7 +164,7 @@
                                 @endif
                             </h5>
                             <input hidden name="total" type="text" class="form-control" id="city" value="@if (session()->has('discounts') && session()->get('discounts') != null)
-                                    {{ $subtotal-($subtotal * $codedd)/100}}
+                                    {{ ($subtotal-($subtotal * $codedd)/100)}}
                                     @else{{ $subtotal }}
                                 @endif">
                         </div>

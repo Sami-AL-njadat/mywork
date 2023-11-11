@@ -27,25 +27,30 @@
                                     @method('PUT') <!-- Use the PUT method for updating -->
 
                                     <div class="card">
-                                        <div class="form-group m-4">
-                                            <label for="image">Current Image</label>
-                                            <br>
-                                            @if ($admin->image)
-                                                <img src="{{ asset($admin->image) }}"
-                                                    style="max-width: 300px; max-height: 200px;" alt="Current Image">
-                                            @else
-                                                <p>No image uploaded.</p>
-                                            @endif
+                                        <div class="row">
+                                            <div class="col-xl-3">
+                                                <div class="mb-3 ml-4">
 
 
-                                              <div class="form-row">
-                                                    <div class="form-group col-md-8">
-                                                        <label for="image">New Image</label>
-                                                        <input type="file" name="image" class="form-control"
-                                                            id="image" accept="image/*">
-                                                    </div>
+                                                    @if ($admin->image)
+                                                        <img id="showImage" src="{{ asset($admin->image) }}"
+                                                            alt="Current Image" style="max-width: 100px; ">
+                                                    @else
+                                                        <img src="{{ url('front_end/no-category-image.jpg') }}">
+                                                    @endif
                                                 </div>
+                                            </div>
+                                            <div class="col-xl-5">
+                                                <div class="mb-5">
+                                                    <label class="text-dark font-weight-medium" for="">Image</label>
+                                                    <input type="file" class="form-control" name="image"
+                                                        id="image">
+                                                </div>
+                                            </div>
                                         </div>
+
+
+
                                         <div class="card-body">
                                             <div class="form-row ">
 
@@ -66,18 +71,18 @@
                                                         value="{{ $admin->email }}">
                                                 </div>
 
-                                              
-                                                
 
 
-                                             
-                                                    <div class="form-group col-md-8">
-                                                        <label for="phone">Phone</label>
-                                                        <input type="tel" name="phone" class="form-control"
-                                                            id="phone" value="{{ $admin->phone }}">
-                                                    </div> 
-                                                    
-                                                    <div class="form-row">
+
+
+
+                                                <div class="form-group col-md-8">
+                                                    <label for="phone">Phone</label>
+                                                    <input type="tel" name="phone" class="form-control" id="phone"
+                                                        value="{{ $admin->phone }}">
+                                                </div>
+
+                                                <div class="form-row">
                                                     {{-- <div class="form-group col-md-6">
                                                         <label for="password">Password</label>
                                                         <input type="password" name="password" class="form-control"
@@ -101,4 +106,18 @@
             </div>
         </section>
     </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#image').change(function(e) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#showImage').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            })
+        });
+    </script>
 @endsection

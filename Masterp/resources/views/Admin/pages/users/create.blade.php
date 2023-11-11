@@ -28,8 +28,8 @@
 
                                             <div class="row">
                                                 <div class="col-xl-3">
-                                                    <div class="mb-3">
-                                                        <img id="showImage" width="100px" src="{{ url('no-image.png') }}">
+                                                    <div class="mb-3 ">
+                                                        <img id="showImage" width="100px" src="{{ url('front_end/no-category-image.jpg') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-5">

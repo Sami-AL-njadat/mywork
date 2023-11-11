@@ -48,8 +48,8 @@ class ProductsController extends Controller
             'name' => ['required', 'max:255'],
             'Sdescription' => ['required', 'max:255'],
             'Ldescription' => ['required', 'max:1000'],
-            'price' => ['required', 'min:0'],
-            'stockqty' => ['required', 'integer', 'min:0'],
+            'price' => ['required', 'min:0', 'max:4'],
+            'stockqty' => ['required', 'integer','min:0', 'max:4'],
             'status' => ['string'], // Assuming status can be 0 or 1
             'categoryId' => ['required', 'integer'],
             'image1' => ['required','image', 'max:4192'],

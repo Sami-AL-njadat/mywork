@@ -222,7 +222,7 @@
                                     </li>
 
                                                        <li style="margin-top: -6px">
-                                        <a href="{{ route('wishlist.index') }}"><i class="fa fa-shopping-cart"
+                                        <a href="{{ route('wishlist.index') }}"><i class="fa fa-heart"
                                                 style="font-size: 25px;" aria-hidden="true"></i>
                                             <span>wish <span class="cart-quantity">(0)</span></span></a>
 
