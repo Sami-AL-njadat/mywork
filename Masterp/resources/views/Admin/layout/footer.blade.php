@@ -1,4 +1,4 @@
-<footer class="main-footer">
+{{-- <footer class="main-footer">
     <div class="footer-left">
         Copyright &copy; 2023 <div class="bullet"></div> Design By <a href="#">Mashtal onlian</a>
     </div>
@@ -108,9 +108,9 @@
     });
 </script>
 {{-- @stack('scripts') --}}
-            @stack('scripts')
+            {{-- @stack('scripts') --}}
 
 
-</body>
+{{-- </body> --}}
 
-</html>
+{{-- </html> --}} --}}

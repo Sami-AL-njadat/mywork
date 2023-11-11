@@ -30,10 +30,10 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        carts::where('customerId', auth()->user()->id)->delete();
+        carts::where('customerId', auth()->user()->id) ;
 
         $sessioncart = session('cart');
-
+ 
 if (isset($sessioncart)) {
 
             foreach ($sessioncart as $product) {

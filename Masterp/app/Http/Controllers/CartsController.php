@@ -77,7 +77,6 @@ class CartsController extends Controller
                     'customerId' => $iduser,
                     'productId' => $productId,
                     'quantity' => 1,
-
                 ]);
             }
         } else {
@@ -269,13 +268,15 @@ class CartsController extends Controller
      * @param  \App\Models\carts  $carts
      * @return \Illuminate\Http\Response
      */
+
+     
     public function destroy(Request $request)
     {
         if (auth()->user()) {
             $customerId = auth()->user()->id;
             $productId = $request->id;
 
-            $cart = carts::where('customerId', $customerId)
+            $cart = carts::where('customerId', $customerId) 
                 ->where('id', $productId)
                 ->delete();
         } else {
@@ -290,6 +291,9 @@ class CartsController extends Controller
         }
         return redirect()->back();
     }
+
+
+
     public function add($id)
     {
 
@@ -307,66 +311,39 @@ class CartsController extends Controller
                 session()->put('cart', $cart);
             }
         }
-        session()->flash('success', 'Product successfully added!');
+        session()->flash('success', 'Product Quantity added!');
 
         return redirect()->back();
     }
 
     public function remove($id)
-    {
-        // if (auth()->user()) {
-        //     carts::remove($id);
-        // }else{
+    { 
 
 
         $cart = session()->get('cart');
 
-        // if (isset($cart[$id])) {
         if (auth()->user()) {
             $iduser = auth()->user()->id;
             $cart = carts::where('customerId', $iduser)->where('id', $id)->with('product')->first();
             if ($cart->quantity > 1) {
                 $cart->update(['quantity' => $cart->quantity - 1]);
-                session()->flash('success', 'Product successfully removed!');
+                session()->flash('success', 'Product Quantity deducted !');
             } else {
-                carts::where('customerId', $iduser)->where('id', $id)->with('product')->delete();
-                session()->flash('success', 'you have only 1 product');
+                // carts::where('customerId', $iduser)->where('id', $id)->with('product')->delete();
+                session()->flash('success', 'you have only 1 product ');
             }
         } else {
             if ($cart[$id]["quantity"] > 1) {
                 $cart[$id]["quantity"] -= 1;
                 session()->put('cart', $cart);
-                session()->flash('success', 'Product successfully removed!');
+                session()->flash('success', 'Product Quantity deducted !');
             } else {
-                session()->unset($cart[$id]);
-                session()->flash('success', 'you have only 1 product');
+                session()->forget($cart[$id]);
+                session()->flash('warning','you have only 1 product if you want to delet click on X');
             }
         }
-        // }}
+        
 
         return redirect()->back();
-    }
-    // public function updateShippingCost(Request $request)
-    // {
-    //     $city = $request->input('city');
-    //     $shippingCosts = [
-    //         'AJLOUN' => 0.5,
-    //         'AMMAN' => 5,
-    //         'JARASH' => 5,
-    //         'IRBID' => 3,
-    //     ];
-
-    //     // Calculate the updated total
- 
-    //     // Store the updated total in the session
-    //     session()->put();
-
-    //     return redirect()->route('cart.index');
-    // }
-
-
-
-
+    } 
 }
-
-

@@ -1,4 +1,4 @@
-@extends('admin.layout.master')
+@extends('Admin.layout.master')
 
 @section('content')
     <!-- Main Content -->
@@ -21,9 +21,7 @@
                                 <h4>Create user</h4>
                             </div>
                             <div class="card-body p-0">
-                                <form 
-                                action="{{ route('users.store') }}" 
-                                method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="card">
                                         <div class="card-body">
@@ -35,37 +33,51 @@
                                                 </div>
                                                 <div class="form-group col-md-6">
                                                     <label for="location">email</label>
-                                                    <input type="email" name="email" class="form-control"
-                                                        id="location" placeholder="Enter email">
+                                                    <input type="email" name="email" class="form-control" id="location"
+                                                        placeholder="Enter email">
                                                 </div>
-                                            </div>
- 
- 
-                                        
 
- 
-{{-- 
-                                            <div class="form-row">
+
+
                                                 <div class="form-group col-md-6">
-                                                    <label for="image">Image</label>
-                                                    <input type="file" name="image" class="form-control" id="image"
-                                                        placeholder="Choose an image" accept="image/*">
+                                                    <div class="form-group">
+                                                        <label for="phone">Phone</label>
+                                                        <input type="tel" name="phone" class="form-control"
+                                                            id="inputAddress" placeholder="EX: 077 777 7777">
+                                                    </div>
                                                 </div>
-                                            </div> --}}
-
-                            
 
 
-                                            {{-- ------------------- Optional ------------------ --}}
-                                           
+                                                <div class="form-group col-md-4">
+                                                    <label for="name">Image</label>
+                                                    <input type="file" name="image" class="form-control"
+                                                        id="inputEmail4">
+                                                </div>
 
-               
-                                           
-                                    </div>
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
 
-                                    </div>
+                                                  <div class="form-group col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="password">Password</label>
+                                                        <input type="password" name="password" class="form-control" id="inputAddress"
+                                                            placeholder="Password">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+
+
+
+
+
+
+
+                                        </div>
+                                        <div class="card-footer">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+
+                                        </div>
                                 </form>
                             </div>
                         </div>

@@ -26,7 +26,7 @@
     <!-- <h2>WELCOME</h2> -->
     <div class="container" id="container">
         <div id="singipp" class="form-container sign-up-container">
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('register') }}" >
                 @csrf
                 <h1>Create Account</h1>
                 <!-- <div class="social-container">
@@ -81,7 +81,7 @@
             <a href="{{ ('/') }}"> <i class="fa fa-arrow-left" aria-hidden="true"
                     style="color: #94ee58; font-size: x-large;"></i>
             </a>
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('login') }}"  >
                 @csrf
                 <h1>Sign in</h1>
                 <!-- <div class="social-container">

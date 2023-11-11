@@ -48,13 +48,20 @@ class UsersController extends Controller
 
         $request->validate([
             'name' => ['required', 'max:30'],
-            'email' => ['required', 'email']
+            'email' => ['required', 'email'],
+            'image' => ['required', 'image', 'max:4192'],
+            'phone' => ['required', 'digits:10'],
+            'password' => ['required'],
 
         ]);
         $users = new User();
+        $imagePath = $this->uploadImage($request, 'image', 'uploads');
+        $users->image = $imagePath;
+
         $users->name = $request->name;
         $users->email = $request->email;
-        $users->password = Hash::make('password');
+        $users->phone = $request->phone;
+        $users->password = bcrypt($request->password);
         $users->save();
         return redirect()->route('users.index');
     }
@@ -95,12 +102,20 @@ class UsersController extends Controller
 
         $request->validate([
             'name' => ['required', 'max:30'],
-            'email' => ['required', 'email']
+            'email' => ['required', 'email'],
+            'phone' => ['nullable', 'digits:10'],
+           'image' => ['nullable', 'image', 'max:4192'],
+
 
         ]);
         $users =  User::findOrFail($id);
+        $imagePath = $this->updateImage($request, 'image', 'uploads', $users->image);
+        $users->image = empty(!$imagePath) ? $imagePath : $users->image;
+
         $users->name = $request->name;
         $users->email = $request->email;
+        $users->phone = $request->phone;
+
         $users->save();
         return redirect()->route('users.index');
     }

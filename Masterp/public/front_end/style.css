@@ -17,7 +17,24 @@ Version: - v1.0
 @import url(css/font-awesome.min.css);
 @import url(css/elegant-icon.css);
 /* :: 3.0 Base CSS */
+ .count{
+   
+    position: absolute;
+    z-index: 2;
+    top: 15px;
+    /* right: 0; */
+    border-radius: 50%;
+    background: #4bd60b;
+    width: 19px;
+    height: 19px;
+    line-height: 20px;
+    display: block;
+    text-align: center;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
 
+ }
 
 
 #flash-message {

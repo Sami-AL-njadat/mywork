@@ -9,12 +9,9 @@
                     <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
                        
 
-                        <div class="card card-primary" 
-                        {{-- style="background-color: #37a40b" --}}
-                        >
+                        <div class="card card-primary" >
                             <div class="card-header">
-                                    <img style="width: 100px; border-radius: 50%;  margin: auto;
-"
+                                    <img style="width: 100px; border-radius: 50%;  margin: auto;"
                                 src="{{ asset('front_end/img/core-img/LOGOss.PNG') }}" alt="logo">
                             </div>
 
@@ -51,11 +48,11 @@
                                         <div class="form-group">
                                             <div class="d-block">
                                                 <label for="password" class="control-label">Password</label>
-                                                <div class="float-right">
+                                                {{-- <div class="float-right">
                                                     <a href="{{ route('password.request') }}" class="text-small">
                                                         Forgot Password?
                                                     </a>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                             <input id="password" type="password" class="form-control" name="password"
                                                 {{ old('password') }} tabindex="2">
@@ -83,21 +80,7 @@
                                             </button>
                                         </div>
                                     </form>
-                                    {{-- <div class="text-center mt-4 mb-3">
-                                        <div class="text-job text-muted">Login With Social</div>
-                                    </div> --}}
-                                    {{-- <div class="row sm-gutters">
-                                        <div class="col-6">
-                                            <a class="btn btn-block btn-social btn-facebook">
-                                                <span class="fab fa-facebook"></span> Facebook
-                                            </a>
-                                        </div>
-                                        <div class="col-6">
-                                            <a class="btn btn-block btn-social btn-twitter">
-                                                <span class="fab fa-twitter"></span> Twitter
-                                            </a>
-                                        </div>
-                                    </div> --}}
+                                  
 
                                 </div>
                             </form>

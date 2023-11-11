@@ -35,12 +35,12 @@
 
 <body>
     <!-- Preloader -->
-    <div class="preloader d-flex align-items-center justify-content-center">
+    {{-- <div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-circle"></div>
         <div class="preloader-img">
             <img src="{{ asset('front_end/img/core-img/leaf.png') }}" alt="" />
         </div>
-    </div>
+    </div> --}}
 
 
 
@@ -66,20 +66,7 @@
 
                             <!-- Top Header Content -->
                             <div class="top-header-meta d-flex">
-                                <!-- Language Dropdown -->
-                                 {{-- <div class="language-dropdown">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle mr-30" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Language</button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href="#">USA</a>
-                                            <a class="dropdown-item" href="#">UK</a>
-                                            <a class="dropdown-item" href="#">Bangla</a>
-                                            <a class="dropdown-item" href="#">Hindi</a>
-                                            <a class="dropdown-item" href="#">Spanish</a>
-                                            <a class="dropdown-item" href="#">Latin</a>
-                                        </div>
-                                    </div>
-                                </div> --}}
+                           
                                 <!-- Login -->
                                 <div class="login">
                                     <a href="login.html"><i class="fa fa-user" style="font-size: 25px; "
@@ -89,12 +76,16 @@
 
 
                                 </div>
+
+                                {{-- liveware --}}
                                 <!-- Cart -->
-                                <div class="cart">
+                                {{-- <div class="cart">
                                     <a href="{{ route('cart.index') }}"><i class="fa fa-shopping-cart"
                                             style="font-size: 25px;" aria-hidden="true"></i>
                                         <span>Cart <span class="cart-quantity">(1)</span></span></a>
-                                </div>
+                                </div> --}}
+
+                                @livewire('cart-iqoun')
                             </div>
                         </div>
                     </div>
@@ -115,8 +106,7 @@
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
-                            <span class="navbarToggler"><span></span><span></span><span></span></span>
-                        </div>
+                         </div>
 
                         <!-- Menu -->
                         <div class="classy-menu">
@@ -201,10 +191,10 @@
                                         </li>
                                     @else
                                         <li><a class="btn alazea-btn mr-30" href="{{ route('login') }}"
-                                                class="">Login</a></li>
+                                                class="">Login </a></li>
                                         @if (Route::has('register'))
                                             <li><a class="btn alazea-btn active" href="{{ route('login') }}"
-                                                    class="">Register</a></li>
+                                                    class=""> Register</a></li>
                                         @endif
                                     @endauth
                                 @endif
@@ -215,9 +205,7 @@
                                 <ul>
 
                                     <li style="margin-top: -6px">
-                                        <a href="{{ route('cart.index') }}"><i class="fa fa-shopping-cart"
-                                                style="font-size: 25px;" aria-hidden="true"></i>
-                                            <span>Cart <span class="cart-quantity">(1)</span></span></a>
+                                   @livewire('cart-iqoun')
 
                                     </li>
 

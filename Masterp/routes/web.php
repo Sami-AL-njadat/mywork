@@ -25,9 +25,9 @@ Route::get('/welcome', function () {
     return view('Admin.layout.master');
 });
 
-Route::get('/adminlog', function () {
-    return view('Admin.loginadmin.login');
-});
+// Route::get('/adminlog', function () {
+//     return view('Admin.loginadmin.login');
+// });
 
 Route::get('/indexs', [CategoriesController::class, 'indexCategory'])->name('indexxxs');
 
@@ -47,9 +47,9 @@ Route::get('/indexs', [CategoriesController::class, 'indexCategory'])->name('ind
 
 
 
-Route::get('/dash', function () {
-    return view('Admin.bashboord');
-})->name('dash')->middleware('isLoggedIn');
+// Route::get('/dash', function () {
+//     return view('Admin.bashboord');
+// })->name('dash')->middleware('isLoggedIn');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

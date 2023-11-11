@@ -39,6 +39,7 @@ class AdminLoginController extends Controller
         return view('Admin.pages.login.loginAdmin');
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -52,31 +53,27 @@ class AdminLoginController extends Controller
         ]);
 
         $admin = admins::where('email', $request->email)->first();
-        // dd($user);
+
         if ($admin) {
             if (Hash::check($request->password, $admin->password)) {
-                // session(['admin_id' => $admin->id]);
                 $request->session()->put('loginId', $admin->id);
                 session()->put('loginname', $admin->name);
                 session()->put('loginimage', $admin->image);
 
-
-                return redirect()->route('dash');
+                return redirect()->route('admin.dashboard');
             } else {
                 return back()->with('fail', 'Password incorrect');
             }
-            // return view('admin/dashboard', ['admin' => $admin]);
         } else {
-            // return
-            //     redirect('admin/login')->with('fail', 'This email is not registered');
             return back()->with('fail', 'This email is not registered');
         }
     }
 
+
     public function dashboard()
     {
-
         $admin = array();
+
         if (Session::has('loginId')) {
             $admin = admins::where('id', Session::get('loginId'))->first();
 
@@ -85,7 +82,7 @@ class AdminLoginController extends Controller
             // Count the number of admins
             $adminsCount = admins::whereNotNull('id')->count();
             // Count the number of projects
-            $projectsCount = products::whereNotNull('id')->count();
+            $productsCount = products::whereNotNull('id')->count();
 
             // Concatenate 'budget' in all projects
             $projects = products::whereNotNull('id')->get(); // Get all projects with a valid 'id'
@@ -94,46 +91,42 @@ class AdminLoginController extends Controller
 
             // Calculate the sum of 'budget' values
             $totalBudget = array_sum($budgetsArray);
-            return view('Admin.bashboord', compact('admin', 'usersCount', 'adminsCount', 'projectsCount', 'totalBudget'));
+            //  dd(Session('loginimage'));   
+            return view('Admin.dashboord', compact('admin', 'usersCount', 'adminsCount', 'productsCount', 'totalBudget'));
         }
     }
+
 
 
 
     public function noe(Request $request, $id)
     {
 
-        // // Find the user with the specified ID
-        // $admin = Admin::find($id);
+        // Find the user with the specified ID
+        $admin = admins::find($id);
 
-        // if ($admin) {
-        //     // Log out the user
-        //     // Auth::guard()->logout();
-        //     $this->guard()->logout();
+        if ($admin) {
+            // Log out the user
+            // Auth::guard()->logout();
+            $this->guard()->logout();
 
 
-        //     // Invalidate the session
-        //     $request->session()->invalidate();
+            // Invalidate the session
+            $request->session()->invalidate();
 
-        //     // Redirect to the login page
-        //     return $this->loggedOut($request) ?: redirect('admin/login');
-        // } else {
-        //     // User with the specified ID not found, handle the error
-        //     // You can return a response or redirect to an error page
-        //     // Example:
-        //     return redirect()->back()->with('error', 'User not found.');
-        // }
+            // Redirect to the login page
+            return $this->loggedOut($request) ?: redirect('admin/login');
+        } else {
+            // User with the specified ID not found, handle the error
+            // You can return a response or redirect to an error page
+            // Example:
+            return redirect()->back()->with('error', 'User not found.');
+        }
     }
 
     public function logout(Request $request)
     {
-        // Auth::guard('web')->logout();
 
-        // $request->session()->invalidate();
-
-        // $request->session()->regenerateToken();
-
-        // return redirect('admin/login');
         if (Session::has('loginId')) {
             session::pull('loginId');
             return redirect('admin/login');
