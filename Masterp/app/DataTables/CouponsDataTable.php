@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\admins;
+use App\Models\coupons;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AdminsDataTable extends DataTable
+class CouponsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -24,8 +24,8 @@ class AdminsDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $editBtn = "<a href='" . route('admins.edit', $query->id) . "' class='btn btn-success'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href='" . route('admins.destroy', $query->id) . "' class='btn btn-danger my-2 delete-item'><i class='fas fa-trash-alt'></i></a>";
+                $editBtn = "<a href='" . route('coupons.edit', $query->id) . "' class='btn btn-success'><i class='far fa-edit'></i></a>";
+                $deleteBtn = "<a href='" . route('coupons.destroy', $query->id) . "' class='btn btn-danger my-2 delete-item'><i class='fas fa-trash-alt'></i></a>";
 
                 return $editBtn . $deleteBtn;
             })
@@ -34,16 +34,15 @@ class AdminsDataTable extends DataTable
             })
             ->rawColumns(['action', 'image'])
             ->setRowId('id');
-
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\admins $model
+     * @param \App\Models\coupons $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(admins $model): QueryBuilder
+    public function query(coupons $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -56,10 +55,10 @@ class AdminsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('admins-table')
+                    ->setTableId('coupons-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
+                    // ->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
@@ -80,17 +79,17 @@ class AdminsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            
             Column::make('id'),
-            Column::make('name'),
-            Column::make('image'),
-            Column::make('email'),
-            Column::make('phone'),
+            Column::make('discount'),
+            Column::make('couponName'),
+            Column::make('beginning'),
+            Column::make('ending'),
             Column::computed('action')
-            ->exportable(false)
-            ->printable(false)
-            ->width(60)
-            ->addClass('text-center'),
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(60)
+                  ->addClass('text-center'),
+     
         ];
     }
 
@@ -101,6 +100,6 @@ class AdminsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Admins_' . date('YmdHis');
+        return 'Coupons_' . date('YmdHis');
     }
 }

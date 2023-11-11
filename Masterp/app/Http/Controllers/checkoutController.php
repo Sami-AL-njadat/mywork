@@ -12,6 +12,7 @@ use App\Models\shipments;
 
 
 use App\Models\User;
+use App\Models\wishlists;
 use Illuminate\Support\Facades\Auth;
 
 class checKoutController extends Controller
@@ -131,8 +132,8 @@ class checKoutController extends Controller
 
         ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
+        // $user->name = $request->name;
+        // $user->email = $request->email;
         $user->phone = $request->phone;
         $user->update();
 
@@ -206,7 +207,10 @@ class checKoutController extends Controller
                     "orderId" => $order->id,
                     "customerId" => Auth::user()->id,
                     "productId" => $product->productId,
+                    
                 ]);
+                wishlists::where('productId', $product->product->id)->where('customerId', Auth::user()->id)->delete();
+
                 $product->delete();
             }
         }
@@ -244,8 +248,12 @@ class checKoutController extends Controller
                     "orderId" => $order->id,
                     "customerId" => Auth::user()->id,
                     "productId" => $product->productId,
+
                 ]);
+                // dd($product->id);    
+                 wishlists::where('productId', $product->product->id)->where('customerId', Auth::user()->id)->delete();
                 $product->delete();
+
             }
             return redirect()->route('home')->with('success', 'Thank you for your purchase. Your order will be shipped to you soon.!');
         } else {
@@ -255,7 +263,8 @@ class checKoutController extends Controller
 
     public function cancel()
     {
-        return view('pagess.contact.contact');
+
+        return redirect()->route('show.contact')->with('error' , 'Your Payment By PayPal Has Been Canceled');
     }
 }
 

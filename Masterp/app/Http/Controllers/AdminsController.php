@@ -7,6 +7,8 @@ use App\Models\admins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Illuminate\Database\QueryException;
 
 use App\Traits\ImageUploadTrait;
 
@@ -56,12 +58,40 @@ class AdminsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'image' => ['required', 'image', 'max:4192'],
+    //         'name' => ['required', 'max:20'],
+    //         'email' => ['required', 'email'],
+    //         'phone' => ['required', 'digits:10'],
+    //         'password' => ['required'],
+    //     ]);
+
+    //     $admin = new admins();
+
+    //     $imagePath = $this->uploadImage($request, 'image', 'uploads');
+
+    //     $admin->image = $imagePath;
+    //     $admin->name = $request->name;
+    //     $admin->email = $request->email;
+    //     $admin->phone = $request->phone;
+    //     $admin->password = Hash::make($request->password);
+
+    //     $admin->save();
+
+    //     toastr('Admin Created Successfully', 'success');
+    //     return redirect()->route('admins.index');
+    // }
+
+
+
     public function store(Request $request)
     {
         $request->validate([
             'image' => ['required', 'image', 'max:4192'],
             'name' => ['required', 'max:20'],
-            'email' => ['required', 'email', 'unique:users,email'],
+            'email' => ['required', 'email', Rule::unique('admins')],
             'phone' => ['required', 'digits:10'],
             'password' => ['required'],
         ]);
@@ -74,14 +104,28 @@ class AdminsController extends Controller
         $admin->name = $request->name;
         $admin->email = $request->email;
         $admin->phone = $request->phone;
-        $admin->password = bcrypt($request->password);
+        $admin->password = Hash::make($request->password);
 
-        // $admin->password = Hash::make('password');
-        $admin->save();
-
-        toastr('Updated Successfully', 'success');
-        return redirect()->route('admins.index');
+        try {
+            $admin->save();
+            toastr('Admin Created Successfully', 'success');
+            return redirect()->route('admins.index');
+        } catch (QueryException $e) {
+            // Check if the exception is due to a unique constraint violation
+            if ($e->errorInfo[1] == 1062) {
+                toastr('Email already exists for admin', 'error');
+                return redirect()->route('admins.index');
+            } else {
+                // Handle other database-related errors if needed
+                toastr('Error saving admin', 'error');
+                return redirect()->route('admins.index');
+            }
+        }
     }
+
+
+
+
 
     /**
      * Display the specified resource.
@@ -134,47 +178,38 @@ class AdminsController extends Controller
         $request->validate([
             'image' => ['image', 'max:4192'],
             'name' => ['required', 'max:20'],
-            'email' => ['required', 'email', 'unique:users,email'],
             'phone' => ['required', 'digits:10'],
         ]);
 
-        // Check if the admin with the given email already exists
-        $admin = admins::where('id', $id)->first();
+        $admin = admins::find($id);
 
-        // If an admin with the email exists, it's an update; otherwise, create a new admin
-        if ($admin) {
-            // Perform update
-            if ($request->hasFile('image')) {
-                // Update image if a new one is provided
-                $imagePath = $this->uploadImage($request, 'image', 'uploads');
-                $admin->image = $imagePath;
-                session(['loginimage' => $imagePath]);
-            }
-
-            $admin->name = $request->name;
-            session(['loginname' => $admin->name]);
-
-            $admin->phone = $request->phone;
-
-            // You can update the password if needed
-            // $admin->password = Hash::make($request->password);
-        } else {
-            // Perform create
-            $imagePath = $this->uploadImage($request, 'image', 'uploads');
-
-            $admin = new admins();
-            $admin->image = $imagePath;
-            $admin->name = $request->name;
-            $admin->email = $request->email;
-            $admin->phone = $request->phone;
-            $admin->password = bcrypt($request->password);
+        if (!$admin) {
+            return redirect()->route('admins.index')->with('error', 'Admin not found');
         }
+
+        // Check if the admin being updated is the same as the one currently logged in
+        if ($admin->id !== session('loginId')) {
+            return redirect()->route('admins.index')->with('error', 'Unauthorized');
+        }
+
+        // Update the admin's information
+        if ($request->hasFile('image')) {
+            $imagePath = $this->uploadImage($request, 'image', 'uploads');
+            $admin->image = $imagePath;
+            session(['loginimage' => $imagePath]);
+        }
+
+        $admin->name = $request->name;
+        session(['loginname' => $admin->name]);
+
+        $admin->phone = $request->phone;
 
         $admin->save();
 
-        toastr('Admin ' . ($admin ? 'Updated' : 'Created') . ' Successfully', 'success');
+        toastr('Admin Updated Successfully', 'success');
         return redirect()->route('admins.index');
     }
+
 
     /**
      * Remove the specified resource from storage.

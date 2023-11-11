@@ -55,14 +55,14 @@
                             <!-- Top Header Content -->
 
                             <!-- كومنت على الايمل  -->
-                            <div class="top-header-meta">
+                            {{-- <div class="top-header-meta">
                                 <a href="#" data-toggle="tooltip" data-placement="bottom"
                                     title="infodeercreative@gmail.com"><i class="fa fa-envelope-o"
                                         aria-hidden="true"></i> <span>Email: infodeercreative@gmail.com</span></a>
                                 <a href="#" data-toggle="tooltip" data-placement="bottom"
                                     title="+1 234 122 122"><i class="fa fa-phone" aria-hidden="true"></i> <span>Call Us:
                                         +1 234 122 122</span></a>
-                            </div>
+                            </div> --}}
 
                             <!-- Top Header Content -->
                             <div class="top-header-meta d-flex">
@@ -100,7 +100,7 @@
                     <!-- Menu -->
                     <nav class="classy-navbar justify-content-between" id="alazeaNav">
                         <!-- Nav Brand -->
-                        <a href="index.html" class="nav-brand"><img id="navlogo"
+                        <a href="{{ route('home') }}" class="nav-brand"><img id="navlogo"
                                 src="{{ asset('front_end/img/core-img/NEWLOGO-removebg-preview.png') }}"
                                 alt="" /></a>
 
@@ -125,9 +125,9 @@
                                         <a href="#">Pages</a>
                                         <ul class="dropdown">
 
-                                            <li> <a href="{{ route('shop') }}">Shop</a>
+                                            <li> <a href="{{ route('shops') }}">Shop</a>
                                                 <ul class="dropdown">
-                                                    <li><a href="{{ route('shop') }}">Shop</a></li>
+                                                    <li><a href="{{ route('shops') }}">Shop</a></li>
                                                     <li>
                                                         {{-- <a href="{{ route('shopdetai') }}">Shop Details</a> --}}
                                                     </li>
@@ -170,7 +170,7 @@
                                     @auth
                                         <li><a>My Account</a>
                                             <ul class="dropdown text-center">
-                                                <li><a href="{{ route('myacc') }}">Profile</a></li>
+                                                <li><a href="{{ route('profile.edit') }}">Profile</a></li>
 
                                                 <form style="display: inline-block" method="POST" class="nav-item"
                                                     action="{{ route('logout') }}">
@@ -190,11 +190,11 @@
                                             </ul>
                                         </li>
                                     @else
-                                        <li><a class="btn alazea-btn mr-30" href="{{ route('login') }}"
-                                                class="">Login </a></li>
+                                        <li><a class="btn alazea-btn mr-30" href="/login"
+                                                class="">Login</a></li>
                                         @if (Route::has('register'))
-                                            <li><a class="btn alazea-btn active" href="{{ route('login') }}"
-                                                    class=""> Register</a></li>
+                                            <li><a class="btn alazea-btn active" href="{{ url('register') }}"
+                                                    class="">Register</a></li>
                                         @endif
                                     @endauth
                                 @endif

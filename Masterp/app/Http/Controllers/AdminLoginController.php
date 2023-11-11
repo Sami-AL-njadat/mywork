@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\admins;
+use App\Models\orders;
 use App\Models\products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -84,54 +85,63 @@ class AdminLoginController extends Controller
             // Count the number of projects
             $productsCount = products::whereNotNull('id')->count();
 
-            // Concatenate 'budget' in all projects
+            $incomeCount = orders::sum('totalPrice');
+
             $projects = products::whereNotNull('id')->get(); // Get all projects with a valid 'id'
-            // Use the pluck method to extract the 'budget' values as an array
-            $budgetsArray = $projects->pluck('budget')->toArray();
+            //  $budgetsArray = $projects->pluck('budget')->toArray();
 
-            // Calculate the sum of 'budget' values
-            $totalBudget = array_sum($budgetsArray);
-            //  dd(Session('loginimage'));   
-            return view('Admin.dashboord', compact('admin', 'usersCount', 'adminsCount', 'productsCount', 'totalBudget'));
+            //  $totalBudget = array_sum($budgetsArray);
+            return view('Admin.dashboord', compact('admin', 'usersCount', 'adminsCount', 'productsCount', 'incomeCount'));
         }
     }
 
 
 
 
-    public function noe(Request $request, $id)
-    {
+    // public function noe(Request $request, $id)
+    // {
 
-        // Find the user with the specified ID
-        $admin = admins::find($id);
+    //     // Find the user with the specified ID
+    //     $admin = admins::find($id);
 
-        if ($admin) {
-            // Log out the user
-            // Auth::guard()->logout();
-            $this->guard()->logout();
+    //     if ($admin) {
+    //         // Log out the user
+    //         // Auth::guard()->logout();
+    //         $this->guard()->logout();
 
 
-            // Invalidate the session
-            $request->session()->invalidate();
+    //         // Invalidate the session
+    //         $request->session()->invalidate();
 
-            // Redirect to the login page
-            return $this->loggedOut($request) ?: redirect('admin/login');
-        } else {
-            // User with the specified ID not found, handle the error
-            // You can return a response or redirect to an error page
-            // Example:
-            return redirect()->back()->with('error', 'User not found.');
-        }
-    }
+    //         // Redirect to the login page
+    //         return $this->loggedOut($request) ?: redirect('admin/login');
+    //     } else {
+    //         // User with the specified ID not found, handle the error
+    //         // You can return a response or redirect to an error page
+    //         // Example:
+    //         return redirect()->back()->with('error', 'User not found.');
+    //     }
+    // }
+
+    // public function logout(Request $request)
+    // {
+
+    //     if (Session::has('loginId')) {
+    //         session::pull('loginId');
+    //         return redirect('admin/login');
+    //     }
+    // }
+
 
     public function logout(Request $request)
     {
-
         if (Session::has('loginId')) {
-            session::pull('loginId');
-            return redirect('admin/login');
+            Session::forget(['loginId', 'loginname', 'loginimage']);
         }
+
+        return redirect()->route('admin.login');
     }
+
 
 
     /**

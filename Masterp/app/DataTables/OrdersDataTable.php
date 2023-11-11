@@ -2,17 +2,18 @@
 
 namespace App\DataTables;
 
-use App\Models\admins;
+use App\Models\orderItems;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use App\Models\products;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AdminsDataTable extends DataTable
+class OrdersDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -23,27 +24,46 @@ class AdminsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function ($query) {
-                $editBtn = "<a href='" . route('admins.edit', $query->id) . "' class='btn btn-success'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href='" . route('admins.destroy', $query->id) . "' class='btn btn-danger my-2 delete-item'><i class='fas fa-trash-alt'></i></a>";
+            ->addColumn('prouct_name', function ($query) {
+                return $query->product->productName ?? 'N/A';
+            })
 
-                return $editBtn . $deleteBtn;
+            ->addColumn('Price', function ($query) {
+                return $query->product->price ?? 'N/A';
             })
+
+
+            ->addColumn('Price_of_sale', function ($query) {
+                return $query->order->totalPrice ?? 'N/A';
+            })
+
+            ->addColumn('Total_Price', function ($query) {
+                return $query->price ?? 'N/A';
+            })
+
+           
+            ->addColumn('customer_name', function ($query) {
+                return $query->user->name ?? 'N/A'; // Use 'N/A' as a default value if user is null
+            })
+
+            
+            
             ->addColumn('image', function ($query) {
-                return "<img width='100px' src='" . asset($query->image) . "'></img>";
+                return "<img width='100px' src='" . asset($query->product->image1 ?? 'N/A') . "'></img>" ;
             })
-            ->rawColumns(['action', 'image'])
+
+            ->rawColumns([ 'image', 'prouct_name', 'Price', 'Price_of_sale', 'customer_name', 'Total_Price'  ])
             ->setRowId('id');
 
-    }
+     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\admins $model
+     * @param \App\Models\orderItems $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(admins $model): QueryBuilder
+    public function query(orderItems $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -56,10 +76,10 @@ class AdminsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('admins-table')
+                    ->setTableId('orders-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
+                    // ->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
@@ -80,17 +100,24 @@ class AdminsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+           
+            // Column::make('id'),
+            Column::make('prouct_name'),
+            Column::make('Price'),
+            Column::make('quantity'),
+            Column::make('Total_Price'),
+            Column::make('Price_of_sale'),
+            Column::make('orderId'),
+            Column::make('customerId'),
+            Column::make('customer_name'),
             
-            Column::make('id'),
-            Column::make('name'),
             Column::make('image'),
-            Column::make('email'),
-            Column::make('phone'),
-            Column::computed('action')
-            ->exportable(false)
-            ->printable(false)
-            ->width(60)
-            ->addClass('text-center'),
+            // Column::make('Price'),
+            // Column::computed('action')
+            // ->exportable(false)
+            // ->printable(false)
+            // ->width(60)
+            // ->addClass('text-center'),
         ];
     }
 
@@ -101,6 +128,6 @@ class AdminsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Admins_' . date('YmdHis');
+        return 'Product_' . date('YmdHis');
     }
 }

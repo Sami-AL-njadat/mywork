@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\categories;
 use Illuminate\Http\Request;
-use App\Models\Products;
+use App\Models\products;
 use App\Models\reviwes;
+use App\Models\User;
+use App\Models\orders;
 use App\Traits\ImageUploadTrait;
 use App\DataTables\CategoryDataTable;
 use Illuminate\Support\Facades\File;
@@ -17,14 +19,65 @@ class CategoriesController extends Controller
     use ImageUploadTrait;
 
 
+    // public function showProducts(Request $request, $id = null)
+    // {
+    //     $perPage = $request->input('per_page', 6);
+    //     $allcategory = categories::orderBy('categoryName', 'ASC')->get();
+    //     $counts = products::count();
+    //     // $categoryes = Products::where('categoryName')->count();
+
+    //     $category = categories::all();
+
+    //     // Check if the request has filter parameters
+    //     $minPrice = $request->input('min_price');
+    //     $maxPrice = $request->input('max_price');
+
+    //     $query = Products::query();
+
+    //     // Apply price filter if values are provided
+    //     if ($minPrice !== null && $maxPrice !== null) {
+    //         $query->whereBetween('price', [$minPrice, $maxPrice]);
+    //         session()->flash('success', 'parice change ');
+    //     }
+
+    //     // Apply category filter if $id is provided
+    //     if ($id !== null) {
+    //         $query->where('categoryId', $id);
+    //     }
+
+    //     $sort = $request->input('sort', 'az');
+
+    //     if ($sort === 'az') {
+    //         $query->orderBy('productName', 'asc');
+    //     } elseif ($sort === 'za') {
+    //         $query->orderBy('productName', 'desc');
+    //     } elseif ($sort === 'high_price') {
+    //         $query->orderBy('price', 'desc');
+    //     } elseif ($sort === 'low_price') {
+    //         $query->orderBy('price', 'asc');
+    //     }
+
+    //     $newproducts = products::orderBy('created_at', 'desc')->take(3)->get();
+
+    //     $product = $query->paginate($perPage);
+
+    //     return view('pagess.shop.shop', compact('product', 'counts', 'category', 'allcategory', 'newproducts'));
+    // }
+
     public function showProducts(Request $request, $id = null)
     {
         $perPage = $request->input('per_page', 6);
         $allcategory = categories::orderBy('categoryName', 'ASC')->get();
-        $counts = Products::count();
-        // $categoryes = Products::where('categoryName')->count();
+        $counts = products::count();
+        $counts = products::count();
 
         $category = categories::all();
+
+
+        $maxPrices = products::max('price');
+        $minPrices = products::min('price');
+        
+
 
         // Check if the request has filter parameters
         $minPrice = $request->input('min_price');
@@ -35,7 +88,7 @@ class CategoriesController extends Controller
         // Apply price filter if values are provided
         if ($minPrice !== null && $maxPrice !== null) {
             $query->whereBetween('price', [$minPrice, $maxPrice]);
-            session()->flash('success', 'parice change ');
+            session()->flash('success', 'Price changed');
         }
 
         // Apply category filter if $id is provided
@@ -43,9 +96,23 @@ class CategoriesController extends Controller
             $query->where('categoryId', $id);
         }
 
+        $sort = $request->input('sort', 'az');
+
+        if ($sort === 'az') {
+            $query->orderBy('productName', 'asc');
+        } elseif ($sort === 'za') {
+            $query->orderBy('productName', 'desc');
+        } elseif ($sort === 'high_price') {
+            $query->orderBy('price', 'desc');
+        } elseif ($sort === 'low_price') {
+            $query->orderBy('price', 'asc');
+        }
+
+        $newproducts = products::orderBy('created_at', 'desc')->take(3)->get();
+
         $product = $query->paginate($perPage);
 
-        return view('pagess.shop.shop', compact('product', 'counts', 'category', 'allcategory'));
+        return view('pagess.shop.shop', compact('product', 'counts', 'category', 'allcategory', 'newproducts', 'id', 'minPrice', 'maxPrice', 'maxPrices', 'minPrices'));
     }
 
 
@@ -71,13 +138,14 @@ class CategoriesController extends Controller
 
     function shopdetai(Request $request, $id = null)
     {
+        
 
         $allcategory = Categories::orderBy('categoryName', 'ASC')->get();
 
         if ($id !== null) {
-            $product = Products::find($id);
+            $product = products::find($id);
             $review = reviwes::where('productId', $id)->get();
-
+      
             // Retrieve the category name of the selected product
             $selectedCategory = Categories::find($product->categoryId);
 
@@ -86,14 +154,34 @@ class CategoriesController extends Controller
                 ->limit(4)
                 ->get();
 
-            return view('pagess.shop.shopDetailes', compact('product', 'allcategory', 'reproduct', 'selectedCategory' , "review"));
+            $user = auth()->user();
+            $hasBeenBought = false;
+
+            if ($user) {
+                $userOrderItems = $user->orderItems;
+                foreach ($userOrderItems as $orderItem) {
+                    if ($orderItem->productId == $id) {
+                        $hasBeenBought = true;
+                        break;
+                    }
+                }
+            }
+            return view('pagess.shop.shopDetailes', compact('product', 'allcategory', 'reproduct', 'selectedCategory' ,"review", 'hasBeenBought'));
         } else {
-            $product = Products::all();
-            $reproduct = Products::inRandomOrder()->limit(4)->get();
+            $product = products::all();
+            $reproduct = products::inRandomOrder()->limit(4)->get();
             return view('pagess.shop.shopDetailes', compact('product', 'allcategory', 'reproduct'));
         }
     }
 
+
+
+
+
+            
+ 
+ 
+    
  
 
 
@@ -116,10 +204,37 @@ class CategoriesController extends Controller
 
     function index()
     {
+        $ordersCount = orders::whereNotNull('id')->count();
+        $usersCount = User::whereNotNull('id')->count();
+        $reviewCount = reviwes::whereNotNull('id')->count();
+        $productsCount = products::whereNotNull('id')->count();
+        $incomeCount = orders::sum('totalPrice');
+
+
+
+        $reviews = reviwes::latest()->take(5)->get();
+
+        // Create an empty array to store review data
+        $data = [];
+
+        // Loop through the reviews and retrieve user data for each review
+        foreach ($reviews as $review) {
+            $user = $review->user;
+
+            $reviewData = [
+                'name' => $user->name,
+                'image' => $user->image  ?? 'N/A',
+                'review' => $review->review,
+                // 'rating' => $review->rating,
+                // 'reason' => $review->reason,
+            ];
+
+            $data[] = $reviewData;
+        }
         $categories = categories::all();
 
-        $product = Products::orderBy('created_at', 'desc')->take(4)->get();
-        return view('pagess.home.home', compact('categories', 'product'));
+        $product = products::orderBy('created_at', 'desc')->take(4)->get();
+        return view('pagess.home.home', compact('categories', 'product','data', 'reviewCount', 'productsCount', 'usersCount', 'incomeCount', "ordersCount"));
     }
 
 
@@ -131,6 +246,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
+ 
         return view('Admin.pages.category.create');
     }
 
@@ -146,7 +262,7 @@ class CategoriesController extends Controller
         $request->validate([
             'image' => ['required', 'image', 'max:4192'],
             'name' => ['required', 'max:20'],
-            'description' => ['required', 'max:1000'],
+            'description' => ['required', 'max:12000'],
         ]);
 
         $category = new categories();
@@ -155,7 +271,7 @@ class CategoriesController extends Controller
 
         $category->image =  $imagePath;
         $category->categoryName = $request->name;
-        $category->description = htmlspecialchars($request->description);
+        $category->description = e($request->description);
         $category->save();
 
         toastr('Created Successfully!', 'success');
@@ -199,7 +315,7 @@ class CategoriesController extends Controller
         $request->validate([
             'image' => ['image', 'max:4192'],
             'name' => ['required', 'max:20'],
-            'description' => ['required', 'max:1000'],
+            'description' => ['required', 'max:12000'],
         ]);
 
         $category = categories::findOrFail($id);
@@ -207,7 +323,9 @@ class CategoriesController extends Controller
 
         $category->image = empty(!$imagePath) ? $imagePath : $category->image;
         $category->categoryName = $request->name;
-        $category->description = htmlspecialchars($request->description);
+        $category->description = e($request->description);
+                // $category->description = htmlspecialchars($request->description);
+
         // $category->image = $request->image;
         $category->save();
 
