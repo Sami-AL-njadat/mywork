@@ -246,6 +246,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
+ 
         return view('Admin.pages.category.create');
     }
 

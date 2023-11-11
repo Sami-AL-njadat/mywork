@@ -41,9 +41,9 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="#"><i class="fa fa-home"></i> Home</a>
+                             <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('shops') }}">Shop</a></li>
                             <li class="breadcrumb-item active" aria-current="page">
                                 Shop Details
                             </li>
@@ -511,8 +511,10 @@
 
                             <!-- Product Image -->
                             <div class="product-img">
-                                <a href="{{ route('shopdetai', $reproducts->id) }}"><img
-                                        src="{{ asset($reproducts->image1) }}" alt="" /></a>
+                                <a href="{{ route('shopdetai', $reproducts->id) }}">
+                                    <img
+                                    style="height: 302.21px !important;"
+                                        src="{{ asset($reproducts->image1) }}" alt="image" /></a>
                                 <!-- Product Tag -->
                                 <div class="product-tag">
                                     <a href="#">{{ $reproducts->status }}</a>

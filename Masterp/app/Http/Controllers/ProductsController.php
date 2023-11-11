@@ -30,7 +30,9 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return view('Admin.pages.product.create');
+        $categories = categories::all();
+         return view('Admin.pages.product.create', compact('categories'));
+
     }
 
     /**
@@ -99,7 +101,9 @@ class ProductsController extends Controller
     {
         $product = products::findOrFail($id);
 
-        return view('Admin.pages.product.edit', compact('product'));
+        $categories = categories::all();
+ 
+        return view('Admin.pages.product.edit', compact('product', 'categories'));
     }
     /**
      * Update the specified resource in storage.

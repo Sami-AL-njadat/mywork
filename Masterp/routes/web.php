@@ -36,6 +36,9 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
      Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/password/update',  [ProfileController::class, 'updatePassword'])->name('password.updated');
+ 
+ 
       Route::delete('/delete-account', [ProfileController::class, 'destroyAccount'])->name('profile.destroyAccount');
 
 });
@@ -77,7 +80,7 @@ Route::get('cart/{id?}', [CartsController::class, 'store'])->name('cartstor');
 Route::get('carttt/{id?}', [CartsController::class, 'storee'])->name('cartstoree');
 
 
-
+ 
 
 
 // Route::get('/cart', [CartsController::class, 'index'])->name('cart.index');
@@ -111,8 +114,7 @@ Route::get('about', [ReviwesController::class,'show'])->name('about');
 
 
 
-// for edit wish
-
+ 
  
   
  
@@ -123,6 +125,4 @@ Route::get('/wishlist/{id?}', [WishlistsController::class, 'stores'])->name('Wis
 //  add quistion mark in route  WishListStore
   Route::get('wishlist/updated/{id?}', [WishlistsController::class, 'updated'])->name('wishlist.updated');
  Route::get('delete/{id?}', [WishlistsController::class, 'destroy'])->name('wishlist.destroy');
-
-// Route::get('add/{id?}', [CartsController::class, 'add'])->name('cart.add');
-// Route::get('remove/{id?}', [CartsController::class, 'remove'])->name('cart.remove');
+ 

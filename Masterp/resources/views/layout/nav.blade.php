@@ -109,7 +109,7 @@
                     <!-- Menu -->
                     <nav class="classy-navbar justify-content-between" id="alazeaNav">
                         <!-- Nav Brand -->
-                        <a href="index.html" class="nav-brand"><img id="navlogo"
+                        <a href="{{ route('home') }}" class="nav-brand"><img id="navlogo"
                                 src="{{ asset('front_end/img/core-img/NEWLOGO-removebg-preview.png') }}"
                                 alt="" /></a>
 

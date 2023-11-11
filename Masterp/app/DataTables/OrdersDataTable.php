@@ -25,20 +25,20 @@ class OrdersDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('prouct_name', function ($query) {
-                return $query->product->productName;
+                return $query->product->productName ?? 'N/A';
             })
 
             ->addColumn('Price', function ($query) {
-                return $query->product->price;
+                return $query->product->price ?? 'N/A';
             })
 
 
             ->addColumn('Price_of_sale', function ($query) {
-                return $query->order->totalPrice;
+                return $query->order->totalPrice ?? 'N/A';
             })
 
             ->addColumn('Total_Price', function ($query) {
-                return $query->price;
+                return $query->price ?? 'N/A';
             })
 
            
@@ -49,7 +49,7 @@ class OrdersDataTable extends DataTable
             
             
             ->addColumn('image', function ($query) {
-                return "<img width='100px' src='" . asset($query->product->image1) . "'></img>";
+                return "<img width='100px' src='" . asset($query->product->image1 ?? 'N/A') . "'></img>" ;
             })
 
             ->rawColumns([ 'image', 'prouct_name', 'Price', 'Price_of_sale', 'customer_name', 'Total_Price'  ])

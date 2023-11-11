@@ -32,13 +32,13 @@ class ProductDataTable extends DataTable
             return $editBtn . $deleteBtn;
         })
         ->addColumn('image1', function ($query) {
-            return "<img width='100px' src='" . asset($query->image1) . "'></img>";
+            return "<img width='55px' height='70px' src='" . asset($query->image1) . "'></img>";
         })
         ->addColumn('image2', function ($query) {
-            return "<img width='100px' src='" . asset($query->image2) . "'></img>";
+            return "<img width='55px' height='70px' src='" . asset($query->image2) . "'></img>";
         })
         ->addColumn('image3', function ($query) {
-            return "<img width='100px' src='" . asset($query->image3) . "'></img>";
+            return "<img width='55px' height='70px' src='" . asset($query->image3) . "'></img>";
         })
         ->addColumn('category_name', function ($query) {
             return $query->Category->categoryName;
@@ -94,25 +94,26 @@ class ProductDataTable extends DataTable
    
 
         return [
-            Column::make('id'),
-            Column::make('productName'),
-            Column::make('categoryId'),
-            Column::make('Sdescription'),
-            Column::make('Ldescription'),
-            Column::make('price'),
-            Column::make('stockqty'),
-            Column::make('status'),
-            Column::make('category_name'),
-            Column::make('image1'),
-            Column::make('image2'),
-            Column::make('image3'),
+
+                Column::make('id'),
+                Column::make('productName'),
+                Column::make('categoryId'),
+                Column::make('Sdescription')->width(25),
+                Column::make('Ldescription')->width(40),
+                Column::make('price'),
+                Column::make('stockqty'),
+                Column::make('status'),
+                Column::make('category_name'),
+                Column::make('image1')->width(55),
+                Column::make('image2')->width(55),
+                Column::make('image3')->width(55),
             // Column::make('updated_at'),
             Column::computed('action')
             ->exportable(false)
             ->printable(false)
-            ->width(90)
+            ->width(60)
             ->addClass('text-center'),
-        ];
+            ];
     }
 
     /**

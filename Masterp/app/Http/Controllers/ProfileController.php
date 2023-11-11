@@ -12,6 +12,7 @@ use App\Models\orderItems;
 use App\Models\User;
 use App\Models\shipments;
 use App\Models\orders;
+use Illuminate\Support\Facades\Hash;
 use App\Traits\ImageUploadTrait;
 
 
@@ -35,7 +36,7 @@ class ProfileController extends Controller
             $orderItems[] = OrderItems::where('customerId', $userId)
                 ->where('orderId', $item->id)
                 ->with('product')
-                ->get();
+                ->get()  ?? 'N/A';
          }
  
 
@@ -49,16 +50,42 @@ class ProfileController extends Controller
         ]);
     }
 
+
+
+    public function updatePassword(Request $request)
+    {
+        // Validate the form data
+        $request->validate([
+            'current_password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        // Check if the current password is correct
+        if (!Hash::check($request->current_password, auth()->user()->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'The current password is incorrect.']);
+        }
+
+        // Update the user's password
+        $user = User::find(auth()->id()); // Assuming you're using the default User model
+        $user->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->back()->with('success', 'Password updated successfully.');
+    }
+
+
+
+
+
     /**
      * Update the user's profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        
         logger($request->all());
-        
+
         if ($request->hasFile('image')) {
-            // dd("dddddddddddddd");
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path(''), $imageName);
@@ -76,10 +103,14 @@ class ProfileController extends Controller
         }
 
         $request->user()->save();
-        session()->flash('success', 'profile edit successfully!');
+        session()->flash('success', 'Profile edited successfully!');
 
-        return Redirect::route('profile.edit');
+        // Check if the user object has the "image1" property before accessing it
+        $image1 = optional($request->user())->image1 ?? 'N/A';
+
+        return Redirect::route('profile.edit')->with('image1', $image1);
     }
+
 
     /**
      * Delete the user's account.

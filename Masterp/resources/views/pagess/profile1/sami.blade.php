@@ -11,8 +11,9 @@
                  <div class="col-12">
                      <nav aria-label="breadcrumb">
                          <ol class="breadcrumb">
-                             <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
-                             <li class="breadcrumb-item active" aria-current="page">Contact</li>
+                             <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
+                             </li>
+                             <li class="breadcrumb-item active" aria-current="page">My Accounts</li>
                          </ol>
                      </nav>
                  </div>
@@ -124,6 +125,7 @@
                                                          </tr>
                                                      </thead>
                                                      <tbody>
+
                                                          @php $No = 0; @endphp
                                                          @foreach ($orders as $item)
                                                              @php $No++; @endphp
@@ -153,15 +155,38 @@
                                                                          <tbody>
                                                                              @foreach ($item->orderItems as $items)
                                                                                  <tr>
-                                                                                     <td><img src="{{ asset('' . $items->product->image1 . '') }}"
-                                                                                             alt=""
-                                                                                             style="width:80px"></td>
-                                                                                     <td>{{ $items->product->productName }}
+                                                                                     <td>
+                                                                                         @if (isset($items->product))
+                                                                                             <img src="{{ asset('' . $items->product->image1 . '') }}"
+                                                                                                 alt=""
+                                                                                                 style="width:80px">
+                                                                                         @else
+                                                                                             <!-- Provide a default image or handle the case where the product is not set -->
+                                                                                             <img src="{{ asset('path/to/default/image.jpg') }}"
+                                                                                                 alt="Default Image"
+                                                                                                 style="width:80px">
+                                                                                         @endif
                                                                                      </td>
-                                                                                     <td>{{ $items->product->price }}</td>
-                                                                                     <td>{{ $items->quantity }}</td>
+                                                                                     <td>
+                                                                                         @if (isset($items->product))
+                                                                                             {{ $items->product->productName }}
+                                                                                         @else
+                                                                                             N/A
+                                                                                         @endif
+                                                                                     </td>
+                                                                                     <td>
+                                                                                         @if (isset($items->product))
+                                                                                             {{ $items->product->price }}
+                                                                                         @else
+                                                                                             N/A
+                                                                                         @endif
+                                                                                     </td>
+                                                                                     <td>{{ $items->quantity }}
+                                                                                        
+                                                                                    </td>
                                                                                  </tr>
                                                                              @endforeach
+
                                                                          </tbody>
                                                                      </table>
                                                                  </td>
@@ -288,7 +313,7 @@
 
 
 
-                                             <form action="{{ route('password.update') }}" method="post"
+                                             <form action="{{ route('password.updated') }}" method="post"
                                                  class="uren-form">
                                                  @csrf
                                                  @method('put')
@@ -349,20 +374,27 @@
                                      <div class="tab-pane fade" id="account-delete" role="tabpanel"
                                          aria-labelledby="account-delete-tab">
                                          <div class="myaccount-delete">
-                                             <div>
+                                             <div class="container">
+                                                 <h3>DELETE ACCOUNT </h3>
 
-
+                                                 <p class="text-danger mt-3">
+                                                     Please enter your current password to delete your account. We're sad to
+                                                     see you go, and we'd like to know the reason for your departure.
+                                                 </p>
                                                  <form method="POST" action="{{ route('profile.destroyAccount') }}">
                                                      @csrf
                                                      @method('DELETE')
-                                                     <label for="password">Password:</label>
-                                                     <input type="password" name="password" id="password" required>
-                                                     <button type="submit">Delete Account</button>
+                                                     <div class="form-group">
+                                                         <label for="password">Current Password:</label>
+                                                         <input type="password" name="password" id="password"
+                                                             class="form-control" required>
+                                                     </div>
+                                                     <button type="submit" class="btn btn-danger">Delete Account</button>
                                                  </form>
-
 
                                              </div>
                                          </div>
+
                                      </div>
 
 

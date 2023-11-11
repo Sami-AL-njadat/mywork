@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\wishlists;
+
 
 class RegisteredUserController extends Controller
 {
@@ -44,14 +46,29 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        if ($request->hasFile('image')) {
+            // Handle the uploaded image file (you may want to store it in a specific directory)
+            $imagePath = $request->file('image')->storeAs('avatars', $user->id . '_avatar-2.png', 'public');
+            $user->image = $imagePath; // Change 'avatar' to 'image'
+            $user->save();
+        } else {
+              $defaultImagePath = '/admin/assets/img/avatar/avatar-2.png';
+            $user->image = $defaultImagePath; //  
+            $user->save();
+        }
+
         Auth::login($user); // Log in the newly registered user
 
         $request->session()->regenerate();
 
 
         carts::where('customerId', auth()->user()->id)->delete();
+        Wishlists::where('customerId', auth()->user()->id);
 
         $sessioncart = session('cart');
+        $sessionWishlist = session('wishlist');
+
 
         if (isset($sessioncart)) {
 
@@ -70,6 +87,17 @@ class RegisteredUserController extends Controller
             }
         }
 
+        if (isset($sessionWishlist)) {
+            foreach ($sessionWishlist as $product) {
+                $wishlistData = [
+                    'productId' => $product['id'],
+                    'customerId' => auth()->user()->id,
+                ];
+
+                Wishlists::create($wishlistData);
+            }
+        }
+        session()->forget('wishlist');
 
         event(new Registered($user));
 

@@ -24,7 +24,8 @@
 
                                     <div class="form-group">
                                         <label for="name">Product Name</label>
-                                        <input type="text" name="name" class="form-control" id="name" placeholder="Enter product name">
+                                        <input type="text" name="name" class="form-control" id="name"
+                                            placeholder="Enter product name">
                                     </div>
 
                                     <div class="form-group">
@@ -39,12 +40,14 @@
 
                                     <div class="form-group">
                                         <label for="price">Price</label>
-                                        <input type="number" name="price" class="form-control" id="price" placeholder="Enter price">
+                                        <input type="number" name="price" class="form-control" id="price"
+                                            placeholder="Enter price">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="stockqty">Stock Quantity</label>
-                                        <input type="number" name="stockqty" class="form-control" id="stockqty" placeholder="Enter stock quantity">
+                                        <input type="number" name="stockqty" class="form-control" id="stockqty"
+                                            placeholder="Enter stock quantity">
                                     </div>
 
                                     <div class="form-group">
@@ -53,28 +56,49 @@
                                             <option value="1">Active</option>
                                             <option value="0">Inactive</option>
                                         </select> --}}
-                               <input type="text" name="status" class="form-control" id="status" placeholder="Enter status ">
+                                        <input type="text" name="status" class="form-control" id="status"
+                                            placeholder="Enter status ">
 
                                     </div>
 
                                     <div class="form-group">
                                         <label for="categoryId">Category ID</label>
-                                        <input type="number" name="categoryId" class="form-control" id="categoryId" placeholder="Enter category ID">
+                                          <select class="form-control"   name="categoryId">
+                                            <option value="">Choose a Category</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}"> #{{ $category->id }}  {{ $category->categoryName }} </option>
+                                            @endforeach
+                                        </select>
+                                            
                                     </div>
+
+                                    {{-- <div class="form-group">
+                                         
+                                        <select class="form-control"   name="categoryId">
+                                            <option value="">Choose a Category</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}"> {{ $category->categoryName }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div> --}}
+
 
                                     <div class="form-group">
                                         <label for="image1">Image 1</label>
-                                        <input type="file" name="image1" class="form-control" id="image1" accept="image/*">
+                                        <input type="file" name="image1" class="form-control" id="image1"
+                                            accept="image/*">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="image2">Image 2</label>
-                                        <input type="file" name="image2" class="form-control" id="image2" accept="image/*">
+                                        <input type="file" name="image2" class="form-control" id="image2"
+                                            accept="image/*">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="image3">Image 3</label>
-                                        <input type="file" name="image3" class="form-control" id="image3" accept="image/*">
+                                        <input type="file" name="image3" class="form-control" id="image3"
+                                            accept="image/*">
                                     </div>
 
                                     <!-- Add more form fields as needed for your product -->

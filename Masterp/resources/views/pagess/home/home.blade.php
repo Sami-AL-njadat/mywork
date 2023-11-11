@@ -244,8 +244,9 @@
                             <div class="single-product-area mb-50 wow fadeInUp" data-wow-delay="100ms">
                                 <!-- Product Image -->
                                 <div class="product-img">
-                                    <a href="{{ route('shopdetai', $newarrvel->id) }}"><img src="{{ $newarrvel->image1 }}"
-                                            alt="" /></a>
+                                    <a href="{{ route('shopdetai', $newarrvel->id) }}">
+                                        <img  style="height:302.21px !important;" src="{{ $newarrvel->image1 }}"
+                                            alt="image" /></a>
                                     <!-- Product Tag -->
                                     <div class="product-tag">
                                         <a href="#">Hot</a>

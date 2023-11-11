@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Traits\ImageUploadTrait;
 use App\Rules\StartsWithZero;
 
-
+use Illuminate\Validation\Rule;
+use Illuminate\Database\QueryException;
 
 
 class UsersController extends Controller
@@ -50,12 +51,11 @@ class UsersController extends Controller
         $request->validate([
             'image' => ['required', 'image', 'max:4192'],
             'name' => ['required', 'max:40'],
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', Rule::unique('users')],
             'phone' => ['required', 'digits:10', new StartsWithZero],
+        ]);
 
-                        ]);
         $users = new User();
-
 
         $imagePath = $this->uploadImage($request, 'image', 'uploads');
 
@@ -64,11 +64,22 @@ class UsersController extends Controller
         $users->image = $imagePath;
         $users->phone = $request->phone;
         $users->password = Hash::make('password');
-        $users->save();
 
-        toastr('Updated Successfully', 'success');
-
-        return redirect()->route('users.index');
+        try {
+            $users->save();
+            toastr('Updated Successfully', 'success');
+            return redirect()->route('users.index');
+        } catch (QueryException $e) {
+            // Check if the exception is due to a unique constraint violation
+            if ($e->errorInfo[1] == 1062) {
+                toastr('Email already exists', 'error');
+                return redirect()->route('users.index');
+            } else {
+                // Handle other database-related errors if needed
+                toastr('Error saving user', 'error');
+                return redirect()->route('users.index');
+            }
+        }
     }
 
     /**

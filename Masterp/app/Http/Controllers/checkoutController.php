@@ -263,7 +263,8 @@ class checKoutController extends Controller
 
     public function cancel()
     {
-        return view('pagess.contact.contact');
+
+        return redirect()->route('show.contact')->with('error' , 'Your Payment By PayPal Has Been Canceled');
     }
 }
 

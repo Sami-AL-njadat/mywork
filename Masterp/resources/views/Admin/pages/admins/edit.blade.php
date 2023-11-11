@@ -39,7 +39,7 @@
 
 
                                               <div class="form-row">
-                                                    <div class="form-group col-md-6">
+                                                    <div class="form-group col-md-8">
                                                         <label for="image">New Image</label>
                                                         <input type="file" name="image" class="form-control"
                                                             id="image" accept="image/*">
@@ -52,13 +52,13 @@
 
 
 
-                                                <div class="form-group col-md-6">
+                                                <div class="form-group col-md-8">
                                                     <label for="name">Name</label>
                                                     <input type="text" name="name" class="form-control" id="name"
                                                         value="{{ $admin->name }}">
                                                 </div>
 
-                                                <div class="form-group col-md-6">
+                                                <div class="form-group col-md-8">
                                                     <label for="email">Email</label>
                                                     <b>YOUR Email Will <span style="color: red">Not Change</span> </b>
 
@@ -67,15 +67,17 @@
                                                 </div>
 
                                               
-
+                                                
 
 
                                              
-                                                    <div class="form-group col-md-6">
+                                                    <div class="form-group col-md-8">
                                                         <label for="phone">Phone</label>
                                                         <input type="tel" name="phone" class="form-control"
                                                             id="phone" value="{{ $admin->phone }}">
-                                                    </div>   <div class="form-row">
+                                                    </div> 
+                                                    
+                                                    <div class="form-row">
                                                     {{-- <div class="form-group col-md-6">
                                                         <label for="password">Password</label>
                                                         <input type="password" name="password" class="form-control"

@@ -13,7 +13,7 @@
                  <div class="col-12">
                      <nav aria-label="breadcrumb">
                          <ol class="breadcrumb">
-                             <li class="breadcrumb-item"><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                             <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a></li>
                              <li class="breadcrumb-item active" aria-current="page">Contact</li>
                          </ol>
                      </nav>
@@ -96,7 +96,8 @@
                                  </div>
                                  <div class="col-12">
                                      <div class="form-group">
-                                         <textarea class="form-control" name="message" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                                         <textarea class="form-control" name="message"
+                                          id="message" cols="30" rows="10" placeholder="Message"></textarea>
                                      </div>
                                  </div>
                                  <div class="col-12">

@@ -14,7 +14,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <a href="#"><i class="fa fa-home"></i> Home</a>
+                                <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">Shop</li>
                         </ol>
@@ -220,7 +220,7 @@
                                         <!-- Product Image -->
                                         <div class="product-img">
                                             <a href="{{ route('shopdetai') }}/{{ $allproduct->id }}">
-                                                <img src={{ asset($allproduct->image1) }} alt="" /></a>
+                                                <img style="height: 302.21px !important; " src={{ asset($allproduct->image1) }} alt="" /></a>
                                             <div class="product-tag">
                                                 @if ($allproduct->status > 0)
                                                     <a href="#">{{ $allproduct->status }}</a>
