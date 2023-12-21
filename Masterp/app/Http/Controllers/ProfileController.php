@@ -40,7 +40,7 @@ class ProfileController extends Controller
          }
  
 
-        return view('pagess.profile1.sami', [
+        return view('pagess.profile1.myaccount', [
             'user' => $request->user(),
             'orderItems' => $orderItems,
             'orders' => $orders,

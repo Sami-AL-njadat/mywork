@@ -27,9 +27,25 @@ class checKoutController extends Controller
             $product->price = $product->product->price;
             $product->productName = $product->product->productName;
         }
-        // dd($products[0]->
-
+ 
         return view('pagess.shop.checkOut', compact('cartitem'));
+    }
+
+    public function getShipmentCost($cityId)
+    {
+        $shipmentCosts = [
+            'AJLOUN' => 10.00, // AJLOUN
+            'AMMAN' => 15.00, // AMMAN
+            'JARASH' => 12.00, // JARASH
+            'IRBID' => 8.00, // IRBID
+        ];
+
+        if (array_key_exists($cityId, $shipmentCosts)) {
+            $shipmentCost = $shipmentCosts[$cityId];
+            return response()->json(['shipment_cost' => $shipmentCost]);
+        }
+
+        return response()->json(['error' => 'City not found'], 404);
     }
 
 
@@ -121,7 +137,7 @@ class checKoutController extends Controller
             'phone' => 'required|numeric',
             'company' => 'nullable|string',
             'address' => 'required|string',
-            'city' => 'required|string',
+            'city' => 'required',
         ]);
         $user = User::find(Auth::user()->id);
         $address = $user->address()->updateOrCreate([], [
@@ -210,7 +226,8 @@ class checKoutController extends Controller
                     
                 ]);
                 wishlists::where('productId', $product->product->id)->where('customerId', Auth::user()->id)->delete();
-
+                carts::where('couponid', Auth::user()->id)->delete();
+                session()->forget('discounts');
                 $product->delete();
             }
         }
@@ -250,8 +267,12 @@ class checKoutController extends Controller
                     "productId" => $product->productId,
 
                 ]);
-                // dd($product->id);    
-                 wishlists::where('productId', $product->product->id)->where('customerId', Auth::user()->id)->delete();
+                // dd($product->id);  
+  
+                wishlists::where('productId', $product->product->id)->where('customerId', Auth::user()->id)->delete();
+                carts::where('couponid', Auth::user()->id)->delete();
+                session()->forget('discounts');
+              
                 $product->delete();
 
             }
@@ -269,54 +290,4 @@ class checKoutController extends Controller
 }
 
 
-
-
-
-    //     if (isset($response['status']) && $response['status'] == 'COMPLETED') {
-    //         $productIds = session('cart'); // Your array of product IDs
-    //         $productQuantities = [];
-            
-    //         if (is_array($productIds) && count($productIds) > 0) {
-    //             // Calculate product quantities by counting the occurrences of each product ID
-    //             foreach ($productIds as $productId) {
-    //                 if (array_key_exists($productId, $productQuantities)) {
-    //                     // If the product ID already exists in the quantities array, increment the quantity
-    //                     $productQuantities[$productId]++;
-    //                 } else {
-    //                     // If it's the first occurrence, set the quantity to 1
-    //                     $productQuantities[$productId] = 1;
-    //                 }
-    //             }
-    //             $products = Product::whereIn('id', array_keys($productQuantities))->get();
-    // $total = 0;
-    //             foreach($products as $product){
-    //                     $product->quantity = $productQuantities[$product->id];
-    // $total += $product->price * $product->quantity;
-    //             }
-    //         }
-    //         Payment::create([
-    //             "userId" => Auth::user()->id,
-    //             "amount" => $total,
-    //             "provider" => "paypal",
-    //             "status" => "success",
-    //             "payment-method" => "paypal",
-    //         ]);
-    
-    //         Orderdetail::create([
-    //             "userId" => Auth::user()->id,
-    //             "paymentId" => Payment::where("userId", Auth::user()->id)->latest()->first()->id,
-    //             "shipmentId" => Shipment::where("userId", Auth::user()->id)->latest()->first()->id,
-    //             "total" =>$total,
-    //         ]);
-    
-    //         foreach($products as $product){
-    //             Orderitem::create([
-    //                 "orderId"=> Orderdetail::where("userId", Auth::user()->id)->latest()->first()->id,
-    //                 "productId"=> $product->id,
-    //                 "quantity"=> $product->quantity,
-    //             ]);
-                
-    //                         }
-    //                         // $hhs= cart::where("userId", Auth::user()->id)->delete();
-    //                         session()->forget('cart');
-    //                         return redirect()->route("home.index");
+ 

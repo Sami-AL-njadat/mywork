@@ -181,38 +181,82 @@ class CartsController extends Controller
 
     function coupon(Request $request)
     {
-
-
+        // Retrieve all coupons from the database
         $coupon = coupons::all();
+
         foreach ($coupon as $code) {
+            // Check if the entered coupon code matches any in the database
             if ($code->couponName == $request->code) {
+                // If the user is authenticated, apply the coupon to the user's cart
                 if (auth()->user()) {
                     $iduser = auth()->user()->id;
                     $cart = carts::where('customerId', $iduser)->get();
-                    // dd($cart);
+
                     foreach ($cart as $product) {
                         $product->update(['couponid' => $code->id]);
-                        session()->flash('success', 'coupons add successfully !');
-                        //  @dd($product);
-
+                        session()->flash('success', 'Coupon added successfully!');
                         return redirect()->route("cart.index");
                     }
                 } else {
-
+                    // If the user is not authenticated, store the coupon in the session for later use
                     $discounts = $code->discount;
                     session()->put('coupon', $code->id);
                 }
-                session()->flash('success', 'coupons add successfully !');
+
+                // Flash a success message and redirect back with the discount information
+                session()->flash('success', 'Coupon added successfully!');
                 return redirect()->back()->with('discounts', $discounts);
             }
         }
-        session()->flash('error', 'coupons  not addedd!');
 
+        // If the coupon is not found, remove any existing coupon from the user's cart
+        if (auth()->user()) {
+            $cart = carts::where('customerId', auth()->user()->id)->get();
+
+            foreach ($cart as $product) {
+                $product->update(['couponid' => 0]);
+                session()->forget('discounts');
+            }
+        }
+
+        // Flash an error message and redirect back
+        session()->flash('error', 'Coupon not added!');
         return redirect()->back();
     }
 
 
 
+    
+    // function coupon(Request $request)
+    // {
+
+
+    //     $coupon = coupons::all();
+    //     foreach ($coupon as $code) {
+    //         if ($code->couponName == $request->code) {
+    //             if (auth()->user()) {
+    //                 $iduser = auth()->user()->id;
+    //                 $cart = carts::where('customerId', $iduser)->get();
+    //                 // dd($cart);
+    //                 foreach ($cart as $product) {
+    //                     $product->update(['couponid' => $code->id]);
+    //                     session()->flash('success', 'coupons add successfully !');
+    //                     //  @dd($product);
+
+    //                     return redirect()->route("cart.index");
+    //                 }
+    //             } else {
+
+    //                 $discounts = $code->discount;
+    //                 session()->put('coupon', $code->id);
+    //             }
+    //             session()->flash('success', 'coupons add successfully !');
+    //             return redirect()->back()->with('discounts', $discounts);
+    //         }
+    //     }
+    //     session()->flash('error', 'coupons  not addedd!');
+    // }
+     
     /**
      * Display the specified resource.
      *
@@ -233,7 +277,7 @@ class CartsController extends Controller
                 if ($products[0]->coupon !== null) {
                     $discounts = $products[0]->coupon->discount;
 
-                    session()->put('discounts', $discounts);;
+                    session()->put('discounts', $discounts);
                 }
             }
             return view('pagess.shop.cart', compact('products'));
@@ -354,7 +398,4 @@ class CartsController extends Controller
 
         return redirect()->back();
     }
-  
-
-
 }

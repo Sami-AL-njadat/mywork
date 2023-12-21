@@ -30,9 +30,9 @@
                 </div>
             </div>
         </section>
-    </div>
-@endsection
-
+    </div> 
 @push('scripts')
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 @endpush
+
+@endsection

@@ -6,6 +6,7 @@ use App\Models\products;
 use Illuminate\Http\Request;
 use App\Models\categories;
 use App\DataTables\ProductDataTable;
+use App\Models\carts;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Support\Facades\File; 
 
@@ -46,10 +47,10 @@ class ProductsController extends Controller
 
         $request->validate([
             'name' => ['required', 'max:255'],
-            'Sdescription' => ['required', 'max:255'],
-            'Ldescription' => ['required', 'max:1000'],
-            'price' => ['required', 'min:0', 'max:4'],
-            'stockqty' => ['required', 'integer','min:0', 'max:4'],
+            'Sdescription' => ['required', 'max:22000'],
+            'Ldescription' => ['required', 'max:22000'],
+            'price' => ['required', 'min:0', 'max:500'],
+            'stockqty' => ['required','min:0', 'max:500'],
             'status' => ['string'], // Assuming status can be 0 or 1
             'categoryId' => ['required', 'integer'],
             'image1' => ['required','image', 'max:4192'],
@@ -86,9 +87,10 @@ class ProductsController extends Controller
      * @param  \App\Models\products  $products
      * @return \Illuminate\Http\Response
      */
-    public function show(products $products)
+    public function show($id)
     {
-        //
+        $product = products::findOrFail($id);
+        return view('Admin.pages.product.show', compact('product'));
     }
 
     /**
@@ -116,8 +118,8 @@ class ProductsController extends Controller
     {
         $request->validate([
             'name' => ['required', 'max:255'],
-            'Sdescription' => ['required', 'max:255'],
-            'Ldescription' => ['required', 'max:1000'],
+            'Sdescription' => ['required', 'max:22000'],
+            'Ldescription' => ['required', 'max:22000'],
             'price' => ['required', 'numeric', 'min:0'],
             'stockqty' => ['required', 'integer', 'min:0'],
             'status' => ['required','string'], // Assuming status can be 0 or 1
@@ -176,6 +178,8 @@ class ProductsController extends Controller
     public function destroy($id)
 
     {
+        carts::where('productId', $id)->delete();
+
 
         $product = products::findOrFail($id);
         $product->delete();
@@ -183,6 +187,9 @@ class ProductsController extends Controller
 
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
+
+
+  
 
 
 

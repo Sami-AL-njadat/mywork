@@ -29,11 +29,16 @@ class UsersDataTable extends DataTable
 
                 return $editBtn . $deleteBtn;
             })
-          
+
 
             ->addColumn('image', function ($query) {
-                return "<img width='100px' src='" . asset($query->image) . "'></img>";
+                if ($query->image) {
+                    return "<img width='100px' src='" . asset($query->image) . "'></img>";
+                } else {
+                    return "<img width='100px' src='" . asset('front_end/no-category-image.jpg') . "'></img>";
+                }
             })
+
             ->rawColumns(['action', 'image'])
             ->setRowId('id');
 

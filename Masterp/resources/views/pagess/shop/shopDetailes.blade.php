@@ -1,5 +1,12 @@
 @extends('layout.master')
+
 @section('content')
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-circle"></div>
+        <div class="preloader-img">
+            <img src="{{ asset('front_end/img/core-img/pls.jpeg') }}" alt="" />
+        </div>
+    </div>
     @if (count($review) > 0)
         @php
             $R1 = 0;
@@ -41,7 +48,7 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                             <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
+                                <a href="{{ route('home') }}"><i class="fa fa-home"></i> Home</a>
                             </li>
                             <li class="breadcrumb-item"><a href="{{ route('shops') }}">Shop</a></li>
                             <li class="breadcrumb-item active" aria-current="page">
@@ -101,90 +108,7 @@
                             <h4 class="price">JOD {{ $product->price }}</h4>
                             <div class="short_overview">
                                 <p>{{ $product->Ldescription }}</p>
-                                {{-- ******* --}}
-                                <!-- <div class="form1" style="display: flex; gap: 50px">
-                                            <form class="form">
-                                              <div class="form__group">
-                                                <div class="form__radio-group">
-                                                  <input
-                                                    type="radio"
-                                                    class="form__radio-input"
-                                                    id="1"
-                                                    name="radiogroup"
-                                                  />
-                                                  <label for="1" class="form__radio-label">
-                                                    <span class="form__radio-button">Small</span>
-                                                  </label>
-                                                </div>
 
-                                                <div class="form__radio-group">
-                                                  <input
-                                                    type="radio"
-                                                    class="form__radio-input"
-                                                    id="2"
-                                                    name="radiogroup"
-                                                  />
-                                                  <label for="2" class="form__radio-label">
-                                                    <span class="form__radio-button">Medium</span>
-                                                  </label>
-                                                </div>
-
-                                                <div class="form__radio-group">
-                                                  <input
-                                                    type="radio"
-                                                    class="form__radio-input"
-                                                    id="3"
-                                                    name="radiogroup"
-                                                  />
-                                                  <label for="3" class="form__radio-label">
-                                                    <span class="form__radio-button">Larg</span>
-                                                  </label>
-                                                </div>
-                                              </div>
-                                            </form>
-                                            <form class="form">
-                                              <div class="form__group">
-                                                <div class="form__radio-group">
-                                                  <input
-                                                    type="radio"
-                                                    class="form__radio-input"
-                                                    id="1"
-                                                    name="radiogroup"
-                                                  />
-                                                  <label for="1" class="form__radio-label">
-                                                    <span class="form__radio-button">clay</span>
-                                                  </label>
-                                                </div>
-
-                                                <div class="form__radio-group">
-                                                  <input
-                                                    type="radio"
-                                                    class="form__radio-input"
-                                                    id="2"
-                                                    name="radiogroup"
-                                                  />
-                                                  <label for="2" class="form__radio-label">
-                                                    <span class="form__radio-button">blastic</span>
-                                                  </label>
-                                                </div>
-                                              </div>
-                                            </form>
-                                            <form class="form">
-                                              <div class="form__group">
-                                                <div class="form__radio-group">
-                                                  <input
-                                                    type="color"
-                                                    class="form__radio-input"
-                                                    id="1"
-                                                    name="radiogroup"
-                                                  />
-                                                  <label for="1" class="form__radio-label">
-                                                    <span class="form__radio-button">clay</span>
-                                                  </label>
-                                                </div>
-                                              </div>
-                                            </form>
-                                          </div> -->
                             </div>
 
                             <div class="cart--area d-flex flex-wrap align-items-center">
@@ -196,8 +120,8 @@
                                         <a class="qty-minus"
                                             onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i
                                                 class="fa fa-minus" aria-hidden="true"></i></a>
-                                        <input type="number" class="qty-text" id="qty" step="1"
-                                            min="1" max="99" name="quantity" value="1" />
+                                        <input type="number" class="qty-text" id="qty" step="1" min="1"
+                                            max="99" name="quantity" value="1" />
                                         <a class="qty-plus"
                                             onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i
                                                 class="fa fa-plus" aria-hidden="true"></i></a>
@@ -214,17 +138,19 @@
                                 </form>
                                 <!-- Wishlist & Compare -->
                                 <div class="wishlist-compare d-flex flex-wrap align-items-center">
-                                    <a href="{{route ('wishlist.updated') }}/{{ $product->id }}" class="wishlist-btn ml-15"><i class="icon_heart_alt"></i></a>
-                                    <a href="{{ route('shops') }}" class="compare-btn ml-15"><i class="arrow_left_alt"></i></a>
+                                    <a href="{{ route('wishlist.updated') }}/{{ $product->id }}"
+                                        class="wishlist-btn ml-15"><i class="icon_heart_alt"></i></a>
+                                    <a href="{{ route('shops') }}" class="compare-btn ml-15"><i
+                                            class="arrow_left_alt"></i></a>
                                 </div>
 
                                 <!-- <select name="" id="">
-                                            <option value="0">Type of pots</option>
-                                            <option value="1">plastic</option>
-                                            <option value="2">
-                                              <img src="img/bg-img/1.jpg" alt="" srcset="" /> cycle
-                                            </option>
-                                          </select> -->
+                                                                            <option value="0">Type of pots</option>
+                                                                            <option value="1">plastic</option>
+                                                                            <option value="2">
+                                                                              <img src="img/bg-img/1.jpg" alt="" srcset="" /> cycle
+                                                                            </option>
+                                                                          </select> -->
                             </div>
 
                             <div class="products--meta">
@@ -306,109 +232,72 @@
                                 <div class="additional_info_area">
                                     <p>
                                         What should I do if I receive a damaged parcel? <br />
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing
-                                            elit. Reprehenderit impedit similique qui, itaque
-                                            delectus labore.</span>
+                                        <span>If you receive a damaged parcel, document the damage with photos, contact the
+                                            carrier to report the issue, and follow their instructions for filing a claim.
+                                            Additionally, inform the seller if applicable and retain the original packaging
+                                            for inspection.</span>
                                     </p>
                                     <p>
                                         I have received my order but the wrong item was delivered
                                         to me. <br />
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing
-                                            elit. Facilis quam voluptatum beatae harum tempore,
-                                            ab?</span>
+                                        <span>Received wrong item. Contact seller promptly, provide details, and follow their instructions for returns or exchanges to get the correct item delivered.</span>
                                     </p>
                                     <p>
                                         Product Receipt and Acceptance Confirmation Process <br />
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing
-                                            elit. Dolorum ducimus, temporibus soluta impedit minus
-                                            rerum?</span>
+                                        <span>The product receipt and acceptance confirmation process includes inspecting received items, verifying order accuracy, and confirming acceptance, ensuring accurate inventory and facilitating issue resolution if necessary.</span>
                                     </p>
                                     <p>
                                         How do I cancel my order? <br />
-                                        <span>Lorem ipsum dolor sit amet, consectetur adipisicing
-                                            elit. Nostrum eius eum, minima!</span>
+                                        <span>To cancel your order, check the seller's cancellation policy on their website or contact customer support. Follow their instructions, provide necessary details, and adhere to any specified time frames.</span>
                                     </p>
                                 </div>
                             </div>
                             <div role="tabpanel" class="tab-pane fade" id="reviews">
-                                <div class="reviews_area">
-                                    <ul>
-                                        @foreach ($review as $reviews)
-                                            <li>
-                                                <div class="single_user_review mb-15">
-                                                    <div class="review-rating">
-                                                        {{-- <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i>
-                                                <i class="fa fa-star" aria-hidden="true"></i> --}}
-                                                        @for ($i = 0; $i < 5; $i++)
-                                                            @if ($reviews->rating > $i)
-                                                                <i class="fa fa-star"></i>
-                                                            @else
-                                                                <i class="fa fa-star-o"></i>
-                                                            @endif
-                                                        @endfor
 
-
-
-                                                        <span>for {{ $reviews->reason }}</span>
+                                <div class="comment_area clearfix">
+                                    <h4 class="headline">Comments</h4>
+                                    <ol id="commentList">
+                                        <!-- Display the first two reviews initially -->
+                                        @foreach ($review->take(2) as $reviews)
+                                            <li class="single_comment_area">
+                                                <div class="comment-wrapper d-flex">
+                                                    <!-- Comment Meta -->
+                                                    <div class="comment-author">
+                                                        <img src="{{ asset($reviews->user->image) }}" alt="" />
                                                     </div>
-                                                    <h4> "{{ $reviews->review }}"</h4>
-
-                                                    <div class="review-details">
-                                                        <p>
-
-                                                            by <a href="#">{{ $reviews->name }}</a> on
-                                                            <span>{{ $reviews->created_at }}</span>
-                                                        </p>
-
-
+                                                    <!-- Comment Content -->
+                                                    <div class="comment-content">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <div>
+                                                                <h3>{{ $reviews->name }} </h3>
+                                                                <strong>for {{ $reviews->reason }}</strong>
+                                                            </div>
+                                                            <span class="comment-date">{{ $reviews->created_at }}</span>
+                                                        </div>
+                                                        <p>{{ $reviews->review }}</p>
+                                                        <div class="review-rating">
+                                                            @for ($i = 0; $i < 5; $i++)
+                                                                @if ($reviews->rating > $i)
+                                                                    <i class="fa fa-star"></i>
+                                                                @else
+                                                                    <i class="fa fa-star-o"></i>
+                                                                @endif
+                                                            @endfor
+                                                        </div>
                                                     </div>
                                                 </div>
-
-
                                             </li>
                                         @endforeach
+                                    </ol>
 
-                                        {{-- 
-                                    @foreach ($Reviews as $review)
-                                    <div class="review_item">
-                                        <div class="media">
-                                            <div class="d-flex">
-                                                <img style="width: 70px; height: 70px; border-radius: 50%;"
-                                                    src="{{ url($review->User->image ? $review->User->image : 'userSide/img/user.jpg') }}"
-                                                    alt="image">
-                                            </div>
-                                            <div class="media-body">
-                                                <h4>{{ $review->User->name }}</h4>
-                                                @for ($i = 0; $i < 5; $i++)
-                                                    @if ($review->rating > $i)
-                                                        <i class="fa fa-star"></i>
-                                                    @else
-                                                        <i class="fa fa-star-o"></i>
-                                                    @endif
-                                                @endfor
-                                            </div>
+                                    <!-- "Show More" button with styling -->
+                                    @if ($review->count() > 2)
+                                        {{-- <button id="showMoreBtn" onclick="showMoreComments()">Show More</button> --}}
+                                        <div class="col-12 text-center">
+                                            <a id="showMoreBtn" onclick="showMoreComments()" class="btn alazea-btn">View
+                                                All</a>
                                         </div>
-                                        <p>{{ $review->review_text }}</p>
-                                    </div>
-                                @endforeach --}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    </ul>
+                                    @endif
                                 </div>
 
                                 <div class="submit_a_review_area mt-50">
@@ -504,47 +393,142 @@
 
             <div class="row">
                 <!-- Single Product Area -->
-                @foreach ($reproduct as $reproducts)
-                    <div class="col-12 col-sm-6 col-lg-3">
-                        <div class="single-product-area mb-100">
+                <div class="portfolio-slides owl-carousel mb-100">
+
+                    @foreach ($reproduct as $reproducts)
+                        <div class="single-portfolio-slide">
+
+                            <div class="col-12 col-sm-6 col-lg-8">
+                                <div class="single-product-area ">
 
 
-                            <!-- Product Image -->
-                            <div class="product-img">
-                                <a href="{{ route('shopdetai', $reproducts->id) }}">
-                                    <img
-                                    style="height: 302.21px !important;"
-                                        src="{{ asset($reproducts->image1) }}" alt="image" /></a>
-                                <!-- Product Tag -->
-                                <div class="product-tag">
-                                    <a href="#">{{ $reproducts->status }}</a>
-                                </div>
+                                    <!-- Product Image -->
+                                    <div class="product-img">
+                                        <a href="{{ route('shopdetai', $reproducts->id) }}">
+                                            <img style="height: 302.21px !important;"
+                                                src="{{ asset($reproducts->image1) }}" alt="image" /></a>
+                                        <!-- Product Tag -->
+                                        <div class="product-tag">
+                                            <a href="#">{{ $reproducts->status }}</a>
+                                        </div>
 
-                                <div class="product-meta d-flex">
+                                        <div class="product-meta d-flex">
 
-                                    <a href="{{route ('WishListStore') }}/{{ $reproducts->id }}" class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                    <a href="{{ route('cartstor', $reproducts->id) }}" class="add-to-cart-btn">Add to
-                                        cart</a>
-                                    <a href="{{ route('shopdetai', $reproducts->id)}}" class="compare-btn"><i class="arrow_left-right_alt"></i></a>
+                                            <a href="{{ route('WishListStore') }}/{{ $reproducts->id }}"
+                                                class="wishlist-btn"><i class="icon_heart_alt"></i></a>
+                                            <a href="{{ route('cartstor', $reproducts->id) }}"
+                                                class="add-to-cart-btn">Add to
+                                                cart</a>
+                                            <a href="{{ route('shopdetai', $reproducts->id) }}" class="compare-btn"><i
+                                                    class="arrow_left-right_alt"></i></a>
+                                        </div>
+                                    </div>
+                                    <!-- Product Info -->
+                                    <div class="product-info mt-15 text-center">
+                                        <a href="shop-details.html">
+                                            <p>{{ $reproducts->productName }}</p>
+                                        </a>
+                                        <h6>{{ $reproducts->price }}</h6>
+                                    </div>
+
                                 </div>
                             </div>
-                            <!-- Product Info -->
-                            <div class="product-info mt-15 text-center">
-                                <a href="shop-details.html">
-                                    <p>{{ $reproducts->productName }}</p>
-                                </a>
-                                <h6>{{ $reproducts->price }}</h6>
-                            </div>
-
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
 
 
+                </div>
             </div>
         </div>
     </div>
     <!-- ##### Related Product Area End ##### -->
 
+    <script>
+        function showMoreComments() {
+            // Show the hidden reviews
+            document.getElementById('commentList').innerHTML += `
+            @foreach ($review->slice(2) as $reviews)
+                <li class="single_comment_area">
+                    <div class="comment-wrapper d-flex">
+                        <!-- Comment Meta -->
+                        <div class="comment-author">
+                            <img src="{{ asset($reviews->user->image) }}" alt="" />
+                        </div>
+                        <!-- Comment Content -->
+                        <div class="comment-content">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h3>{{ $reviews->name }} </h3>
+                                    <strong>for {{ $reviews->reason }}</strong>
+                                </div>
+                                <span class="comment-date">{{ $reviews->created_at }}</span>
+                            </div>
+                            <p>{{ $reviews->review }}</p>
+                            <div class="review-rating">
+                                @for ($i = 0; $i < 5; $i++)
+                                    @if ($reviews->rating > $i)
+                                        <i class="fa fa-star"></i>
+                                    @else
+                                        <i class="fa fa-star-o"></i>
+                                    @endif
+                                @endfor
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            @endforeach
+        `;
+
+            // Hide the "Show More" button if all reviews are displayed
+            document.getElementById('showMoreBtn').style.display = 'none';
+        }
+    </script>
     <!-- ##### Single Product Details Area Start ##### -->
 @endsection
+
+
+
+
+{{-- <div class="reviews_area">
+                                    <ul>
+                                        @foreach ($review as $reviews)
+                                            <li>
+                                                <div class="single_user_review mb-15">
+                                                    <div class="review-rating">
+                                                       
+                                                        @for ($i = 0; $i < 5; $i++)
+                                                            @if ($reviews->rating > $i)
+                                                                <i class="fa fa-star"></i>
+                                                            @else
+                                                                <i class="fa fa-star-o"></i>
+                                                            @endif
+                                                        @endfor
+
+
+
+                                                        <span>for {{ $reviews->reason }}</span>
+                                                    </div>
+                                                    <h4> "{{ $reviews->review }}"</h4>
+
+                                                    <div class="review-details">
+                                                        <p>
+
+                                                            by <a href="#">{{ $reviews->name }}</a> on
+                                                            <span>{{ $reviews->created_at }}</span>
+                                                        </p>
+
+
+                                                    </div>
+                                                </div>
+
+
+
+                                            </li>
+                                        @endforeach
+
+
+
+
+
+                                    </ul>
+                                </div> --}}

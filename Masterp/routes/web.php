@@ -8,8 +8,13 @@ use App\Http\Controllers\CartsController;
 use App\Http\Controllers\checKoutController;
 use App\Http\Controllers\ReviwesController;
 use App\Http\Controllers\WishlistsController;
- 
-
+use App\Http\Controllers\ShippmentsController;
+use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\GitHubController;
+use App\Http\Controllers\FacebookController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\DownloadController;
+use App\Http\Livewire\SearchComponent;
 
 
 
@@ -27,7 +32,7 @@ Route::get('/indexs', [CategoriesController::class, 'indexCategory'])->name('ind
 
 
 
- 
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -35,12 +40,11 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::put('/password/update',  [ProfileController::class, 'updatePassword'])->name('password.updated');
- 
- 
-      Route::delete('/delete-account', [ProfileController::class, 'destroyAccount'])->name('profile.destroyAccount');
 
+
+    Route::delete('/delete-account', [ProfileController::class, 'destroyAccount'])->name('profile.destroyAccount');
 });
 
 require __DIR__ . '/auth.php';
@@ -55,11 +59,11 @@ Route::post('store-contact', [ContactController::class, 'store'])->name('store.c
 
 
 
- 
 
+Route::get('/shops/{id?}', [CategoriesController::class, 'showProducts'])->name('shops');
 Route::get('/shop/filterByPrice/{id?}', [CategoriesController::class, 'showProducts'])->name('shop.filterByPrice');
-// Route::get('/shop/{id?}', [CategoriesController::class, 'showProducts'])->name('shop');
- Route::get('/shops/{id?}', [CategoriesController::class, 'showProducts'])->name('shops');
+// Route::get('/shop/productSearch/{id?}', [CategoriesController::class, 'showProducts'])->name('shop.search');
+// Route::post('/shop/productSearch/{id?}', [CategoriesController::class, 'searchProducts'])->name('shop.search.ajax');
 
 
 
@@ -80,7 +84,7 @@ Route::get('cart/{id?}', [CartsController::class, 'store'])->name('cartstor');
 Route::get('carttt/{id?}', [CartsController::class, 'storee'])->name('cartstoree');
 
 
- 
+
 
 
 // Route::get('/cart', [CartsController::class, 'index'])->name('cart.index');
@@ -90,7 +94,6 @@ Route::get('/cart/destroy/{id}', [CartsController::class, 'destroy'])->name('car
 Route::get('add/{id?}', [CartsController::class, 'add'])->name('cart.add');
 Route::get('remove/{id?}', [CartsController::class, 'remove'])->name('cart.remove');
 
-// Route::get('/checkout', [checKoutController::class, 'checkout'])->middleware(['auth', 'verified'])->name('checkout');
 Route::post('/coupon', [CartsController::class, 'coupon'])->name('coupon');
 // Route::get('/checkout', [CategoriesController::class, 'shows'])->name('checkouts');
 Route::post('/update-shipping-cost', [CartsController::class, 'updateShippingCost'])
@@ -99,6 +102,8 @@ Route::post('/update-shipping-cost', [CartsController::class, 'updateShippingCos
 
 // web.php
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->middleware(['auth', 'verified'])->name('checkout');
+Route::get('/get-shipment-cost/{cityId}', [CheckoutController::class, 'getShipmentCost'])->name('get-shipment-cost');
+
 
 Route::post('/store-shipment', [CheckoutController::class, 'storeShipment'])->name('store-shipment');
 Route::get('paypal/success', [CheckoutController::class, 'success'])->name('paypal_success');
@@ -108,21 +113,42 @@ Route::get('paypal/cancel', [CheckoutController::class, 'cancel'])->name('paypal
 
 
 Route::post('review/{id?}', [ReviwesController::class, 'store'])->name('review');
- 
-
-Route::get('about', [ReviwesController::class,'show'])->name('about');
 
 
+Route::get('about', [ReviwesController::class, 'show'])->name('about');
 
- 
- 
-  
- 
+
+Route::get('/countcart', [ShippmentsController::class, 'index'])->name('Cartcount');
+
+
+
+Route::get('auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('Auth.Google');
+Route::get('auth/google/call-back', [GoogleAuthController::class, 'handleGoogleCallback'])->name('AuthGoogleCallBack');
+
+
+Route::get('/login/github', [GitHubController::class, 'redirectToGitHub'])->name('login.github');
+Route::get('/login/github/callback', [GitHubController::class, 'handleGitHubCallback'])->name('AuthGithubCallBack');
+
+
+
+
+Route::get('/login/Facebook', [FacebookController::class, 'redirectToFacebook'])->name('login.Facebook');
+Route::get('/login/Facebook/callback', [FacebookController::class, 'handleFacebookCallback'])->name('AuthFacebookCallBack');
+
+
 
 
 Route::get('/wishlist', [WishlistsController::class, 'show'])->name('wishlist.index');
 Route::get('/wishlist/{id?}', [WishlistsController::class, 'stores'])->name('WishListStore');
 //  add quistion mark in route  WishListStore
-  Route::get('wishlist/updated/{id?}', [WishlistsController::class, 'updated'])->name('wishlist.updated');
- Route::get('delete/{id?}', [WishlistsController::class, 'destroy'])->name('wishlist.destroy');
- 
+Route::get('wishlist/updated/{id?}', [WishlistsController::class, 'updated'])->name('wishlist.updated');
+Route::get('delete/{id?}', [WishlistsController::class, 'destroy'])->name('wishlist.destroy');
+
+Route::get('/events/{id?}', [EventController::class, 'showevents'])->name('events');
+
+Route::get('/eventdetal/{id?}', [EventController::class, 'detail'])->name('eventdetal');
+
+
+
+
+Route::get('download', [DownloadController::class, 'download'])->name('download');

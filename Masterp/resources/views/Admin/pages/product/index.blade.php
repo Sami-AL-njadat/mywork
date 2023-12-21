@@ -23,6 +23,7 @@
                                     <a 
                                     href="{{ route('product.create') }}"
                                      class="btn btn-primary">+ Create</a>
+
                                 </div>
                             </div>
                             <div class="card-body p-0">

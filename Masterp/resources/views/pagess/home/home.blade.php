@@ -1,7 +1,15 @@
 @extends('layout.master')
 @section('content')
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-circle"></div>
+        <div class="preloader-img">
+            <img src="{{ asset('front_end/img/core-img/pls.jpeg') }}" alt="" />
+        </div>
+    </div>
     <!-- ##### Hero Area Start ##### -->
     <section class="hero-area">
+        <!-- Preloader -->
+
         <div class="hero-post-slides owl-carousel">
             <!-- Single Hero Post -->
             <div class="single-hero-post bg-overlay">
@@ -21,9 +29,22 @@
                                     Not only do they add a touch of nature to your space,
                                     but they also contribute to cleaner air and a more serene environment
                                 </p>
+
+                                @isset($firstCoupon)
+                                      <p>For your first payment use the discount
+                                    <strong style="color:greenyellow">
+                                        {{ $firstCoupon->couponName }}
+                                    </strong>
+                                    after that you will fiand other discount in your account !
+
+                                </p>
+                                @else
+                                
+                                @endisset
+                              
                                 <div class="welcome-btn-group">
-                                    <a href="#" class="btn alazea-btn mr-30">GET STARTED</a>
-                                    <a href="#" class="btn alazea-btn active">CONTACT US</a>
+                                    <a href="{{ route('login') }}" class="btn alazea-btn mr-30">GET STARTED</a>
+                                    <a href="{{ route('show.contact') }}" class="btn alazea-btn active">CONTACT US</a>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +96,7 @@
                     <div class="col-12">
                         <!-- Section Heading -->
                         <div class="section-heading text-center">
-                            <h2>OUR PRODUCT</h2>
+                            <h2>OUR CATEGORIES</h2>
                             <p>Explore our products and bring the beauty of plants into your world</p>
 
                         </div>
@@ -84,52 +105,27 @@
 
 
                 <div class="row justify-content-center">
-                    <!-- Single Blog Post Area -->
-                    {{-- @foreach ($categories as $category)
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="single-blog-post mb-100">
-                                <div class="post-thumbnail mb-30">
-                                    <a href="{{ route('shops' $category->id) }}"><img src="{{ $category->image }}" alt="" /></a>
-                                </div>
-                                <div class="post-content">
-                                    <a href="single-post.html" class="post-title">
-                                        <h3>
-                                            {{ $category->categoryName }}
-                                        </h3>
-                                    </a>
-
-                                    <p class="post-excerpt">
-                                        {{ $category->description }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach --}}
-
-
 
 
                     @foreach ($categories as $category)
-                        <div class="col-12 col-md-6 col-lg-4">
-                            <div class="single-blog-post mb-100">
-                                <div {{-- class="product-img" --}} class="side-img wow fadeInUp" data-wow-delay="900ms">
-                                    <a href="{{ route('shops', ['id' => $category->id]) }}"><img
-                                            style="width: 290px; height: 257.61px;" src="{{ $category->image }}"
-                                            alt="" /></a>
-                                </div>
-                                <div class="post-content">
-                                    <a href="{{ route('shops', ['id' => $category->id]) }}" class="post-title">
-                                        <h3>
-                                            {{ $category->categoryName }}
-                                        </h3>
-                                    </a>
-                                    <p class="post-excerpt">
-                                        {{ $category->description }}
-                                    </p>
-                                </div>
+                        <div class="col-12 col-sm-6 col-lg-4 single_portfolio_item garden office-design mb-100">
+                            <!-- Portfolio Thumbnail -->
+                            <div class="portfolio-thumbnail bg-img" style="background-image: url({{ $category->image }});">
+                            </div>
+                            <!-- Portfolio Hover Text -->
+                            <div class="portfolio-hover-overlay">
+                                <a href="{{ route('shops', ['id' => $category->id]) }}"
+                                    class="portfolio-img d-flex align-items-center justify-content-center" title="">
+                                    <div class="port-hover-text">
+                                        <h3> {{ $category->categoryName }}</h3>
+                                        <h5> {{ $category->description }}
+                                        </h5>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     @endforeach
+
 
 
 
@@ -169,6 +165,7 @@
                                 <div class="service-icon mr-30">
                                     <img src="{{ asset('front_end/img/core-img/b2.png') }}" alt="">
                                 </div>
+
                                 <!-- Content -->
                                 <div class="service-content">
                                     <h5> FUTURE PLAN </h5>
@@ -220,9 +217,11 @@
             </div>
         </section>
         <!-- ##### Service Area End ##### -->
+        @if (\App\Models\reviwes::exists())
+            @include('pagess.aboutUs.testimonial')
+        @endif
 
 
-        @include('pagess.aboutUs.testimonial')
 
         <!-- ##### Product Area Start ##### -->
         <section class="new-arrivals-products-area section-padding-100">
@@ -245,7 +244,7 @@
                                 <!-- Product Image -->
                                 <div class="product-img">
                                     <a href="{{ route('shopdetai', $newarrvel->id) }}">
-                                        <img  style="height:302.21px !important;" src="{{ $newarrvel->image1 }}"
+                                        <img style="height:302.21px !important;" src="{{ $newarrvel->image1 }}"
                                             alt="image" /></a>
                                     <!-- Product Tag -->
                                     <div class="product-tag">
@@ -254,10 +253,9 @@
 
                                     <div class="product-meta d-flex">
                                         <a href="{{ route('WishListStore', ['id' => $newarrvel->id]) }}"
-                                      
                                             class="wishlist-btn"><i class="icon_heart_alt"></i></a>
-                                       
-                                            <a href="{{ route('cartstor') }}/{{ $newarrvel->id }}"
+
+                                        <a href="{{ route('cartstor') }}/{{ $newarrvel->id }}"
                                             class="add-to-cart-btn">Add to cart</a>
                                         <a href="{{ route('shopdetai', ['id' => $newarrvel->id]) }}"
                                             class="compare-btn"><i alt="MORE" class="arrow_left-right_alt"></i></a>
@@ -279,6 +277,7 @@
                     </div>
                 </div>
             </div>
+
         </section>
         <!-- ##### Product Area End ##### -->
     @endsection

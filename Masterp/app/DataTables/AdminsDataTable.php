@@ -30,7 +30,8 @@ class AdminsDataTable extends DataTable
                 return $editBtn . $deleteBtn;
             })
             ->addColumn('image', function ($query) {
-                return "<img width='100px' src='" . asset($query->image) . "'></img>";
+                $imagePath = $query->image ? asset($query->image) : asset('front_end/no-category-image.jpg');
+                return "<img width='100px' src='" . $imagePath . "'></img>";
             })
             ->rawColumns(['action', 'image'])
             ->setRowId('id');

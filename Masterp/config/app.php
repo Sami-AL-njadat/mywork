@@ -196,6 +196,10 @@ return [
         App\Providers\RouteServiceProvider::class,
         Yajra\DataTables\ButtonsServiceProvider::class,
 
+        Yajra\DataTables\DataTablesServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
     ],
 
     /*
@@ -211,7 +215,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'Datatables'    => Yajra\DataTables\Facades\DataTables::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Excel' => Maatssite\Excel\Facades\Excel::class,
     ])->toArray(),
 
 ];

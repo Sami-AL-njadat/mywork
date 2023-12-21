@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('productName');
-            $table->string('Sdescription');
-            $table->string('Ldescription');
+            $table->text('Sdescription');
+            $table->text('Ldescription');
             $table->float('price');
             $table->integer('stockqty');
             $table->string('status')->nullable(); // Allow NULL values

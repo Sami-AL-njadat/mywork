@@ -65,14 +65,14 @@
                                                         <input type="tel" name="phone" class="form-control"
                                                             id="inputAddress" placeholder="EX: 077 777 7777">
                                                     </div>
-                                                </div>
+                                                {{-- </div>
                                                 <div class="form-group col-md-8">
                                                     <div class="form-group">
                                                         <label for="password">Password</label>
                                                         <input type="password" name="password" class="form-control"
                                                             id="inputAddress" placeholder="Password">
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                         <div class="card-footer">

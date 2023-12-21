@@ -25,15 +25,15 @@
 
     <!-- <h2>WELCOME</h2> -->
     <div class="container" id="container">
-        <div   class="form-container sign-up-container">
-            <form   method="POST" action="{{ route('register') }}">
+        <div class="form-container sign-up-container">
+            <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <h1 class="h1">Create Account</h1>
-                <!-- <div class="social-container">
+                {{-- <div class="social-container">
                     <a href="#" class="social"><i class="fa-brands fa-facebook-f" style="color: #4b82e2;"></i></a>
                     <a href="#" class="social"><i class="fa-brands fa-linkedin-in" style="color: #2e64c2;"></i></a>
-                    <a href="#" class="social"><i class="fa-brands fa-google" style="color: #5089ed;"></i></a>
-                </div> -->
+                    <a href="{{ route('Auth.Google') }}" class="social"><i class="fa-brands fa-google" style="color: #5089ed;"></i></a>
+                </div>  --}}
                 <strong> use your email for registration</strong>
                 <br>
                 <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" placeholder="Name"
@@ -73,26 +73,32 @@
         <!--sign in here baby  -->
 
 
-        <div   class="form-container sign-in-container">
+        <div class="form-container sign-in-container">
             <!-- <a href="index.html"> <button  type="button" class="btn btn-outline-success" >Back Home</button></a> -->
             <!-- <i  href="index.html" class="fa-solid fa-arrow-left-long" style="color: #94ee58;"></i> -->
 
-{{-- 
+            {{-- 
             <a href="{{ ('/') }}"> <i class="fa fa-arrow-left" aria-hidden="true"
                     style="color: #94ee58; font-size: x-large;"></i>
             </a> --}}
             <form method="POST" action="{{ route('login') }}">
                 @csrf
-                <h1 class="h1">Sign in</h1>
-                <!-- <div class="social-container">
-                    <a href="#" class="social"><i class="fa-brands fa-facebook-f" style="color: #4b82e2;"></i></a>
-                    <a href="#" class="social"><i class="fa-brands fa-linkedin-in" style="color: #2e64c2;"></i></a>
-                    <a href="#" class="social"><i class="fa-brands fa-google" style="color: #5089ed;"></i></a>
-                </div> -->
+                <h1 class="h1">Sign in </h1>
+                <h1 class="h4"> Or Use Social Media Account</h1>
+
+                <div class="social-container">
+
+                    <a href="{{ route('login.github') }}" class="social"><i class="fa-brands fa-github"
+                            style="color: #4be250;"></i></a>
+
+                    <a href="{{ route('Auth.Google') }}" class="social"><i class="fa-brands fa-google"
+                            style="color: #50eda1;"></i></a>
+                </div>
+
                 <strong> use your account</strong>
                 <br>
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email"
-                    placeholder="Email" :value="old('email')" required autofocus autocomplete="username" />
+                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" placeholder="Email"
+                    :value="old('email')" required autofocus autocomplete="username" />
                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 <br>
 
@@ -101,6 +107,7 @@
 
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 <br>
+
 
                 <!-- Remember Me -->
 
@@ -143,7 +150,7 @@
         <p class="spase"></p>
     </div>
 
-{{-- 
+    {{-- 
          <script>
    document.addEventListener("DOMContentLoaded", function() {
     const signUpButton = document.getElementById("signUp");
@@ -174,12 +181,12 @@
   
 });
 </script>  --}}
- 
- 
+
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="{{ asset('front_end/login.js') }}"></script>
+    <script src="{{ asset('front_end/login.js') }}"></script>
 
 
     <script src="{{ asset('front_end/login.js') }}"></script>

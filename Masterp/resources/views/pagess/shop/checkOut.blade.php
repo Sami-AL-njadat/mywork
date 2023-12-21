@@ -1,12 +1,18 @@
 @extends('layout.master')
 @section('content')
+
     @php
         $subtotal = 0;
         if (session()->has('discounts') && session()->get('discounts') != null) {
             $codedd = session('discounts');
         }
     @endphp
-
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-circle"></div>
+        <div class="preloader-img">
+            <img src="{{ asset('front_end/img/core-img/pls.jpeg') }}" alt="" />
+        </div>
+    </div>
 
     <!-- ##### Breadcrumb Area Start ##### -->
     <div class="breadcrumb-area">
@@ -62,13 +68,24 @@
                                 </div>
                                 <div class="col-12 mb-4">
                                     <label for="address">Address *</label>
-                                    <input name="address" type="text" class="form-control" id="address" value="">
+                                    <input name="address" type="text" class="form-control" id="address"
+                                        value="{{ optional(Auth::user()->address->first())->address }}">
                                 </div>
+
                                 <div class="col-md-12 mb-4">
                                     <label for="city">Town/City *</label>
-                                    <input name="city" type="text" class="form-control" id="city" value="">
+                                    <select id="citySelect" class="custom-select" onchange="submitForm()">
+                                        <option selected disabled>CITY</option>
+                                        <option value="AJLOUN">AJLOUN</option>
+                                        <option value="AMMAN">AMMAN</option>
+                                        <option value="JARASH">JARASH</option>
+                                        <option value="IRBID">IRBID</option>
+                                    </select>
+                                    <input hidden id="cityInput" name="city" type="text" class="form-control">
+
                                 </div>
-{{-- 
+
+                                {{-- 
                                 <div class="col-md-12 mb-4">
                                     <form id="shippingForm" action="{{ route('store-shipment') }}" method="post">
                                         @csrf
@@ -130,17 +147,41 @@
                             <h5>Subtotal</h5>
                             <h5>${{ $subtotal }}</h5>
                         </div>
-                         <div class="shipping d-flex justify-content-between align-items-center">
+                        {{-- <div class="shipping d-flex justify-content-between align-items-center">
                             <h5>COUPON</h5>
                             @if (session()->has('discounts') && session()->get('discounts') != null)
                                 <h5>%{{ $codedd }}</h5>
                             @else
                                 <h5>$ 0</h5>
                             @endif
-                        </div>
+                        </div> --}}
+
+
+                        <!-- ... (other code) ... -->
+
+
+
+                        <!-- ... (other code) ... -->
+
                         <div class="shipping d-flex justify-content-between align-items-center">
-                            <h5>Shipping</h5>
-                            <h5 id="shippingPrice">$5.00</h5>
+                            <h5>COUPON { x } </h5>
+                            @if ($cartitem->isNotEmpty() && $cartitem[0]->coupon)
+                                <h5>%{{ $cartitem[0]->coupon->discount }}</h5>
+                            @else
+                                <h5>$ 0</h5>
+                            @endif
+                        </div>
+
+                        <!-- ... (other code) ... -->
+
+
+
+
+                        <div class="shipping d-flex justify-content-between align-items-center">
+                            <h5>Shipping { + }</h5>
+                            <h5 id="shipmentCost">$0.00</h5>
+                            <input hidden id="shipmentCostInput" name="ship" type="text" class="form-control">
+
                         </div>
                         {{-- <div class="col-md-6 mb-4">
                                     <form id="shippingForm" action="{{ route('store-shipment') }}" method="post">
@@ -155,19 +196,46 @@
                                     </form>
                                 </div> --}}
 
-                       
+
                         <div class="order-total d-flex justify-content-between align-items-center">
+                            <h5>Order Total = </h5>
+                            @php
+                                $discount = 0;
+                                if ($cartitem->isNotEmpty() && $cartitem[0]->coupon) {
+                                    $discount = $cartitem[0]->coupon->discount;
+                                }
+                                $discountAmount = ($subtotal * $discount) / 100;
+                                $total = $subtotal - $discountAmount;
+                            @endphp
+
+                            <h5 id="total">${{ number_format($total, 2) }}</h5>
+                            <input hidden id="totalInput" name="total" type="text" class="form-control"
+                                value="{{ number_format($total, 2) }}">
+
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                        {{-- <div class="order-total d-flex justify-content-between align-items-center">
                             <h5>Order Total = </h5>
                             <h5>$ @if (session()->has('discounts') && session()->get('discounts') != null)
                                     {{ $subtotal - ($subtotal * $codedd) / 100 }}
                                     @else{{ $subtotal }}
                                 @endif
                             </h5>
-                            <input hidden name="total" type="text" class="form-control" id="city" value="@if (session()->has('discounts') && session()->get('discounts') != null)
-                                    {{ ($subtotal-($subtotal * $codedd)/100)}}
-                                    @else{{ $subtotal }}
-                                @endif">
-                        </div>
+                            <input hidden name="total" type="text" class="form-control" id="city"
+                                value="@if (session()->has('discounts') && session()->get('discounts') != null) {{ $subtotal - ($subtotal * $codedd) / 100 }}
+                                    @else{{ $subtotal }} @endif">
+                        </div> --}}
                         <div class="checkout-btn mt-30">
                             <input type="submit" name="paypal" class="btn alazea-btn w-100" value="paypal">
                         </div>
@@ -193,4 +261,51 @@
             }
         });
     </script> --}}
+ <script>
+    var previousShipmentCost = 0;
+
+    function submitForm() {
+        var selectedCity = $('#citySelect').val();
+
+        if (selectedCity !== 'CITY') {
+            $.ajax({
+                url: '/get-shipment-cost/' + selectedCity,
+                type: 'GET',
+                success: function(response) {
+                    if (response.shipment_cost) {
+                        // Subtract the previous shipment cost from the total
+                        var currentTotal = parseFloat($('#totalInput').val());
+                        var newTotal = currentTotal - previousShipmentCost;
+
+                        // Update the shipment cost on the page
+                        var shipmentCost = response.shipment_cost.toFixed(2);
+                        $('#shipmentCost').text('Shipment Cost: $' + shipmentCost);
+
+                        // Update the hidden input value
+                        $('#shipmentCostInput').val(shipmentCost);
+
+                        // Add the new shipment cost to the total
+                        newTotal += parseFloat(shipmentCost);
+
+                        // Update the total value
+                        $('#total').text('$' + newTotal.toFixed(2));
+                        $('#totalInput').val(newTotal.toFixed(2));
+
+                        // Include the selected city in the form data
+                        $('#cityInput').val(selectedCity);
+
+                        // Update the previous shipment cost
+                        previousShipmentCost = parseFloat(shipmentCost);
+                    } else {
+                        console.error('Error: ' + response.error);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Ajax request failed: ' + status + ', ' + error);
+                }
+            });
+        }
+    }
+</script>
+
 @endsection

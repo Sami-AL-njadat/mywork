@@ -58,6 +58,7 @@ class ContactController extends Controller
         return redirect()->route('show.contact');
     }
 
+ 
 
 
     public function destroy($id)

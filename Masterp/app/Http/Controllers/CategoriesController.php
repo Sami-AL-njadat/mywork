@@ -10,7 +10,9 @@ use App\Models\User;
 use App\Models\orders;
 use App\Traits\ImageUploadTrait;
 use App\DataTables\CategoryDataTable;
+use App\Models\coupons;
 use Illuminate\Support\Facades\File;
+use Illuminate\Database\Eloquent\Model;
 
 use function Pest\Laravel\get;
 
@@ -64,6 +66,7 @@ class CategoriesController extends Controller
     //     return view('pagess.shop.shop', compact('product', 'counts', 'category', 'allcategory', 'newproducts'));
     // }
 
+
     public function showProducts(Request $request, $id = null)
     {
         $perPage = $request->input('per_page', 6);
@@ -73,15 +76,13 @@ class CategoriesController extends Controller
 
         $category = categories::all();
 
-
         $maxPrices = products::max('price');
         $minPrices = products::min('price');
-        
-
 
         // Check if the request has filter parameters
         $minPrice = $request->input('min_price');
         $maxPrice = $request->input('max_price');
+        $searchTerm = $request->input('search');
 
         $query = Products::query();
 
@@ -94,6 +95,11 @@ class CategoriesController extends Controller
         // Apply category filter if $id is provided
         if ($id !== null) {
             $query->where('categoryId', $id);
+        }
+
+        // Apply search filter if search term is provided
+        if ($searchTerm !== null) {
+            $query->where('productName', 'LIKE', "%$searchTerm%");
         }
 
         $sort = $request->input('sort', 'az');
@@ -112,8 +118,22 @@ class CategoriesController extends Controller
 
         $product = $query->paginate($perPage);
 
-        return view('pagess.shop.shop', compact('product', 'counts', 'category', 'allcategory', 'newproducts', 'id', 'minPrice', 'maxPrice', 'maxPrices', 'minPrices'));
+        return  response()->view('pagess.shop.shop', compact('product', 'counts', 'category', 'allcategory', 'newproducts', 'id', 'minPrice', 'maxPrice', 'maxPrices', 'minPrices', 'searchTerm'));
     }
+
+
+    // public function searchProducts(Request $request, $id = null)
+    // {
+    //     $query = $request->input('query');
+
+    //     $products = products::where('productName', 'like', "%$query%")
+    //     ->when($id, function ($query, $id) {
+    //         return $query->where('categoryId', $id);
+    //     })
+    //         ->get();
+
+    //     return response()->json(['products' => $products]);
+    // }
 
 
 
@@ -150,9 +170,7 @@ class CategoriesController extends Controller
             $selectedCategory = Categories::find($product->categoryId);
 
             $reproduct = Products::where('categoryId', $product->categoryId)
-                ->inRandomOrder()
-                ->limit(4)
-                ->get();
+                ->inRandomOrder()->get();
 
             $user = auth()->user();
             $hasBeenBought = false;
@@ -204,6 +222,8 @@ class CategoriesController extends Controller
 
     function index()
     {
+        $firstCoupon = coupons::where('couponName', '!=', '')->first();
+
         $ordersCount = orders::whereNotNull('id')->count();
         $usersCount = User::whereNotNull('id')->count();
         $reviewCount = reviwes::whereNotNull('id')->count();
@@ -222,9 +242,9 @@ class CategoriesController extends Controller
             $user = $review->user;
 
             $reviewData = [
-                'name' => $user->name,
+                'name' => $user->name  ?? 'N/A',
                 'image' => $user->image  ?? 'N/A',
-                'review' => $review->review,
+                'review' => $review->review  ?? 'N/A',
                 // 'rating' => $review->rating,
                 // 'reason' => $review->reason,
             ];
@@ -232,9 +252,12 @@ class CategoriesController extends Controller
             $data[] = $reviewData;
         }
         $categories = categories::all();
+ 
+
+
 
         $product = products::orderBy('created_at', 'desc')->take(4)->get();
-        return view('pagess.home.home', compact('categories', 'product','data', 'reviewCount', 'productsCount', 'usersCount', 'incomeCount', "ordersCount"));
+        return view('pagess.home.home', compact('categories', 'product','data', 'reviewCount', 'productsCount', 'usersCount', 'incomeCount', "ordersCount" , 'firstCoupon'));
     }
 
 
@@ -285,10 +308,10 @@ class CategoriesController extends Controller
      * @param  \App\Models\categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function show(categories $categories)
-    {
-        //
-    }
+    // public function show(categories $categories)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -343,6 +366,8 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
+        products::where('categoryId', $id)->delete();
+
         $category = categories::findOrFail($id);
         $this->deleteImage($category->image);
         $category->delete();
@@ -352,3 +377,4 @@ class CategoriesController extends Controller
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 }
+

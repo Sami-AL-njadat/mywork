@@ -23,6 +23,9 @@ class User extends Authenticatable
         'password',
         'image',
         'phone',
+        'google_id',
+        'github_id',
+
     ];
 
     /**
@@ -58,5 +61,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(orderItems::class, 'customerId', 'id');
     }
+
+
+    
 }
 

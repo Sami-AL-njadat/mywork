@@ -28,8 +28,10 @@ class ProductDataTable extends DataTable
         ->addColumn('action', function ($query) {
             $editBtn = "<a href='" . route('product.edit', $query->id) . "' class='btn btn-success'><i class='far fa-edit'></i></a>";
             $deleteBtn = "<a href='" . route('product.destroy', $query->id) . "' class='btn btn-danger my-2 delete-item'><i class='fas fa-trash-alt'></i></a>";
+            $viewBtn = "<a href='" . route('product.show', $query->id) . "' class='btn btn-warning my-2'><i class='far fa-eye'></i></a>";
 
-            return $editBtn . $deleteBtn;
+            return $editBtn . $deleteBtn
+            . $viewBtn;
         })
         ->addColumn('image1', function ($query) {
             return "<img width='55px' height='70px' src='" . asset($query->image1) . "'></img>";
@@ -71,16 +73,16 @@ class ProductDataTable extends DataTable
                     ->setTableId('product-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
-                    //->dom('Bfrtip')
+                    // ->dom('Bfrtip')
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
-                        Button::make('csv'),
+                        // Button::make('csv'),
                         Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
+                        // Button::make('print'),
+                        // Button::make('reset'),
+                        // Button::make('reload')
                     ]);
     }
 
@@ -98,15 +100,15 @@ class ProductDataTable extends DataTable
                 Column::make('id'),
                 Column::make('productName'),
                 Column::make('categoryId'),
-                Column::make('Sdescription')->width(25),
-                Column::make('Ldescription')->width(40),
+                // Column::make('Sdescription')->width(25),
+                // Column::make('Ldescription')->width(40),
                 Column::make('price'),
-                Column::make('stockqty'),
-                Column::make('status'),
+                // Column::make('stockqty'),
+                // Column::make('status'),
                 Column::make('category_name'),
-                Column::make('image1')->width(55),
-                Column::make('image2')->width(55),
-                Column::make('image3')->width(55),
+                Column::make('image1'),
+                // Column::make('image2')->width(55),
+                // Column::make('image3')->width(55),
             // Column::make('updated_at'),
             Column::computed('action')
             ->exportable(false)

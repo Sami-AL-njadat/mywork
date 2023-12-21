@@ -1,7 +1,13 @@
 @extends('layout.master')
 @section('content')
     <!-- ##### Header Area End ##### -->
-
+  <!-- Preloader -->
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-circle"></div>
+        <div class="preloader-img">
+            <img src="{{ asset('front_end/img/core-img/pls.jpeg') }}" alt="" />
+        </div>
+    </div>
     <!-- ##### Breadcrumb Area Start ##### -->
     <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
@@ -259,7 +265,7 @@
                                 <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
                                 <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
                             </div>
-                        </div>
+                         </div>
                         <!-- Team Member Info -->
                         <div class="team-member-info mt-30">
                             <h5>SAM NJT</h5>

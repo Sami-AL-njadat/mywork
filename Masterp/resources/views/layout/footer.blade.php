@@ -9,8 +9,7 @@
                 <div class="col-12 col-sm-6 col-lg-3">
                     <div class="single-footer-widget">
                         <div class="footer-logo mb-30">
-                            <a href="#"><img
-                                    src="{{ asset('front_end/img/core-img/NEWLOGO-removebg-preview.png') }}"
+                            <a href="#"><img src="{{ asset('front_end/img/core-img/newlogo222.png') }}"
                                     alt="" /></a>
                         </div>
 
@@ -25,12 +24,12 @@
                         </div>
                         <nav class="widget-nav">
                             <ul>
-                                <li><a href="#">Home</a></li>
-                                <li><a href="#">About</a></li>
+                                <li><a href="{{ route('home') }}">Home</a></li>
+                                <li><a href="{{ route('shops') }}">Shop</a></li>
                                 <li><a href="#">Service</a></li>
-                                <li><a href="#">Portfolio</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Contact</a></li>
+                                <li><a href="{{ route('about') }}">About US</a></li>
+                                <li><a href="{{ route('show.contact') }}">Contact</a></li>
+                                <li><a href="{{ route('login') }}">Login</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -80,7 +79,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
 
-   
+
 <!-- ##### All Javascript Files ##### -->
 <!-- jQuery-2.2.4 js -->
 <script src="{{ asset('front_end/js/jquery/jquery-2.2.4.min.js') }}"></script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\UsersDataTable;
+use App\Models\carts;
 use App\Models\User;
 use App\Models\users;
 use Illuminate\Http\Request;
@@ -187,7 +188,10 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+
     {
+        carts::where('customerId', $id)->delete();
+
         $users = User::findOrFail($id);
         if ($users->image >= 1)
             $this->deleteImage($users->image);

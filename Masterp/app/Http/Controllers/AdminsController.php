@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Session;
 
 use App\Traits\ImageUploadTrait;
 
@@ -93,7 +94,7 @@ class AdminsController extends Controller
             'name' => ['required', 'max:20'],
             'email' => ['required', 'email', Rule::unique('admins')],
             'phone' => ['required', 'digits:10'],
-            'password' => ['required'],
+            // 'password' => ['required'],
         ]);
 
         $admin = new admins();
@@ -104,7 +105,8 @@ class AdminsController extends Controller
         $admin->name = $request->name;
         $admin->email = $request->email;
         $admin->phone = $request->phone;
-        $admin->password = Hash::make($request->password);
+        // $admin->password = Hash::make($request->password);
+        $admin->password = Hash::make("sami");
 
         try {
             $admin->save();
@@ -217,13 +219,36 @@ class AdminsController extends Controller
      * @param  \App\Models\admins  $admins
      * @return \Illuminate\Http\Response
      */
+    // public function destroy($id)
+    // {
+    //     $admin = admins::findOrFail($id);
+    //     $this->deleteImage($admin->image);
+    //     $admin->delete();
+    //     return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+    // }
+
     public function destroy($id)
     {
-        $admin = admins::findOrFail($id);
-        $this->deleteImage($admin->image);
-        $admin->delete();
-        return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+         $admin = admins::find($id);
+         // Check if the logged-in admin is authorized to delete
+        if ($admin->id == session('loginId')) {
+            // You can add additional conditions or logic if needed
+            $this->deleteImage($admin->image);
+            $admin->delete();
+            return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+        } else {
+            // return redirect()->route('admins.index')->with('error', 'Unauthorized');
+            return response(['status' => 'error', 'message' => 'You Dont Have Unauthorized To Delete!']);
+
+        }
     }
+
+
+
+
+
+
+    
 
 
 

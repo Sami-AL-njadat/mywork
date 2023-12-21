@@ -31,7 +31,7 @@
                                                 <div class="col-xl-3">
                                                     <div class="mb-3">
                                                         <img id="showImage" width="100px"
-                                                            src="{{ url('front_end/no-category-image.jpg') }}">
+                                                            src="{{ url('image.jpg') }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-5">

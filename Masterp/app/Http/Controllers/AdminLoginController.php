@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\admins;
+use App\Models\categories;
 use App\Models\orders;
 use App\Models\products;
 use Illuminate\Http\Request;
@@ -82,8 +83,10 @@ class AdminLoginController extends Controller
             $usersCount = User::whereNotNull('id')->count();
             // Count the number of admins
             $adminsCount = admins::whereNotNull('id')->count();
+            $categoriesCount = categories::whereNotNull('id')->count();
             // Count the number of projects
             $productsCount = products::whereNotNull('id')->count();
+            $ordersCount = orders::whereNotNull('id')->count();
             
             $incomeCount =orders::sum('totalPrice');
 
@@ -91,7 +94,7 @@ class AdminLoginController extends Controller
             //  $budgetsArray = $projects->pluck('budget')->toArray();
 
             //  $totalBudget = array_sum($budgetsArray);
-              return view('Admin.dashboord', compact('admin', 'usersCount', 'adminsCount', 'productsCount', 'incomeCount'));
+              return view('Admin.dashboord', compact('admin', 'usersCount', 'adminsCount','productsCount','incomeCount','categoriesCount', 'ordersCount'));
         }
     }
 

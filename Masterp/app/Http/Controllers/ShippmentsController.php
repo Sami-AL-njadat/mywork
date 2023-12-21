@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\carts;
+use App\Models\Products;
 use App\Models\shippments;
 use Illuminate\Http\Request;
 
@@ -12,10 +14,27 @@ class ShippmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public $cartCount = 0;
+
     public function index()
     {
-        //
+        $customerId = auth()->user() ? auth()->user()->id : null;
+        $sessionCart = session('cart');
+
+        if ($customerId) {
+            $this->cartCount = carts::where('customerId', $customerId)->count();
+        } elseif ($sessionCart) {
+            $this->cartCount = count($sessionCart);
+        } else {
+            $this->cartCount = 0;
+        }
+
+        return view('layout.nav', ['cartCount' => $this->cartCount]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.

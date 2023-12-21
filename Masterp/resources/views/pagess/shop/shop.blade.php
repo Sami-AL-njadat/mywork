@@ -1,5 +1,11 @@
 @extends('layout.master')
 @section('content')
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-circle"></div>
+        <div class="preloader-img">
+            <img src="{{ asset('front_end/img/core-img/pls.jpeg') }}" alt="" />
+        </div>
+    </div>
     <!-- ##### Breadcrumb Area Start ##### -->
     <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
@@ -10,7 +16,7 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-12">
+                <div class="col-6">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
@@ -20,8 +26,22 @@
                         </ol>
                     </nav>
                 </div>
+
+                <div style="padding: 30px 50px 0 0" class="col-6">
+
+                    <div class="single-widget-area">
+                        <form action="{{ route('shops', ['id' => $id]) }}" method="get" class="search-form">
+                            <input value="{{ $searchTerm }}" type="search" name="search" id="widgetsearch"
+                                placeholder="product name...">
+                            <button type="submit"><i class="icon_search"></i></button>
+                        </form>
+                    </div>
+                </div>
             </div>
+
+
         </div>
+
     </div>
     <!-- ##### Breadcrumb Area End ##### -->
 
@@ -34,7 +54,18 @@
                     <div class="shop-sorting-data d-flex flex-wrap align-items-center justify-content-between">
                         <!-- Shop Page Count -->
                         <div class="shop-page-count">
-                            <p>Showing 1-{{ Request::get('per_page') }} of {{ $counts }} results</p>
+                            @if ($id)
+                                @foreach ($allcategory as $category)
+                                    @if ($category->id == $id)
+                                        <p>Showing 1-{{ Request::get('per_page') }} of {{ $category->Products->count() }}
+                                            results</p>
+                                    @endif
+                                @endforeach
+                            @else
+                                <p>Showing 1-{{ Request::get('per_page') }} of {{ $counts }} results</p>
+                            @endif
+
+
 
                         </div>
 
@@ -57,8 +88,11 @@
                                         Low Price
                                 </select>
                             </form>
+                            <!-- Search by Product Name -->
+
 
                         </div>
+
 
                         <!-- Search by Terms -->
                         <div class="search_by_terms">
@@ -81,6 +115,14 @@
                                 </select>
                             </form>
                         </div>
+
+
+                        {{-- <div class="single-widget-area">
+                            <form action="{{ route('shop.search', ['id' => $id]) }}" method="get" class="search-form">
+                                <input type="search" name="search" id="widgetsearch" placeholder="Search...">
+                                <button type="submit"><i class="icon_search"></i></button>
+                            </form>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -97,10 +139,12 @@
                             <div class="shop-widget price ">
                                 <h4 class="widget-title">Prices</h4>
                                 <p> <b style="color: red">NOTE</b> <b>THAT :
-                                    "We Proudly Present Our Products to You, as Our Prices Range from <b style="color: #70c745"> $ {{ $maxPrices }}</b> To <b style="color: #70c745"> $
-                                        {{ $minPrices }}</b> per Unit."</b></p>
-                                 
-                                 
+                                        "We Proudly Present Our Products to You, as Our Prices Range from <b
+                                            style="color: #70c745"> $ {{ $minPrices }}</b> To <b style="color: #70c745">
+                                            $
+                                            {{ $maxPrices }}</b> per Unit."</b></p>
+
+
                                 <div class="widget-desc">
                                     <div class="slider-range">
                                         <div data-min="0" data-max="100" data-unit="$"
@@ -135,7 +179,7 @@
 
 
                                     <a href="{{ route('shops') }}" class="btn alazea-btn ">
-                                        All plants <span class="badge badge-success">{{ $counts }}</span>
+                                        All <span class="badge badge-success">{{ $counts }}</span>
                                     </a>
 
                                 </div>
@@ -156,6 +200,9 @@
                                     </div>
                                 @endforeach
 
+
+
+
                             </div>
                         </div>
 
@@ -174,7 +221,7 @@
 
                         <!-- Shop Widget -->
                         <div class="shop-widget best-seller mt-5 mb-5">
-                            <h4 class="widget-title">Best Seller</h4>
+                            <h4 class="widget-title">NEW</h4>
                             <div class="widget-desc">
                                 <!-- Single Best Seller Products -->
                                 @isset($newproducts)
@@ -188,13 +235,13 @@
                                                 <a
                                                     href="{{ route('shopdetai') }}/{{ $new->id }}">{{ $new->productName }}</a>
                                                 <p>${{ $new->price }}</p>
-                                                <div class="ratings">
+                                                {{-- <div class="ratings">
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                     @endforeach
@@ -220,7 +267,8 @@
                                         <!-- Product Image -->
                                         <div class="product-img">
                                             <a href="{{ route('shopdetai') }}/{{ $allproduct->id }}">
-                                                <img style="height: 302.21px !important; " src={{ asset($allproduct->image1) }} alt="" /></a>
+                                                <img style="height: 302.21px !important; "
+                                                    src={{ asset($allproduct->image1) }} alt="" /></a>
                                             <div class="product-tag">
                                                 @if ($allproduct->status > 0)
                                                     <a href="#">{{ $allproduct->status }}</a>
@@ -231,7 +279,9 @@
                                                     class="wishlist-btn"><i class="icon_heart_alt"></i></a>
                                                 <a href="{{ route('cartstor') }}/{{ $allproduct->id }}"
                                                     class="add-to-cart-btn">Add to cart</a>
-                                                <a href="{{ route('shopdetai', ['id' => $allproduct->id]) }}" class="compare-btn"><i
+                                                <a title="more"
+                                                    href="{{ route('shopdetai', ['id' => $allproduct->id]) }}"
+                                                    class="compare-btn"><i title="more"
                                                         class="arrow_left-right_alt"></i></a>
                                             </div>
 
@@ -243,7 +293,7 @@
                                             <a href="shop-details.html">
                                                 <p>{{ $allproduct->productName }}</p>
                                             </a>
-                                            <h6>{{ $allproduct->price }}</h6>
+                                            <h6>$ {{ $allproduct->price }}</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -266,6 +316,22 @@
         </div>
     </section>
     <!-- ##### Shop Area End ##### -->
+    <script>
+        $(document).ready(function() {
+            $('#searchForm').on('submit', function(e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
 
+                $.ajax({
+                    type: 'GET',
+                    url: $(this).attr('action'),
+                    data: formData,
+                    success: function(response) {
+                        $('#searchResults').html(response);
+                    }
+                });
+            });
+        });
+    </script>
     <!-- ##### Footer Area Start ##### -->
 @endsection

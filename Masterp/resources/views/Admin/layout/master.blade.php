@@ -114,7 +114,7 @@
         @endforeach
     @endif
 </script>
-
+{{-- 
 <script>
     $(document).ready(function() {
         $.ajaxSetup({
@@ -168,8 +168,79 @@
             })
         })
     })
-</script>
+</script> --}}
 
+ 
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $('body').on('click', '.delete-item', function(event) {
+            event.preventDefault();
+            let deleteUrl = $(this).attr('href');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: 'green',
+                cancelButtonColor: 'red',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: deleteUrl,
+                        data: { '_token': $('meta[name="csrf-token"]').attr('content') },
+                        success: function(data) {
+                            if (data.status == 'success') {
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: data.message,
+                                    icon: 'success',
+                                    timer: 2000, // 2 seconds
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function() {
+                                    window.location.reload();
+                                }, 2000);
+                            } else if (data.status == 'error') {
+                                Swal.fire({
+                                    title: 'Can\'t Delete!',
+                                    text: data.message,
+                                    icon: 'error',
+                                    timer: 2000, // 2 seconds
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function() {
+                                    window.location.reload();
+                                }, 5000);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(xhr.status);
+                            console.log(error);
+                            Swal.fire({
+                                title: 'info!',
+                                text: 'Wait For Processing a Request.',
+                                icon: 'info',
+                                timer: 2000, // 2 seconds
+                                showConfirmButton: false
+                            });
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 2500);
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script> 
 <script>
     $(document).ready(function() {
         $('#myTable').DataTable();

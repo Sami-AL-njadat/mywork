@@ -1,6 +1,6 @@
 <?php
 
- use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CategoriesController;
@@ -12,6 +12,8 @@ use App\Http\Controllers\CouponsController;
 use App\Http\Controllers\ReviwesController;
 use App\Http\Controllers\OrderItemsController;
 use App\Http\Controllers\CartsController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\EventesController;
 
 
 
@@ -27,6 +29,8 @@ Route::resource('message', ContactController::class)->middleware('isLoggedIn');
 Route::resource('coupons', CouponsController::class)->middleware('isLoggedIn');
 Route::resource('review', ReviwesController::class)->middleware('isLoggedIn');
 Route::resource('orders', OrderItemsController::class)->middleware('isLoggedIn');
+Route::resource('event', EventController::class)->middleware('isLoggedIn');
+Route::resource('eventes', EventesController::class)->middleware('isLoggedIn');
 
 
 // Route::post('/loginadmin', [AdminLoginController::class,'login'])->name('loginadmin');

@@ -1,5 +1,11 @@
 @extends('layout.master')
 @section('content')
+  <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-circle"></div>
+        <div class="preloader-img">
+            <img src="{{ asset('front_end/img/core-img/pls.jpeg') }}" alt="" />
+        </div>
+    </div>
     <!-- ##### Breadcrumb Area Start ##### -->
     <div class="breadcrumb-area">
         <!-- Top Breadcrumb Area -->
@@ -150,34 +156,14 @@
 
 
                             </div>
-                            <div class="shipping d-flex justify-content-between">
-                                <h5>Shipping</h5>
-                                <div class="shipping-address">
-                                    <form action="{{ route('updateShippingCost') }}" method="post">
-                                        <select class="custom-select">
-                                            <option selected>CITY</option>
-                                            <option value="AJLOUN">AJLOUN</option>
-                                            <option value="AMMAN">AMMAN</option>
-                                            <option value="JARASH">JARASH</option>
-                                            <option value="IRBID">IRBID</option>
-                                        </select>
-
-                                        <button type="submit">Update Total</button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="total d-flex justify-content-between">
-
-
-
-
-                            </div>
+                   
+                            
 
 
                             <h5>Total</h5>
                             <h5>jod
                                 @if (session()->has('discounts') && session()->get('discounts') != null)
-                                    {{ $subtotal - ($subtotal * $codedd) / 100 }}
+                                    {{number_format($subtotal - ($subtotal * $codedd) / 100,2) }}
                                     @else{{ $subtotal }}
                                 @endif
                             </h5>
