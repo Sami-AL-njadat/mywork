@@ -19,7 +19,9 @@ class AdminTableSeeder extends Seeder
         DB::table('admins')->insert([
             'name' => 'Sami AL Njadat',
             'email' => 'sami.alnajadat@gmail.com',
-            'password' => bcrypt('ss123123'),
+            'image' => '/admin/assets/img/avatar/avatar-1.png',
+            'phone' => '0777415591',
+            'password' => bcrypt('password'),
         ]);
     }
 }

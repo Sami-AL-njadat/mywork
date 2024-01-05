@@ -145,12 +145,12 @@
                                 </div>
 
                                 <!-- <select name="" id="">
-                                                                            <option value="0">Type of pots</option>
-                                                                            <option value="1">plastic</option>
-                                                                            <option value="2">
-                                                                              <img src="img/bg-img/1.jpg" alt="" srcset="" /> cycle
-                                                                            </option>
-                                                                          </select> -->
+                                                                                <option value="0">Type of pots</option>
+                                                                                <option value="1">plastic</option>
+                                                                                <option value="2">
+                                                                                  <img src="img/bg-img/1.jpg" alt="" srcset="" /> cycle
+                                                                                </option>
+                                                                              </select> -->
                             </div>
 
                             <div class="products--meta">
@@ -240,15 +240,21 @@
                                     <p>
                                         I have received my order but the wrong item was delivered
                                         to me. <br />
-                                        <span>Received wrong item. Contact seller promptly, provide details, and follow their instructions for returns or exchanges to get the correct item delivered.</span>
+                                        <span>Received wrong item. Contact seller promptly, provide details, and follow
+                                            their instructions for returns or exchanges to get the correct item
+                                            delivered.</span>
                                     </p>
                                     <p>
                                         Product Receipt and Acceptance Confirmation Process <br />
-                                        <span>The product receipt and acceptance confirmation process includes inspecting received items, verifying order accuracy, and confirming acceptance, ensuring accurate inventory and facilitating issue resolution if necessary.</span>
+                                        <span>The product receipt and acceptance confirmation process includes inspecting
+                                            received items, verifying order accuracy, and confirming acceptance, ensuring
+                                            accurate inventory and facilitating issue resolution if necessary.</span>
                                     </p>
                                     <p>
                                         How do I cancel my order? <br />
-                                        <span>To cancel your order, check the seller's cancellation policy on their website or contact customer support. Follow their instructions, provide necessary details, and adhere to any specified time frames.</span>
+                                        <span>To cancel your order, check the seller's cancellation policy on their website
+                                            or contact customer support. Follow their instructions, provide necessary
+                                            details, and adhere to any specified time frames.</span>
                                     </p>
                                 </div>
                             </div>
@@ -405,7 +411,7 @@
                                     <!-- Product Image -->
                                     <div class="product-img">
                                         <a href="{{ route('shopdetai', $reproducts->id) }}">
-                                            <img style="height: 302.21px !important;"
+                                            <img 
                                                 src="{{ asset($reproducts->image1) }}" alt="image" /></a>
                                         <!-- Product Tag -->
                                         <div class="product-tag">
@@ -428,7 +434,7 @@
                                         <a href="shop-details.html">
                                             <p>{{ $reproducts->productName }}</p>
                                         </a>
-                                        <h6>{{ $reproducts->price }}</h6>
+                                        <h6>{{ $reproducts->price }} JOD</h6>
                                     </div>
 
                                 </div>
@@ -485,50 +491,3 @@
     </script>
     <!-- ##### Single Product Details Area Start ##### -->
 @endsection
-
-
-
-
-{{-- <div class="reviews_area">
-                                    <ul>
-                                        @foreach ($review as $reviews)
-                                            <li>
-                                                <div class="single_user_review mb-15">
-                                                    <div class="review-rating">
-                                                       
-                                                        @for ($i = 0; $i < 5; $i++)
-                                                            @if ($reviews->rating > $i)
-                                                                <i class="fa fa-star"></i>
-                                                            @else
-                                                                <i class="fa fa-star-o"></i>
-                                                            @endif
-                                                        @endfor
-
-
-
-                                                        <span>for {{ $reviews->reason }}</span>
-                                                    </div>
-                                                    <h4> "{{ $reviews->review }}"</h4>
-
-                                                    <div class="review-details">
-                                                        <p>
-
-                                                            by <a href="#">{{ $reviews->name }}</a> on
-                                                            <span>{{ $reviews->created_at }}</span>
-                                                        </p>
-
-
-                                                    </div>
-                                                </div>
-
-
-
-                                            </li>
-                                        @endforeach
-
-
-
-
-
-                                    </ul>
-                                </div> --}}

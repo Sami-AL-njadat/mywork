@@ -2592,7 +2592,7 @@ img {
   .portfolio-slides .owl-prev {
     position: absolute;
     top: calc(50% - 30px);
-    color: #ffffff;
+    color: #060606;
     font-size: 50px;
     left: 30%;
     z-index: 10;
@@ -2602,7 +2602,7 @@ img {
   .portfolio-slides .owl-next {
     position: absolute;
     top: calc(50% - 30px);
-    color: #ffffff;
+    color: #020202;
     font-size: 50px;
     right: 30%;
     z-index: 10;

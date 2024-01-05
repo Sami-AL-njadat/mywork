@@ -18,19 +18,21 @@ use App\Http\Controllers\EventesController;
 
 
 
-Route::get('admin/dashboard', [AdminLoginController::class, 'dashboard'])->name('admin.dashboard')->middleware('isLoggedIn');
+Route::middleware(['isLoggedIn'])->group(function () {
+    Route::get('admin/dashboard', [AdminLoginController::class, 'dashboard'])->name('admin.dashboard');
 
+    Route::resource('category', CategoriesController::class);
+    Route::resource('users', UsersController::class);
+    Route::resource('product', ProductsController::class);
+    Route::resource('admins', AdminsController::class);
+    Route::resource('message', ContactController::class);
+    Route::resource('coupons', CouponsController::class);
+    Route::resource('review', ReviwesController::class);
+    Route::resource('orders', OrderItemsController::class);
+    Route::resource('event', EventController::class);
+    Route::resource('eventes', EventesController::class);
+});
 
-Route::resource('category', CategoriesController::class)->middleware('isLoggedIn');
-Route::resource('users', UsersController::class)->middleware('isLoggedIn');
-Route::resource('product', ProductsController::class)->middleware('isLoggedIn');
-Route::resource('admins', AdminsController::class)->middleware('isLoggedIn');
-Route::resource('message', ContactController::class)->middleware('isLoggedIn');
-Route::resource('coupons', CouponsController::class)->middleware('isLoggedIn');
-Route::resource('review', ReviwesController::class)->middleware('isLoggedIn');
-Route::resource('orders', OrderItemsController::class)->middleware('isLoggedIn');
-Route::resource('event', EventController::class)->middleware('isLoggedIn');
-Route::resource('eventes', EventesController::class)->middleware('isLoggedIn');
 
 
 // Route::post('/loginadmin', [AdminLoginController::class,'login'])->name('loginadmin');

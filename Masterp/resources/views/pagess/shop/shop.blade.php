@@ -100,7 +100,7 @@
 
                             <form method="get" action="{{ route('shops', ['id' => $id]) }}" class="form-inline">
 
-                                <label for="perPageSelect">Short by Popularity:</label>
+                                <label for="perPageSelect">Showing:</label>
                                 <select class="custom-select widget-title" name="per_page" id="perPageSelect"
                                     onchange="this.form.submit()">
                                     <option value="6" {{ Request::get('per_page') == '6' ? 'selected' : '' }}>6
@@ -117,12 +117,7 @@
                         </div>
 
 
-                        {{-- <div class="single-widget-area">
-                            <form action="{{ route('shop.search', ['id' => $id]) }}" method="get" class="search-form">
-                                <input type="search" name="search" id="widgetsearch" placeholder="Search...">
-                                <button type="submit"><i class="icon_search"></i></button>
-                            </form>
-                        </div> --}}
+                    
                     </div>
                 </div>
             </div>
@@ -138,11 +133,11 @@
 
                             <div class="shop-widget price ">
                                 <h4 class="widget-title">Prices</h4>
-                                <p> <b style="color: red">NOTE</b> <b>THAT :
+                                <p> <b style="color: red">NOTE</b> <b>:
                                         "We Proudly Present Our Products to You, as Our Prices Range from <b
-                                            style="color: #70c745"> $ {{ $minPrices }}</b> To <b style="color: #70c745">
-                                            $
-                                            {{ $maxPrices }}</b> per Unit."</b></p>
+                                            style="color: #70c745"> {{ $minPrices }} JOD</b> To <b style="color: #70c745">
+                                            
+                                            {{ $maxPrices }} JOD</b> per Unit."</b></p>
 
 
                                 <div class="widget-desc">
@@ -157,7 +152,7 @@
                                             <span class="ui-slider-handle ui-state-default ui-corner-all"
                                                 tabindex="0"></span>
                                         </div>
-                                        <div class="range-price">Price: $ 0- $ 100</div>
+                                        <div class="range-price">Price:  0 JOD-  100 JOD</div>
                                     </div>
                                 </div>
                             </div>
@@ -210,14 +205,7 @@
 
 
 
-                        <!-- Shop Widget -->
-                        {{-- <div class="shop-widget sort-by mb-50">
-                            <h4 class="widget-title">Sort by</h4>
-                            <div class="widget-desc">
-                                 
-                               
-                            </div>
-                        </div> --}}
+               
 
                         <!-- Shop Widget -->
                         <div class="shop-widget best-seller mt-5 mb-5">
@@ -234,14 +222,8 @@
                                             <div class="product-info">
                                                 <a
                                                     href="{{ route('shopdetai') }}/{{ $new->id }}">{{ $new->productName }}</a>
-                                                <p>${{ $new->price }}</p>
-                                                {{-- <div class="ratings">
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div> --}}
+                                                <p>{{ $new->price }} JOD</p>
+                                         
                                             </div>
                                         </div>
                                     @endforeach
@@ -293,7 +275,7 @@
                                             <a href="shop-details.html">
                                                 <p>{{ $allproduct->productName }}</p>
                                             </a>
-                                            <h6>$ {{ $allproduct->price }}</h6>
+                                            <h6> {{ $allproduct->price }} JOD</h6>
                                         </div>
                                     </div>
                                 </div>

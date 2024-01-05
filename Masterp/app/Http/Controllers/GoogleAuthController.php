@@ -23,47 +23,51 @@ class GoogleAuthController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function handleGoogleCallback(): RedirectResponse
-    {
-        try{
+  public function handleGoogleCallback(): RedirectResponse
+{
+    try {
         $googleUser = Socialite::driver('google')->stateless()->user();
-        } catch (\Exception $e) {
-            return redirect('/login')->with('error', 'Google login failed. Please try again.');
-        }
-        $user = User::where('google_id', $googleUser->getId())->first();
-
-        if (!$user) {
-            $existingUser = User::where('email', $googleUser->email)->first();
-
-            if ($existingUser) {
-                 $existingUser->update(['google_id' => $googleUser->getId()]);
-                Auth::login($existingUser);
-
-                 Session::flash('info', 'Hello again!');
-            } else {
-                 $newUser = User::create([
-                    'name' => $googleUser->name,
-                    'email' => $googleUser->email,
-                    'google_id' => $googleUser->getId()
-                ]);
-                Auth::login($newUser);
-
-                 Session::flash('success', 'Welcome,To MASHTAL');
-            }
-
-             $this->syncSessionDataWithDatabase();
-
-            return redirect()->intended('/');
-        } else {
-            Auth::login($user);
-
-             Session::flash('info', 'Welcome back!');
-
-             $this->syncSessionDataWithDatabase();
-
-            return redirect()->intended('/');
-         }
+    } catch (\Exception $e) {
+        return redirect('/login')->with('error', 'Google login failed. Please try again.');
     }
+
+    $user = User::where('google_id', $googleUser->getId())->first();
+
+    if (!$user) {
+        $existingUser = User::where('email', $googleUser->email)->first();
+
+        if ($existingUser) {
+            $existingUser->update(['google_id' => $googleUser->getId()]);
+            Auth::login($existingUser);
+            Session::flash('info', 'Hello again!');
+        } else {
+            $newUser = User::create([
+                'name' => $googleUser->name,
+                'email' => $googleUser->email,
+                'google_id' => $googleUser->getId(),
+            ]);
+
+            // Set the default image path
+            $defaultImagePath = '/admin/assets/img/avatar/avatar-2.png';
+            $newUser->image = $defaultImagePath;
+            $newUser->save();
+
+            Auth::login($newUser);
+            Session::flash('success', 'Welcome to MASHTAL!');
+        }
+
+        $this->syncSessionDataWithDatabase();
+
+        return redirect()->intended('/');
+    } else {
+        Auth::login($user);
+        Session::flash('info', 'Welcome back!');
+        $this->syncSessionDataWithDatabase();
+
+        return redirect()->intended('/');
+    }
+}
+
 
    
     private function syncSessionDataWithDatabase() 

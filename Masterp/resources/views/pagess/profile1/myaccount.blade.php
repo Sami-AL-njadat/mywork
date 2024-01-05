@@ -2,11 +2,11 @@
 
  @section('content')
      <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="preloader-circle"></div>
-        <div class="preloader-img">
-            <img src="{{ asset('front_end/img/core-img/pls.jpeg') }}" alt="" />
-        </div>
-    </div>
+         <div class="preloader-circle"></div>
+         <div class="preloader-img">
+             <img src="{{ asset('front_end/img/core-img/pls.jpeg') }}" alt="" />
+         </div>
+     </div>
      <div class="breadcrumb-area">
          <!-- Top Breadcrumb Area -->
          <div class="top-breadcrumb-area bg-img bg-overlay d-flex align-items-center justify-content-center"
@@ -64,10 +64,7 @@
                                      {{-- start of logout --}}
 
                                      <li class="nav-item">
-                                         <!-- <a class="nav-link" id="account-logout-tab" href="login-register.html" role="tab" aria-selected="false">Logout</a> -->
-                                         {{-- <button type="submit" href="login-register.html"
-                                    class="btn alazea-btn btn-success mt-15"
-                                    style="margin-top: 10px; border:1px solid lawngreen;">Logout</button> --}}
+
                                          <form style="display: inline-block" method="POST" class="nav-item"
                                              action="{{ route('logout') }}">
                                              @csrf
@@ -81,8 +78,7 @@
                                      </li>
                                      </form>
                                      </li>
-                                     {{-- end of logout --}}
-
+ 
 
                                  </ul>
                              </div>
@@ -96,7 +92,7 @@
                                              @php
                                                  $user = auth()->user();
                                              @endphp
-                                             <div class="card-body media align-items-center ">
+                                             <div class="card-body media align-items-center  ">
                                                  @if (Auth::user()->image)
                                                      <img src="{{ asset('' . Auth::user()->image) }}"
                                                          style=" ; padding:10px ;width:150px" alt=""
@@ -105,10 +101,10 @@
                                                      <img src="{{ url('front_end/no-category-image.jpg') }}"
                                                          style="height: 200px;  " alt="" class="d-block ui-w-80 ">
                                                  @endif
-                                                 <div>
-                                                     <strong>Hello <b> {{ Auth::user()->name }} </b></strong>
-                                                     <strong><span
-                                                             style="color: greenyellow">{{ Auth::user()->email }}</span></strong>
+                                                 <div class="col-8" >
+                                                     <strong>Hello <b style="background: #999999; color:white"> {{ Auth::user()->name }}  </b></strong>
+                                                     {{-- <strong><span
+                                                             style="color: greenyellow">{{ Auth::user()->email }}</span></strong> --}}
 
                                                      <p>From your account dashboard you can view your recent orders, and
                                                          billing addresses and <a href="javascript:void(0)">edit your
@@ -234,7 +230,7 @@
                                              </div>
                                          </div>
                                      </div>
- 
+
 
                                      <div class="tab-pane fade" id="account-address" role="tabpanel"
                                          aria-labelledby="account-address-tab">

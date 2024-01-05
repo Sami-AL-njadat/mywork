@@ -9,6 +9,7 @@ use App\Models\carts;
 use App\Models\orderItems;
 use App\Models\orders;
 use App\Models\shipments;
+use Illuminate\Support\Facades\Http;
 
 
 use App\Models\User;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 
 class checKoutController extends Controller
 {
+    
 
     public function checkout()
     {
@@ -34,10 +36,10 @@ class checKoutController extends Controller
     public function getShipmentCost($cityId)
     {
         $shipmentCosts = [
-            'AJLOUN' => 10.00, // AJLOUN
-            'AMMAN' => 15.00, // AMMAN
-            'JARASH' => 12.00, // JARASH
-            'IRBID' => 8.00, // IRBID
+            'AJLOUN' => 3.00, // AJLOUN
+            'AMMAN' => 10.00, // AMMAN
+            'JARASH' => 5.00, // JARASH
+            'IRBID' => 4.00, // IRBID
         ];
 
         if (array_key_exists($cityId, $shipmentCosts)) {
@@ -128,6 +130,7 @@ class checKoutController extends Controller
     }
     public function storeShipment(Request $request)
     {
+  
 
         // dd($request);
         // Validate the form data
@@ -163,8 +166,12 @@ class checKoutController extends Controller
 
 
             ]);
-            $provider = new PayPalClient;
-            $provider->setApiCredentials(config('paypal'));
+           $provider = \PayPal::setProvider();
+
+            // $provider = new PayPalClient;
+            $provider->getAccessToken();
+
+            // $provider->setApiCredentials(config('paypal'));
             $PaypalToken = $provider->getAccessToken();
 
 
@@ -183,7 +190,7 @@ class checKoutController extends Controller
                     ]
                 ]
             ]);
-            // dd($response);
+            dd($response);
 
 
 
@@ -240,10 +247,10 @@ class checKoutController extends Controller
 
     public function success(Request $request)
     {
+   $provider = \PayPal::setProvider();
 
-
-        $provider = new PayPalClient;
-        $provider->setApiCredentials(config('paypal'));
+            // $provider = new PayPalClient;
+            $provider->getAccessToken();
         $PaypalToken = $provider->getAccessToken();
         $response = $provider->capturePaymentOrder($request->token);
 

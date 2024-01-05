@@ -84,7 +84,8 @@ class CategoriesController extends Controller
         $maxPrice = $request->input('max_price');
         $searchTerm = $request->input('search');
 
-        $query = Products::query();
+         $query = Products::query()->inRandomOrder()->orderBy('productName', 'desc');
+
 
         // Apply price filter if values are provided
         if ($minPrice !== null && $maxPrice !== null) {
@@ -377,4 +378,3 @@ class CategoriesController extends Controller
         return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
     }
 }
-

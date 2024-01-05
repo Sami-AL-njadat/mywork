@@ -145,7 +145,7 @@
                         </div>
                         <div class="subtotal d-flex justify-content-between align-items-center">
                             <h5>Subtotal</h5>
-                            <h5>${{ $subtotal }}</h5>
+                            <h5>{{ $subtotal }} JOD</h5>
                         </div>
                         {{-- <div class="shipping d-flex justify-content-between align-items-center">
                             <h5>COUPON</h5>
@@ -168,7 +168,7 @@
                             @if ($cartitem->isNotEmpty() && $cartitem[0]->coupon)
                                 <h5>%{{ $cartitem[0]->coupon->discount }}</h5>
                             @else
-                                <h5>$ 0</h5>
+                                <h5>0 JOD</h5>
                             @endif
                         </div>
 
@@ -179,22 +179,11 @@
 
                         <div class="shipping d-flex justify-content-between align-items-center">
                             <h5>Shipping { + }</h5>
-                            <h5 id="shipmentCost">$0.00</h5>
+                            <h5 id="shipmentCost">0.00 JOD</h5>
                             <input hidden id="shipmentCostInput" name="ship" type="text" class="form-control">
 
                         </div>
-                        {{-- <div class="col-md-6 mb-4">
-                                    <form id="shippingForm" action="{{ route('store-shipment') }}" method="post">
-                                        @csrf
-                                        <select id="citySelect" class="custom-select" onchange="submitForm()">
-                                            <option selected>CITY</option>
-                                            <option value="AJLOUN">AJLOUN</option>
-                                            <option value="AMMAN">AMMAN</option>
-                                            <option value="JARASH">JARASH</option>
-                                            <option value="IRBID">IRBID</option>
-                                        </select>
-                                    </form>
-                                </div> --}}
+                  
 
 
                         <div class="order-total d-flex justify-content-between align-items-center">
@@ -208,7 +197,7 @@
                                 $total = $subtotal - $discountAmount;
                             @endphp
 
-                            <h5 id="total">${{ number_format($total, 2) }}</h5>
+                            <h5 id="total">{{ number_format($total, 2) }} JOD</h5>
                             <input hidden id="totalInput" name="total" type="text" class="form-control"
                                 value="{{ number_format($total, 2) }}">
 
@@ -279,7 +268,7 @@
 
                         // Update the shipment cost on the page
                         var shipmentCost = response.shipment_cost.toFixed(2);
-                        $('#shipmentCost').text('Shipment Cost: $' + shipmentCost);
+                        $('#shipmentCost').text('Shipment Cost: JOD ' + shipmentCost);
 
                         // Update the hidden input value
                         $('#shipmentCostInput').val(shipmentCost);
@@ -288,7 +277,7 @@
                         newTotal += parseFloat(shipmentCost);
 
                         // Update the total value
-                        $('#total').text('$' + newTotal.toFixed(2));
+                        $('#total').text(' JOD  ' + newTotal.toFixed(2));
                         $('#totalInput').val(newTotal.toFixed(2));
 
                         // Include the selected city in the form data

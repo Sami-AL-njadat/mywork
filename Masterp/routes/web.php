@@ -49,8 +49,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-// Route::get('contact', [ContactController::class, 'shoow'])->name('contact');;
-Route::get('/', [CategoriesController::class, 'index'])->name('home');
+ Route::get('/', [CategoriesController::class, 'index'])->name('home');
 
 
 Route::get('contact', [ContactController::class, 'showContact'])->name('show.contact');
@@ -62,19 +61,11 @@ Route::post('store-contact', [ContactController::class, 'store'])->name('store.c
 
 Route::get('/shops/{id?}', [CategoriesController::class, 'showProducts'])->name('shops');
 Route::get('/shop/filterByPrice/{id?}', [CategoriesController::class, 'showProducts'])->name('shop.filterByPrice');
-// Route::get('/shop/productSearch/{id?}', [CategoriesController::class, 'showProducts'])->name('shop.search');
-// Route::post('/shop/productSearch/{id?}', [CategoriesController::class, 'searchProducts'])->name('shop.search.ajax');
+ 
 
 
 
-
-
-
-
-
-
-// Route::get('/shop/{id?}', [CategoriesController::class, 'showProduct'])->name('shop');
-// Route::get('/shop', [CategoriesController::class, 'showProduct'])->name('products.index');
+ 
 Route::get('/shopdetai/{id?}', [CategoriesController::class, 'shopdetai'])->name('shopdetai');
 
 
@@ -104,10 +95,6 @@ Route::post('/update-shipping-cost', [CartsController::class, 'updateShippingCos
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->middleware(['auth', 'verified'])->name('checkout');
 Route::get('/get-shipment-cost/{cityId}', [CheckoutController::class, 'getShipmentCost'])->name('get-shipment-cost');
 
-
-Route::post('/store-shipment', [CheckoutController::class, 'storeShipment'])->name('store-shipment');
-Route::get('paypal/success', [CheckoutController::class, 'success'])->name('paypal_success');
-Route::get('paypal/cancel', [CheckoutController::class, 'cancel'])->name('paypal_cancel');
 
 
 
@@ -152,3 +139,12 @@ Route::get('/eventdetal/{id?}', [EventController::class, 'detail'])->name('event
 
 
 Route::get('download', [DownloadController::class, 'download'])->name('download');
+
+
+
+
+
+
+Route::post('/store-shipment', [CheckoutController::class, 'storeShipment'])->name('store-shipment');
+Route::get('paypal/success', [CheckoutController::class, 'success'])->name('paypal_success');
+Route::get('paypal/cancel', [CheckoutController::class, 'cancel'])->name('paypal_cancel');

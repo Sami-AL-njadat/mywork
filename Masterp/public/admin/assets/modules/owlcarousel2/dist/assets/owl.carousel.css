@@ -60,7 +60,8 @@
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none; }
+    user-select: none; 
+  }
   .owl-carousel.owl-loaded {
     display: block; }
   .owl-carousel.owl-loading {

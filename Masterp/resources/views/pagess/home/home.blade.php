@@ -208,7 +208,7 @@
                     <div class="col-12 col-lg-6">
                         <div class="alazea-video-area bg-overlay mb-100">
                             <img src="{{ asset('front_end/img/bg-img/23.jpg') }}" alt="">
-                            <a href="{http://www.youtube.com/watch?v=7HKoqNJtMTQ}" class="video-icon">
+                            <a href="https://youtu.be/LaYBepil6J0?si=YILuVydT95AZQ1Na}" class="video-icon">
                                 <i class="fa fa-play" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -248,7 +248,7 @@
                                             alt="image" /></a>
                                     <!-- Product Tag -->
                                     <div class="product-tag">
-                                        <a href="#">Hot</a>
+                                        <a href="#">{{$newarrvel->status}}</a>
                                     </div>
 
                                     <div class="product-meta d-flex">
@@ -266,7 +266,7 @@
                                     <a href="shop-details.html">
                                         <p>{{ $newarrvel->productName }}</p>
                                     </a>
-                                    <h6>{{ $newarrvel->price }}</h6>
+                                    <h6>{{ $newarrvel->price }} JOD</h6>
                                 </div>
                             </div>
                         </div>
